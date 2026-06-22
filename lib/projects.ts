@@ -18,7 +18,7 @@ export type Project = {
   challenge: string;
   approach: string;
   outcome: string;
-  technologies: string[];
+  projectTypes: string[];
 };
 
 export const projects: Project[] = [
@@ -39,7 +39,7 @@ export const projects: Project[] = [
       "We built a single workspace shaped around how DepEd divisions and schools actually encode scores, manage sections, and review results without fighting existing workflows.",
     outcome:
       "Teams can encode learner scores with clear section context and review division-wide performance from one place instead of reconciling multiple files.",
-    technologies: ["Next.js", "Supabase", "TypeScript", "Tailwind CSS"],
+    projectTypes: ["Performance Dashboard", "Internal Tool", "Data Management"],
   },
   {
     slug: "shrimpsense",
@@ -59,7 +59,7 @@ export const projects: Project[] = [
       "We designed a monitoring platform that surfaces pH, temperature, oxygen, and salinity in real time, with clear thresholds and trends farmers can act on before problems spread.",
     outcome:
       "Farmers get a live view of pond conditions and health signals in one dashboard, reducing guesswork and supporting earlier, more confident decisions.",
-    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+    projectTypes: ["Monitoring Platform", "IoT Dashboard", "Real-time Analytics"],
   },
 ];
 

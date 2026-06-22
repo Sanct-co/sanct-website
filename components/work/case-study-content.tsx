@@ -77,15 +77,15 @@ export function CaseStudyContent({
           <Reveal delay={0.15} className="lg:col-span-1">
             <div className="rounded-card border border-border-light bg-white p-7">
               <h3 className="text-sm font-bold uppercase tracking-[0.1em] text-lilac">
-                Technology
+                Project Type
               </h3>
               <ul className="mt-5 flex flex-wrap gap-2">
-                {project.technologies.map((tech) => (
+                {project.projectTypes.map((type) => (
                   <li
-                    key={tech}
+                    key={type}
                     className="rounded-tag bg-sanct-indigo/5 px-3 py-1.5 text-base font-bold text-sanct-indigo"
                   >
-                    {tech}
+                    {type}
                   </li>
                 ))}
               </ul>
