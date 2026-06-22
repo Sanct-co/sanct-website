@@ -1,6 +1,7 @@
 import { ContactForm } from "@/components/contact/contact-form";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
+import { SocialLinks } from "@/components/ui/social-links";
 import { createMetadata } from "@/lib/metadata";
 import { contact } from "@/lib/site";
 
@@ -54,22 +55,9 @@ export default function ContactPage() {
                 </li>
                 <li>
                   <span className="block text-sm font-bold uppercase tracking-[0.1em] text-lilac">
-                    Facebook
+                    Social
                   </span>
-                  <a
-                    href={contact.facebook}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-2 block text-lg font-bold text-sanct-indigo transition-colors duration-150 ease-out hover:text-indigo-mid"
-                  >
-                    Sanct on Facebook
-                  </a>
-                </li>
-                <li>
-                  <span className="block text-sm font-bold uppercase tracking-[0.1em] text-lilac">
-                    Location
-                  </span>
-                  <p className="mt-2 text-lg text-on-light-muted">{contact.location}</p>
+                  <SocialLinks variant="contact" />
                 </li>
               </ul>
             </div>

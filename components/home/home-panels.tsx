@@ -20,37 +20,23 @@ export function HomePanels() {
 
   useGSAP(
     () => {
-      const panels = [heroPanelRef.current, featuredPanelRef.current].filter(
-        Boolean,
-      ) as HTMLElement[];
+      const hero = heroPanelRef.current;
+      const featured = featuredPanelRef.current;
 
-      if (!panels.length || reducedMotion || !lenis) return;
+      if (!hero || reducedMotion || !lenis) return;
 
-      const triggers = panels.map((panel, index) => {
-        const isLastPanel = index === panels.length - 1;
+      gsap.set(hero, { zIndex: 10 });
+      if (featured) gsap.set(featured, { zIndex: 20 });
 
-        gsap.set(panel, { zIndex: 10 + index * 10 });
-
-        return ScrollTrigger.create({
-          trigger: panel,
-          start: () => getPanelPinStart(panel),
-          pin: true,
-          // Hero stacks without extra spacing; featured restores scroll room
-          // so sections below are not pulled under the pinned panel.
-          pinSpacing: isLastPanel,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          onLeave: isLastPanel
-            ? () => {
-                gsap.set(panel, { zIndex: "auto", clearProps: "transform" });
-              }
-            : undefined,
-          onLeaveBack: isLastPanel
-            ? () => {
-                gsap.set(panel, { zIndex: 20 });
-              }
-            : undefined,
-        });
+      // Only pin the hero so it stacks over featured work. Featured scrolls
+      // naturally into the sections below without a pin-spacer gap.
+      const trigger = ScrollTrigger.create({
+        trigger: hero,
+        start: () => getPanelPinStart(hero),
+        pin: true,
+        pinSpacing: false,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
       });
 
       const refresh = () => ScrollTrigger.refresh();
@@ -61,7 +47,7 @@ export function HomePanels() {
       return () => {
         window.removeEventListener("load", refresh);
         window.removeEventListener("resize", refresh);
-        triggers.forEach((trigger) => trigger.kill());
+        trigger.kill();
       };
     },
     { scope: containerRef, dependencies: [reducedMotion, lenis] },

@@ -11,7 +11,7 @@ type CtaBannerProps = {
 export function CtaBanner({
   headline,
   subtext,
-  ctaLabel = "Let's Talk",
+  ctaLabel = "Message Us",
   ctaHref = "/contact",
 }: CtaBannerProps) {
   return (
@@ -30,9 +30,9 @@ export function CtaBanner({
               {subtext}
             </p>
           )}
-          <ButtonLink href={ctaHref} variant="cta" className="mt-10">
+          {/* <ButtonLink href={ctaHref} variant="cta" className="mt-10">
             {ctaLabel}
-          </ButtonLink>
+          </ButtonLink> */}
         </Reveal>
       </div>
     </section>

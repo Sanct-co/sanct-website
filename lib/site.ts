@@ -3,15 +3,22 @@ export const navLinks = [
   { href: "/work", label: "Work" },
   { href: "/about", label: "About" },
   { href: "/services", label: "Services" },
-  { href: "/contact", label: "Contact" },
+  { href: "/#contact", label: "Contact" },
 ] as const;
 
 export const contact = {
   phone: "0968 467 0926",
   phoneHref: "tel:+639684670926",
   facebook: "https://www.facebook.com/profile.php?id=61589366583515",
-  location: "Lower Langcangan, Oroquieta City, Philippines, 7207",
 } as const;
+
+export const socialLinks = [
+  {
+    label: "Facebook",
+    href: contact.facebook,
+    icon: "facebook",
+  },
+] as const;
 
 export const site = {
   name: "Sanct",

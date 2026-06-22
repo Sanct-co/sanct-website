@@ -15,15 +15,20 @@ export function ServicesSnapshot() {
         </h2>
       </Reveal>
 
-      <div className="mt-14 grid gap-8 sm:grid-cols-2">
+      <div className="mt-14 divide-y divide-border-dark lg:mt-16">
         {services.map((service, i) => (
           <Reveal key={service.id} delay={i * 0.08}>
-            <div className="rounded-card border border-border-dark bg-white/5 p-7 backdrop-blur-sm">
-              <h3 className="font-display text-xl font-bold">{service.name}</h3>
-              <p className="mt-3 text-base leading-relaxed text-text-secondary">
+            <article className="group grid gap-4 py-8 first:pt-0 last:pb-0 sm:grid-cols-[3.5rem_minmax(0,1fr)] sm:gap-8 lg:grid-cols-[4rem_minmax(0,1.2fr)_minmax(0,2fr)] lg:items-baseline lg:gap-12 lg:py-10">
+              <span className="font-display text-2xl font-extrabold text-white/15 transition-colors duration-300 group-hover:text-lilac/40">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="font-display text-xl font-bold leading-snug md:text-2xl">
+                {service.name}
+              </h3>
+              <p className="text-base leading-relaxed text-text-secondary sm:col-span-2 lg:col-span-1">
                 {service.description}
               </p>
-            </div>
+            </article>
           </Reveal>
         ))}
       </div>

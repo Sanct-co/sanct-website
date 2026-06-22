@@ -1,12 +1,171 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ButtonLink } from "@/components/ui/button";
 import { BrandMarquee } from "@/components/home/brand-marquee";
 import { EASE_OUT, gsap, useGSAP } from "@/lib/gsap";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
+
+const CODE_LINES: Array<{ tokens: Array<{ text: string; color: string }> }> = [
+  {
+    tokens: [
+      { text: "import", color: "#c792ea" },
+      { text: " { ", color: "#cdd3de" },
+      { text: "createClient", color: "#82aaff" },
+      { text: " } ", color: "#cdd3de" },
+      { text: "from", color: "#c792ea" },
+      { text: ' "@sanct/sdk"', color: "#c3e88d" },
+    ],
+  },
+  { tokens: [] },
+  {
+    tokens: [
+      { text: "const", color: "#c792ea" },
+      { text: " app ", color: "#cdd3de" },
+      { text: "=", color: "#89ddff" },
+      { text: " createClient({", color: "#cdd3de" },
+    ],
+  },
+  {
+    tokens: [
+      { text: "  simplicity", color: "#f07178" },
+      { text: ": ", color: "#89ddff" },
+      { text: "true", color: "#ff9cac" },
+      { text: ",", color: "#cdd3de" },
+    ],
+  },
+  {
+    tokens: [
+      { text: "  complexity", color: "#f07178" },
+      { text: ": ", color: "#89ddff" },
+      { text: "0", color: "#f78c6c" },
+      { text: ",", color: "#cdd3de" },
+    ],
+  },
+  {
+    tokens: [
+      { text: "  focus", color: "#f07178" },
+      { text: ": ", color: "#89ddff" },
+      { text: '"what matters"', color: "#c3e88d" },
+      { text: ",", color: "#cdd3de" },
+    ],
+  },
+  { tokens: [{ text: "})", color: "#cdd3de" }] },
+  { tokens: [] },
+  { tokens: [{ text: "// Ship faster. Think clearer.", color: "#546e7a" }] },
+  {
+    tokens: [
+      { text: "app", color: "#82aaff" },
+      { text: ".", color: "#cdd3de" },
+      { text: "launch", color: "#82aaff" },
+      { text: "()", color: "#cdd3de" },
+    ],
+  },
+];
+
+function HeroCodeAnimation() {
+  const [lineCount, setLineCount] = useState(0);
+  const [cursorOn, setCursorOn] = useState(true);
+  const [showBadges, setShowBadges] = useState(false);
+
+  useEffect(() => {
+    if (lineCount < CODE_LINES.length) {
+      const delay = lineCount === 0 ? 600 : 200;
+      const t = setTimeout(() => setLineCount((n) => n + 1), delay);
+      return () => clearTimeout(t);
+    }
+    const t = setTimeout(() => setShowBadges(true), 500);
+    return () => clearTimeout(t);
+  }, [lineCount]);
+
+  useEffect(() => {
+    if (!showBadges) return;
+    const t = setTimeout(() => {
+      setShowBadges(false);
+      setLineCount(0);
+    }, 3500);
+    return () => clearTimeout(t);
+  }, [showBadges]);
+
+  useEffect(() => {
+    const i = setInterval(() => setCursorOn((v) => !v), 530);
+    return () => clearInterval(i);
+  }, []);
+
+  return (
+    <div className="absolute inset-0 flex flex-col overflow-hidden bg-[#0d0f16] font-mono">
+      {/* title bar */}
+      <div className="flex shrink-0 items-center gap-2 border-b border-white/[0.06] bg-[#13151f] px-4 py-2.5">
+        <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
+        <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
+        <span className="h-3 w-3 rounded-full bg-[#28c840]" />
+        <div className="ml-3 flex gap-0.5 text-xs">
+          <span className="rounded-t bg-[#0d0f16] px-3 py-1 text-white/70">
+            index.ts
+          </span>
+          <span className="px-3 py-1 text-white/25">api.ts</span>
+          <span className="px-3 py-1 text-white/25">deploy.yml</span>
+        </div>
+      </div>
+
+      {/* code area */}
+      <div className="flex-1 overflow-hidden p-5 text-sm leading-7">
+        {CODE_LINES.slice(0, lineCount).map((line, i) => (
+          <div key={i} className="flex items-start">
+            <span className="mr-5 mt-0.5 w-5 shrink-0 select-none text-right text-xs text-white/20">
+              {i + 1}
+            </span>
+            <span>
+              {line.tokens.map((tok, j) => (
+                <span key={j} style={{ color: tok.color }}>
+                  {tok.text}
+                </span>
+              ))}
+              {i === lineCount - 1 && (
+                <span
+                  style={{
+                    color: "#528bff",
+                    opacity: cursorOn ? 1 : 0,
+                    transition: "opacity 75ms",
+                  }}
+                >
+                  |
+                </span>
+              )}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* status bar */}
+      <div className="flex shrink-0 items-center gap-4 bg-[#2C1FA8] px-4 py-1.5 text-xs text-white/70">
+        <span className="text-white/90">TypeScript</span>
+        <span>● Ready</span>
+        <span className="ml-auto">Ln {lineCount}&nbsp;&nbsp;Col 1</span>
+      </div>
+
+      {/* result badges */}
+      <div
+        className="absolute bottom-10 right-4 flex flex-col items-end gap-2"
+        style={{
+          opacity: showBadges ? 1 : 0,
+          transform: showBadges ? "translateY(0)" : "translateY(8px)",
+          transition: "opacity 0.4s ease, transform 0.4s ease",
+        }}
+      >
+        <div className="flex items-center gap-2 rounded-lg border border-white/[0.08] bg-[#1a1d2e] px-3 py-2 text-xs text-white shadow-xl">
+          <span style={{ color: "#28c840" }}>✓</span>
+          Build successful &middot; 2.3s
+        </div>
+        <div className="flex items-center gap-2 rounded-lg border border-white/[0.08] bg-[#1a1d2e] px-3 py-2 text-xs text-white shadow-xl">
+          <span style={{ color: "#82aaff" }}>↑</span>
+          Deployed to production
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function HeroWingLeft() {
   return (
@@ -161,14 +320,7 @@ export function HeroSection() {
             ref={imageRef}
             className="relative z-10 mx-auto aspect-[16/10] max-w-3xl overflow-hidden rounded-card shadow-2xl shadow-sanct-indigo/20"
           >
-            <Image
-              src="/company-pic.jpg"
-              alt="Team collaborating on software design"
-              fill
-              className="object-cover grayscale"
-              priority
-              sizes="(max-width: 768px) 100vw, 896px"
-            />
+            <HeroCodeAnimation />
           </div>
         </div>
 

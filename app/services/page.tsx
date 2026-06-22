@@ -14,7 +14,7 @@ export default function ServicesPage() {
   return (
     <>
       <ServicesIntro />
-      <Section background="ghost">
+      <Section background="white">
         <ServiceList />
       </Section>
       <CtaBanner

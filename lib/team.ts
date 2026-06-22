@@ -1,32 +1,29 @@
 export type TeamMember = {
   name: string;
   title: string;
-  bio: string;
-  initials: string;
-  gradient: string;
+  image: string;
 };
 
 export const team: TeamMember[] = [
   {
-    name: "Marco Reyes",
-    title: "Founder & Lead Engineer",
-    bio: "Ten years building software across fintech and logistics. Believes the best code is the code you don't have to think about.",
-    initials: "MR",
-    gradient: "from-[#2C1FA8] to-[#A09CF5]",
+    name: "Deo Talip",
+    title: "Founder & CEO",
+    image: "/profiles/deo.jpg",
   },
   {
-    name: "Isabel Santos",
-    title: "Product Designer",
-    bio: "Former agency designer who got tired of beautiful interfaces nobody could use. Now obsessed with making complex things feel simple.",
-    initials: "IS",
-    gradient: "from-[#3D35B0] to-[#111015]",
+    name: "KC Ajero",
+    title: "CTO",
+    image: "/profiles/kc.png",
   },
   {
-    name: "Daniel Cruz",
-    title: "Full-Stack Developer",
-    bio: "Ships fast without cutting corners. Specializes in React, Node, and the unglamorous backend work that keeps products running.",
-    initials: "DC",
-    gradient: "from-[#111015] to-[#2C1FA8]",
+    name: "Tristan James Tolentino",
+    title: "DevOps & Security Analyst",
+    image: "/profiles/tristan.png",
+  },
+  {
+    name: "Jether Omictin",
+    title: "Senior Software Engineer",
+    image: "/profiles/jether.png",
   },
 ];
 

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { team, values } from "@/lib/team";
@@ -27,7 +29,7 @@ export function StorySection() {
         <Reveal delay={0.1}>
           <div className="space-y-5 text-lg leading-relaxed text-on-light-muted">
             <p>
-              Sanct was founded in Oroquieta City, Philippines — not because it
+              Sanct was founded in Philippines — not because it
               was trendy, but because it&apos;s home. We saw local businesses
               struggling with software that was either too expensive, too
               complicated, or simply not built for how people here actually work.
@@ -47,6 +49,16 @@ export function StorySection() {
           </div>
         </Reveal>
       </div>
+      <Reveal delay={0.2}>
+        <Image
+          src="/company-pic2.jpg"
+          alt="Sanct team"
+          width={0}
+          height={0}
+          sizes="100vw"
+          className="mt-14 w-full h-auto rounded-2xl mx-auto"
+        />
+      </Reveal>
     </Section>
   );
 }
@@ -91,23 +103,23 @@ export function TeamSection() {
           The people behind Sanct.
         </h2>
       </Reveal>
-      <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         {team.map((member, i) => (
           <Reveal key={member.name} delay={i * 0.1}>
             <div className="text-center">
-              <div
-                className={`mx-auto flex h-28 w-28 items-center justify-center rounded-full bg-gradient-to-br ${member.gradient} font-display text-2xl font-extrabold text-white`}
-                aria-hidden="true"
-              >
-                {member.initials}
+              <div className="relative mx-auto h-28 w-28 overflow-hidden rounded-full">
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  fill
+                  className="object-cover"
+                  sizes="112px"
+                />
               </div>
               <h3 className="mt-5 font-display text-xl font-bold">
                 {member.name}
               </h3>
               <p className="text-base text-lilac">{member.title}</p>
-              <p className="mt-4 text-base leading-relaxed text-on-light-muted">
-                {member.bio}
-              </p>
             </div>
           </Reveal>
         ))}

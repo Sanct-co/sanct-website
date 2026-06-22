@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { SocialLinks } from "@/components/ui/social-links";
 import { contact, navLinks, site } from "@/lib/site";
 
 export function Footer() {
@@ -58,26 +59,14 @@ export function Footer() {
                   {contact.phone}
                 </a>
               </li>
-              <li>
-                <a
-                  href={contact.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-colors duration-150 ease-out hover:text-lilac focus-visible:text-lilac"
-                >
-                  Facebook
-                </a>
-              </li>
             </ul>
           </div>
 
           <div>
             <h2 className="text-sm font-bold uppercase tracking-[0.1em] text-lilac">
-              Location
+              Follow
             </h2>
-            <p className="mt-5 text-base leading-relaxed text-white/70">
-              {contact.location}
-            </p>
+            <SocialLinks variant="footer" />
           </div>
         </div>
 

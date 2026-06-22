@@ -17,9 +17,10 @@ export default function WorkPage() {
       <PageHero
         eyebrow="Portfolio"
         title="Work that earns its place."
-        description="Real projects for real businesses. Filter by category or dive into a case study."
+        description="Real projects for real businesses. Dive into a case study to see how we work."
+        background="white"
       />
-      <Section background="ghost">
+      <Section background="white">
         <ProjectGrid />
       </Section>
       <CtaBanner

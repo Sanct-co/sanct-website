@@ -7,6 +7,12 @@ type PageHeroProps = {
   description?: string;
   children?: ReactNode;
   dark?: boolean;
+  background?: "ghost" | "white";
+};
+
+const lightBackgrounds = {
+  ghost: "bg-ghost-indigo text-near-black",
+  white: "bg-white text-near-black",
 };
 
 export function PageHero({
@@ -15,10 +21,11 @@ export function PageHero({
   description,
   children,
   dark = false,
+  background = "ghost",
 }: PageHeroProps) {
   return (
     <section
-      className={`py-(--spacing-section-y) ${dark ? "bg-near-black text-white" : "bg-ghost-indigo text-near-black"}`}
+      className={`py-(--spacing-section-y) ${dark ? "bg-near-black text-white" : lightBackgrounds[background]}`}
     >
       <div className="mx-auto max-w-(--max-width-container) px-(--spacing-section-x)">
         <Reveal>

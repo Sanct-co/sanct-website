@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ButtonLink } from "@/components/ui/button";
 import { Reveal } from "@/components/ui/reveal";
@@ -26,11 +27,24 @@ export function CaseStudyContent({
             </p>
           </Reveal>
           <Reveal delay={0.1}>
-            <div
-              className={`mt-12 aspect-[16/9] rounded-card bg-gradient-to-br ${project.coverGradient}`}
-              role="img"
-              aria-label={`${project.title} hero visual`}
-            />
+            <div className="relative mt-12 aspect-[16/9] overflow-hidden rounded-card border border-border-dark">
+              {project.coverImage ? (
+                <Image
+                  src={project.coverImage}
+                  alt={`${project.title} hero visual`}
+                  fill
+                  className="object-cover object-top"
+                  sizes="(max-width: 1400px) 100vw, 1400px"
+                  priority
+                />
+              ) : (
+                <div
+                  className={`h-full w-full bg-gradient-to-br ${project.coverGradient}`}
+                  role="img"
+                  aria-label={`${project.title} hero visual`}
+                />
+              )}
+            </div>
           </Reveal>
         </div>
       </section>

@@ -21,14 +21,6 @@ export type Project = {
   technologies: string[];
 };
 
-export const projectCategories: Array<ProjectCategory | "All"> = [
-  "All",
-  "Web App",
-  "Mobile",
-  "Branding",
-  "Internal Tools",
-];
-
 export const projects: Project[] = [
   {
     slug: "depedmps",
@@ -68,78 +60,6 @@ export const projects: Project[] = [
     outcome:
       "Farmers get a live view of pond conditions and health signals in one dashboard, reducing guesswork and supporting earlier, more confident decisions.",
     technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
-  },
-  {
-    slug: "retailflow",
-    title: "RetailFlow",
-    client: "MetroMart PH",
-    industry: "Retail",
-    category: "Web App",
-    description:
-      "Inventory and sales dashboard that replaced three spreadsheets with one clear view.",
-    featured: false,
-    coverGradient: "from-[#2C1FA8] to-[#A09CF5]",
-    challenge:
-      "MetroMart was running inventory, sales, and supplier orders across disconnected spreadsheets. Staff spent hours reconciling numbers instead of serving customers.",
-    approach:
-      "We mapped every workflow on the ground in Oroquieta before writing a line of code. The interface mirrors how store managers already think — aisle by aisle, shift by shift — with real-time sync across branches.",
-    outcome:
-      "Stock reconciliation time dropped from 4 hours to 20 minutes per branch. Managers now spot low-stock items before they become lost sales.",
-    technologies: ["Next.js", "PostgreSQL", "Tailwind CSS", "Vercel"],
-  },
-  {
-    slug: "fieldtrack",
-    title: "FieldTrack",
-    client: "SwiftLogistics",
-    industry: "Logistics",
-    category: "Mobile",
-    description:
-      "Offline-first delivery app for riders navigating patchy connectivity in rural Mindanao.",
-    featured: false,
-    coverGradient: "from-[#111015] to-[#3D35B0]",
-    challenge:
-      "Delivery riders lost hours each week when connectivity dropped mid-route. Paper logs created billing disputes and angry customers.",
-    approach:
-      "We built an offline-first mobile app that queues updates locally and syncs when signal returns. GPS tracking, proof-of-delivery photos, and customer signatures work without a data connection.",
-    outcome:
-      "On-time delivery rate improved by 28%. Billing disputes fell to near zero within the first quarter after launch.",
-    technologies: ["React Native", "SQLite", "Node.js", "AWS"],
-  },
-  {
-    slug: "brandkit",
-    title: "BrandKit",
-    client: "Haven Co.",
-    industry: "Hospitality",
-    category: "Branding",
-    description:
-      "Complete brand identity and digital presence for a boutique resort launching in Siargao.",
-    featured: false,
-    coverGradient: "from-[#A09CF5] to-[#F5F4FF]",
-    challenge:
-      "Haven Co. needed a cohesive brand before opening — logo, color system, website, and booking flow — all within a six-week deadline.",
-    approach:
-      "We started with the guest experience, not the logo. Every design decision — typography, photography direction, booking UX — reinforced the feeling of arriving somewhere unhurried.",
-    outcome:
-      "The resort opened with a fully booked first month. Direct bookings through the site accounted for 60% of reservations, reducing OTA commission costs.",
-    technologies: ["Figma", "Next.js", "Sanity CMS", "Stripe"],
-  },
-  {
-    slug: "opsdesk",
-    title: "OpsDesk",
-    client: "AgriSource",
-    industry: "Agriculture",
-    category: "Internal Tools",
-    description:
-      "Internal operations hub connecting procurement, warehouse, and field teams in one place.",
-    featured: false,
-    coverGradient: "from-[#3D35B0] to-[#111015]",
-    challenge:
-      "AgriSource's procurement, warehouse, and field teams used separate tools that never talked to each other. Orders got lost. Shipments arrived late.",
-    approach:
-      "We built a single internal dashboard with role-based views. Procurement sees supplier pipelines. Warehouse sees incoming stock. Field teams see what's available at each depot — updated in real time.",
-    outcome:
-      "Order processing time cut by 45%. The operations team eliminated two redundant software subscriptions in the first month.",
-    technologies: ["React", "Supabase", "TypeScript", "Railway"],
   },
 ];
 

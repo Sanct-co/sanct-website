@@ -184,7 +184,7 @@ export function Header() {
           {navLinks.map((link) => (
             <NavLink key={link.href} href={link.href} label={link.label} />
           ))}
-          <ButtonLink href="/contact" variant="primary" className="header-nav-item ml-4">
+          <ButtonLink href="/#contact" variant="primary" className="header-nav-item ml-4">
             Let&apos;s Talk
           </ButtonLink>
         </nav>
@@ -248,7 +248,7 @@ export function Header() {
             />
           ))}
           <ButtonLink
-            href="/contact"
+            href="/#contact"
             variant="primary"
             className="mt-3 w-full"
             onClick={() => setMenuOpen(false)}
