@@ -1,8 +1,46 @@
+"use client";
+
+import { useRef } from "react";
+import { gsap, useGSAP } from "@/lib/gsap";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { Tag } from "@/components/ui/tag";
 
+const QUOTE_WORDS =
+  "Sanct didn’t just build us software, they understood how our stores actually run. The dashboard feels like it was designed by someone who’s worked a shift on the floor.".split(
+    " ",
+  );
+
 export function SocialProof() {
+  const quoteRef = useRef<HTMLParagraphElement>(null);
+  const reducedMotion = useReducedMotion();
+
+  useGSAP(
+    () => {
+      if (reducedMotion) return;
+      const words = quoteRef.current?.querySelectorAll<HTMLElement>("[data-quote-word]");
+      if (!words?.length) return;
+
+      gsap.fromTo(
+        words,
+        { color: "rgba(17,16,31,0.15)" },
+        {
+          color: "rgba(17,16,31,1)",
+          stagger: 0.6,
+          ease: "none",
+          scrollTrigger: {
+            trigger: quoteRef.current,
+            start: "top 80%",
+            end: "bottom 25%",
+            scrub: 1.2,
+          },
+        },
+      );
+    },
+    { scope: quoteRef, dependencies: [reducedMotion] },
+  );
+
   return (
     <Section background="ghost">
       <Reveal>
@@ -14,25 +52,33 @@ export function SocialProof() {
         </div>
       </Reveal>
 
-      <Reveal delay={0.1}>
-        <blockquote className="mx-auto max-w-5xl text-center">
-          <p className="font-display text-4xl font-extrabold leading-[1.1] tracking-[-0.02em] text-near-black md:text-5xl lg:text-6xl">
-            &ldquo;Sanct didn&apos;t just build us software — they understood
-            how our stores actually run. The dashboard feels like it was designed
-            by someone who&apos;s worked a shift on the floor.&rdquo;
-          </p>
-          <footer className="mt-10 md:mt-12">
-            <cite className="not-italic">
-              <span className="block text-lg font-bold text-near-black md:text-xl">
-                Elena Morales
-              </span>
-              <span className="mt-1 block text-base text-on-light-muted md:text-lg">
-                Operations Director, MetroMart PH
-              </span>
-            </cite>
-          </footer>
-        </blockquote>
-      </Reveal>
+      <blockquote className="mx-auto max-w-5xl text-center">
+        <p
+          ref={quoteRef}
+          suppressHydrationWarning
+          className={`font-display text-4xl font-extrabold leading-[1.1] tracking-[-0.02em] md:text-5xl lg:text-6xl${reducedMotion ? " text-near-black" : ""}`}
+          style={reducedMotion ? undefined : { color: "rgba(17,16,31,0.15)" }}
+        >
+          &ldquo;
+          {QUOTE_WORDS.map((word, i) => (
+            <span key={i}>
+              <span data-quote-word="">{word}</span>
+              {i < QUOTE_WORDS.length - 1 && " "}
+            </span>
+          ))}
+          &rdquo;
+        </p>
+        <footer className="mt-10 md:mt-12">
+          <cite className="not-italic">
+            <span className="block text-lg font-bold text-near-black md:text-xl">
+              Elena Morales
+            </span>
+            <span className="mt-1 block text-base text-on-light-muted md:text-lg">
+              Operations Director, MetroMart PH
+            </span>
+          </cite>
+        </footer>
+      </blockquote>
     </Section>
   );
 }

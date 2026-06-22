@@ -81,6 +81,16 @@ export function Header() {
 
       const navItems = nav.querySelectorAll(".header-nav-item");
 
+      const showHeaderElements = () => {
+        gsap.set(header, { y: 0, clearProps: "transform" });
+        gsap.set([logo, ...navItems, menuButton], {
+          autoAlpha: 1,
+          x: 0,
+          y: 0,
+          clearProps: "opacity,visibility,transform",
+        });
+      };
+
       const setScrolledState = (scrolled: boolean) => {
         if (isScrolledRef.current === scrolled) return;
         isScrolledRef.current = scrolled;
@@ -103,44 +113,50 @@ export function Header() {
         });
       };
 
-      if (reducedMotion) {
-        gsap.set(border, { scaleX: 0, opacity: 0, transformOrigin: "left center" });
-        ScrollTrigger.create({
-          start: SCROLL_THRESHOLD,
-          end: "max",
-          onEnter: () => setScrolledState(true),
-          onLeaveBack: () => setScrolledState(false),
-        });
-        return;
-      }
-
-      gsap.set(header, {
-        y: -72,
-        backgroundColor: "#ffffff",
-        boxShadow: "0 0 0 rgba(0, 0, 0, 0)",
-      });
-      gsap.set(logo, { autoAlpha: 0, x: -20 });
-      gsap.set(navItems, { autoAlpha: 0, y: -14 });
-      gsap.set(menuButton, { autoAlpha: 0, y: -10 });
       gsap.set(border, { scaleX: 0, opacity: 0, transformOrigin: "left center" });
 
-      const openTimeline = gsap.timeline({ defaults: { ease: EASE_OUT } });
-
-      openTimeline
-        .to(header, { y: 0, duration: 0.75 })
-        .to(logo, { autoAlpha: 1, x: 0, duration: 0.55 }, "-=0.45")
-        .to(navItems, { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.07 }, "-=0.4")
-        .to(menuButton, { autoAlpha: 1, y: 0, duration: 0.4 }, "-=0.35");
-
-      ScrollTrigger.create({
+      const scrollTrigger = ScrollTrigger.create({
         start: SCROLL_THRESHOLD,
         end: "max",
         onEnter: () => setScrolledState(true),
         onLeaveBack: () => setScrolledState(false),
       });
 
+      let openTimeline: gsap.core.Timeline | undefined;
+
+      if (reducedMotion) {
+        showHeaderElements();
+        gsap.set(header, {
+          backgroundColor: "#ffffff",
+          boxShadow: "0 0 0 rgba(0, 0, 0, 0)",
+        });
+      } else {
+        gsap.set(header, {
+          y: -72,
+          backgroundColor: "#ffffff",
+          boxShadow: "0 0 0 rgba(0, 0, 0, 0)",
+        });
+        gsap.set(logo, { autoAlpha: 0, x: -20 });
+        gsap.set(navItems, { autoAlpha: 0, y: -14 });
+        gsap.set(menuButton, { autoAlpha: 0, y: -10 });
+
+        openTimeline = gsap.timeline({
+          defaults: { ease: EASE_OUT },
+          onComplete: showHeaderElements,
+          onInterrupt: showHeaderElements,
+        });
+
+        openTimeline
+          .to(header, { y: 0, duration: 0.75 })
+          .to(logo, { autoAlpha: 1, x: 0, duration: 0.55 }, "-=0.45")
+          .to(navItems, { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.07 }, "-=0.4")
+          .to(menuButton, { autoAlpha: 1, y: 0, duration: 0.4 }, "-=0.35");
+      }
+
       return () => {
-        openTimeline.kill();
+        openTimeline?.kill();
+        scrollTrigger.kill();
+        showHeaderElements();
       };
     },
     { scope: headerRef, dependencies: [reducedMotion] },
@@ -192,7 +208,7 @@ export function Header() {
         <button
           ref={menuButtonRef}
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-input text-near-black transition-colors duration-150 ease-out hover:bg-ghost-indigo focus-visible:bg-ghost-indigo md:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-input text-near-black transition-colors duration-150 ease-out hover:bg-near-black/5 focus-visible:bg-near-black/5 md:hidden"
           aria-expanded={menuOpen}
           aria-controls={menuId}
           aria-label={menuOpen ? "Close menu" : "Open menu"}

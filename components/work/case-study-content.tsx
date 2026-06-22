@@ -83,7 +83,7 @@ export function CaseStudyContent({
                 {project.technologies.map((tech) => (
                   <li
                     key={tech}
-                    className="rounded-tag bg-ghost-indigo px-3 py-1.5 text-base font-bold text-sanct-indigo"
+                    className="rounded-tag bg-sanct-indigo/5 px-3 py-1.5 text-base font-bold text-sanct-indigo"
                   >
                     {tech}
                   </li>

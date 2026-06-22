@@ -7,7 +7,7 @@ import { createMetadata } from "@/lib/metadata";
 export const metadata = createMetadata({
   title: "Work",
   description:
-    "Selected projects and case studies from Sanct — web apps, mobile, branding, and internal tools.",
+    "Selected projects and case studies from Sanct: web apps, mobile, branding, and internal tools.",
   path: "/work",
 });
 

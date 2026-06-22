@@ -8,7 +8,7 @@ export const team: TeamMember[] = [
   {
     name: "Deo Talip",
     title: "Founder & CEO",
-    image: "/profiles/deo.jpg",
+    image: "/profiles/deo.png",
   },
   {
     name: "KC Ajero",
@@ -36,7 +36,7 @@ export const values = [
   {
     title: "Built for real people",
     description:
-      "We talk to the people who'll use the software — not just the people who sign the checks.",
+      "We talk to the people who'll use the software, not just the people who sign the checks.",
   },
   {
     title: "Honest craftsmanship",
@@ -46,6 +46,6 @@ export const values = [
   {
     title: "Rooted in the Philippines",
     description:
-      "We understand local constraints — connectivity, budgets, workflows — and build software that works here, not just in Silicon Valley demos.",
+      "We understand local constraints like connectivity, budgets, and workflows, and build software that works here, not just in Silicon Valley demos.",
   },
 ];

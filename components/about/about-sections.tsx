@@ -29,7 +29,7 @@ export function StorySection() {
         <Reveal delay={0.1}>
           <div className="space-y-5 text-lg leading-relaxed text-on-light-muted">
             <p>
-              Sanct was founded in Philippines — not because it
+              Sanct was founded in Philippines, not because it
               was trendy, but because it&apos;s home. We saw local businesses
               struggling with software that was either too expensive, too
               complicated, or simply not built for how people here actually work.
@@ -42,7 +42,7 @@ export function StorySection() {
             </p>
             <p>
               Today we work with clients across the Philippines and Southeast
-              Asia — from retail chains in Mindanao to hospitality brands in
+              Asia, from retail chains in Mindanao to hospitality brands in
               Siargao. Our roots keep us grounded. Our ambition keeps us
               reaching.
             </p>
@@ -130,10 +130,10 @@ export function TeamSection() {
 
 export function PhilippinesSection() {
   return (
-    <Section background="indigo">
+    <Section background="white">
       <Reveal>
-        <p className="max-w-3xl text-xl leading-relaxed text-text-secondary md:text-2xl">
-          Proudly based in Lower Langcangan, Oroquieta City — building software
+        <p className="max-w-3xl text-xl leading-relaxed text-on-light-muted md:text-2xl">
+          Proudly based in Philippines, building software
           for the Philippines and beyond. We understand local realities and
           build products that work in them.
         </p>

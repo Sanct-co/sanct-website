@@ -27,7 +27,7 @@ export default function ContactPage() {
             </h1>
             <p className="mt-5 max-w-2xl text-xl text-on-light-muted">
               Whether you have a project in mind or just want to explore
-              possibilities — we&apos;re here.
+              possibilities. We&apos;re here.
             </p>
           </Reveal>
         </div>

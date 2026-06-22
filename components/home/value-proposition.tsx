@@ -7,7 +7,7 @@ export function ValueProposition() {
       <Reveal>
         <p className="max-w-4xl font-display text-3xl font-extrabold leading-snug text-near-black md:text-4xl">
           Technology should disappear into the background. We design and build
-          software that removes friction — so your team can think about the work,
+          software that removes friction so your team can think about the work,
           not the workflow.
         </p>
       </Reveal>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ButtonLink } from "@/components/ui/button";
 import { BrandMarquee } from "@/components/home/brand-marquee";
 import { EASE_OUT, gsap, useGSAP } from "@/lib/gsap";
@@ -199,9 +199,30 @@ function HeroWingRight() {
   );
 }
 
+const HERO_WORDS = ["Software", "that", "strips", "away"];
+
+function WordMask({ children, className = "" }: { children: ReactNode; className?: string }) {
+  return (
+    <span
+      className={className}
+      style={{
+        display: "inline-block",
+        overflow: "hidden",
+        verticalAlign: "bottom",
+        paddingBottom: "0.08em",
+        marginBottom: "-0.08em",
+      }}
+    >
+      <span className="hero-word" style={{ display: "inline-block" }}>
+        {children}
+      </span>
+    </span>
+  );
+}
+
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
   const imageBlockRef = useRef<HTMLDivElement>(null);
   const leftWingRef = useRef<HTMLDivElement>(null);
   const rightWingRef = useRef<HTMLDivElement>(null);
@@ -215,55 +236,14 @@ export function HeroSection() {
 
       const tl = gsap.timeline({ defaults: { ease: EASE_OUT } });
 
-      tl.from(contentRef.current, {
-        autoAlpha: 0,
-        y: 24,
-        duration: 0.6,
-      })
-        .from(
-          imageBlockRef.current,
-          {
-            autoAlpha: 0,
-            y: 32,
-            duration: 0.7,
-          },
-          "-=0.25",
-        )
-        .from(
-          leftWingRef.current,
-          {
-            autoAlpha: 0,
-            x: -48,
-            duration: 0.9,
-          },
-          "-=0.55",
-        )
-        .from(
-          rightWingRef.current,
-          {
-            autoAlpha: 0,
-            x: 48,
-            duration: 0.9,
-          },
-          "<",
-        )
-        .from(
-          imageRef.current,
-          {
-            scale: 0.96,
-            duration: 0.8,
-          },
-          "-=0.7",
-        )
-        .from(
-          marqueeRef.current,
-          {
-            autoAlpha: 0,
-            y: 20,
-            duration: 0.6,
-          },
-          "-=0.35",
-        );
+      tl.from(".hero-word", { y: "110%", duration: 0.85, stagger: 0.07 })
+        .from(subtitleRef.current, { autoAlpha: 0, y: 20, duration: 0.6 }, "-=0.35")
+        .from(".hero-cta", { autoAlpha: 0, y: 16, duration: 0.5, stagger: 0.12 }, "-=0.3")
+        .from(imageBlockRef.current, { autoAlpha: 0, y: 32, duration: 0.7 }, "-=0.2")
+        .from(leftWingRef.current, { autoAlpha: 0, x: -48, duration: 0.9 }, "-=0.55")
+        .from(rightWingRef.current, { autoAlpha: 0, x: 48, duration: 0.9 }, "<")
+        .from(imageRef.current, { scale: 0.96, duration: 0.8 }, "-=0.7")
+        .from(marqueeRef.current, { autoAlpha: 0, y: 20, duration: 0.6 }, "-=0.35");
     },
     { scope: sectionRef, dependencies: [reducedMotion] },
   );
@@ -274,24 +254,34 @@ export function HeroSection() {
       className="relative overflow-hidden bg-white px-(--spacing-section-x) pb-20 pt-14 text-near-black md:pb-28 md:pt-20"
     >
       <div className="mx-auto w-full max-w-(--max-width-container)">
-        <div ref={contentRef} className="mx-auto max-w-4xl text-center">
+        <div className="mx-auto max-w-4xl text-center">
           <h1 className="font-display text-[clamp(2.75rem,7vw,5.25rem)] font-extrabold leading-[1.05] tracking-[-0.03em]">
-            Software that strips away{" "}
-            <span className="italic text-sanct-indigo">complexity.</span>
+            {HERO_WORDS.map((word) => (
+              <WordMask key={word}>
+                {word}
+              </WordMask>
+            ))}
+            {" "}
+            <WordMask>
+              <span className="italic text-sanct-indigo">complexity.</span>
+            </WordMask>
           </h1>
 
-          <p className="mx-auto mt-8 max-w-2xl text-lg font-normal leading-relaxed text-on-light-muted md:text-xl">
+          <p
+            ref={subtitleRef}
+            className="mx-auto mt-8 max-w-2xl text-lg font-normal leading-relaxed text-on-light-muted md:text-xl"
+          >
             We build intuitive products that give you mental space to focus on
-            what truly matters — not on the tools you use.
+            what truly matters, not on the tools you use.
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-5 sm:flex-row">
-            <ButtonLink href="/work" variant="primary">
+            <ButtonLink href="/work" variant="primary" className="hero-cta">
               See Our Work
             </ButtonLink>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 text-sm font-medium uppercase tracking-[0.08em] text-near-black transition-colors duration-150 ease-out hover:text-sanct-indigo"
+              className="hero-cta inline-flex items-center gap-2 text-sm font-medium uppercase tracking-[0.08em] text-near-black transition-colors duration-150 ease-out hover:text-sanct-indigo"
             >
               Let&apos;s Talk
               <span aria-hidden="true">→</span>

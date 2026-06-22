@@ -29,14 +29,14 @@ export const projects: Project[] = [
     industry: "Education",
     category: "Web App",
     description:
-      "A single workspace for encoding scores, managing sections, and reviewing performance across schools—aligned with how DepEd divisions and schools actually operate.",
+      "A single workspace for encoding scores, managing sections, and reviewing performance across schools, aligned with how DepEd divisions and schools actually operate.",
     featured: true,
     coverImage: "/projects/depedmps.png",
     coverGradient: "from-[#1a237e] to-[#3D35B0]",
     challenge:
       "Schools and division offices tracked Mean Percentage Scores across disconnected spreadsheets and paper forms, making it hard to compare performance or spot trends early.",
     approach:
-      "We built a single workspace shaped around how DepEd divisions and schools actually encode scores, manage sections, and review results—without fighting existing workflows.",
+      "We built a single workspace shaped around how DepEd divisions and schools actually encode scores, manage sections, and review results without fighting existing workflows.",
     outcome:
       "Teams can encode learner scores with clear section context and review division-wide performance from one place instead of reconciling multiple files.",
     technologies: ["Next.js", "Supabase", "TypeScript", "Tailwind CSS"],
@@ -56,7 +56,7 @@ export const projects: Project[] = [
     challenge:
       "Shrimp farmers relied on manual water testing and reactive interventions, often catching water quality issues only after stock health had already declined.",
     approach:
-      "We designed a monitoring platform that surfaces pH, temperature, oxygen, and salinity in real time—with clear thresholds and trends farmers can act on before problems spread.",
+      "We designed a monitoring platform that surfaces pH, temperature, oxygen, and salinity in real time, with clear thresholds and trends farmers can act on before problems spread.",
     outcome:
       "Farmers get a live view of pond conditions and health signals in one dashboard, reducing guesswork and supporting earlier, more confident decisions.",
     technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS"],

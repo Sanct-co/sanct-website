@@ -10,7 +10,7 @@ export const services: Service[] = [
     id: "custom-software",
     name: "Custom Software Development",
     description:
-      "We build web and mobile applications from the ground up — scoped to your actual workflows, not a template. Every feature earns its place.",
+      "We build web and mobile applications from the ground up, scoped to your actual workflows, not a template. Every feature earns its place.",
     idealClient:
       "Businesses ready to replace spreadsheets, legacy systems, or off-the-shelf tools that don't fit.",
   },
@@ -18,7 +18,7 @@ export const services: Service[] = [
     id: "product-design",
     name: "Product Design & UX",
     description:
-      "Interfaces that feel obvious the first time someone uses them. We design for clarity, not complexity — wireframes through to production-ready UI.",
+      "Interfaces that feel obvious the first time someone uses them. We design for clarity, not complexity, from wireframes through to production-ready UI.",
     idealClient:
       "Teams with a product vision who need design partners that prioritize simplicity.",
   },

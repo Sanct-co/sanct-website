@@ -11,7 +11,7 @@ import { createMetadata } from "@/lib/metadata";
 export const metadata = createMetadata({
   title: "About",
   description:
-    "Learn about Sanct — our mission, story, values, and the team building software that strips away complexity.",
+    "Learn about Sanct: our mission, story, values, and the team building software that strips away complexity.",
   path: "/about",
 });
 

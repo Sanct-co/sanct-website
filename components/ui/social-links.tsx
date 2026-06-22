@@ -25,7 +25,7 @@ export function SocialLinks({ variant = "footer" }: SocialLinksProps) {
             className={
               isFooter
                 ? "flex size-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/70 transition-colors duration-150 ease-out hover:border-lilac hover:bg-lilac/10 hover:text-lilac focus-visible:border-lilac focus-visible:text-lilac"
-                : "flex size-11 items-center justify-center rounded-full border border-border-light bg-ghost text-sanct-indigo transition-colors duration-150 ease-out hover:border-sanct-indigo hover:bg-sanct-indigo/5 focus-visible:border-sanct-indigo"
+                : "flex size-11 items-center justify-center rounded-full border border-border-light bg-white text-sanct-indigo transition-colors duration-150 ease-out hover:border-sanct-indigo hover:bg-sanct-indigo/5 focus-visible:border-sanct-indigo"
             }
           >
             <svg
