@@ -1,0 +1,244 @@
+{
+    "name": "Sanct Portfolio Design System",
+    "version": "1.0.0",
+    "description": "Color, typography, spacing, and component specification for the Sanct portfolio website.",
+  
+    "colors": {
+      "brand": {
+        "sanctIndigo": {
+          "hex": "#2C1FA8",
+          "role": "Primary brand color"
+        },
+        "indigoMid": {
+          "hex": "#3D35B0",
+          "role": "Cards, hover states"
+        },
+        "lilacAccent": {
+          "hex": "#A09CF5",
+          "role": "Highlights, CTAs, category labels"
+        },
+        "ghostIndigo": {
+          "hex": "#F5F4FF",
+          "role": "Light section backgrounds"
+        },
+        "nearBlack": {
+          "hex": "#111015",
+          "role": "Dark sections, footer"
+        },
+        "white": {
+          "hex": "#FFFFFF",
+          "role": "Text and CTAs on dark backgrounds"
+        }
+      },
+      "text": {
+        "primary": "#FFFFFF",
+        "secondary": "rgba(255,255,255,0.55)",
+        "muted": "rgba(255,255,255,0.30)",
+        "onLight": "#111015",
+        "onLightMuted": "#555360"
+      },
+      "ui": {
+        "borderDark": "rgba(255,255,255,0.12)",
+        "borderLight": "rgba(44,31,168,0.15)",
+        "overlayDim": "rgba(0,0,0,0.45)"
+      }
+    },
+  
+    "typography": {
+      "fonts": {
+        "display": {
+          "family": "Inter",
+          "weights": [900],
+          "usage": "Hero headlines, display moments"
+        },
+        "body": {
+          "family": "Space Grotesk",
+          "weights": [400, 700],
+          "usage": "Body copy, labels, navigation, buttons"
+        }
+      },
+      "scale": {
+        "display": {
+          "fontSize": "72–96px",
+          "fontWeight": 900,
+          "lineHeight": 1.0,
+          "fontFamily": "Inter",
+          "usage": "Full-width hero statements"
+        },
+        "h1": {
+          "fontSize": "48px",
+          "fontWeight": 900,
+          "lineHeight": 1.05,
+          "fontFamily": "Inter",
+          "usage": "Page-level headings"
+        },
+        "h2": {
+          "fontSize": "32px",
+          "fontWeight": 700,
+          "lineHeight": 1.1,
+          "fontFamily": "Inter",
+          "usage": "Section titles"
+        },
+        "h3": {
+          "fontSize": "22px",
+          "fontWeight": 700,
+          "lineHeight": 1.2,
+          "fontFamily": "Inter",
+          "usage": "Card titles, subsection headings"
+        },
+        "body": {
+          "fontSize": "16px",
+          "fontWeight": 400,
+          "lineHeight": 1.7,
+          "fontFamily": "Space Grotesk",
+          "usage": "General body copy"
+        },
+        "caption": {
+          "fontSize": "12px",
+          "fontWeight": 400,
+          "lineHeight": 1.5,
+          "fontFamily": "Space Grotesk",
+          "letterSpacing": "0.10em",
+          "textTransform": "uppercase",
+          "usage": "Metadata, tags, category labels"
+        }
+      }
+    },
+  
+    "spacing": {
+      "scale": {
+        "xs": "4px",
+        "sm": "8px",
+        "md": "16px",
+        "lg": "24px",
+        "xl": "32px",
+        "2xl": "48px",
+        "3xl": "64px",
+        "4xl": "96px"
+      },
+      "sectionPadding": {
+        "vertical": "96px",
+        "horizontal": "clamp(24px, 6vw, 120px)"
+      },
+      "containerMaxWidth": "1280px"
+    },
+  
+    "borderRadius": {
+      "none": "0px",
+      "tag": "4px",
+      "input": "8px",
+      "card": "14px",
+      "pill": "100px"
+    },
+  
+    "motion": {
+      "tokens": {
+        "micro": {
+          "duration": "150ms",
+          "easing": "ease-out",
+          "usage": "Hovers, button clicks"
+        },
+        "transition": {
+          "duration": "300ms",
+          "easing": "ease-in-out",
+          "usage": "Page section changes"
+        },
+        "reveal": {
+          "duration": "600ms",
+          "easing": "cubic-bezier(0.16, 1, 0.3, 1)",
+          "usage": "Scroll-triggered fade-ins"
+        }
+      }
+    },
+  
+    "components": {
+      "buttons": {
+        "primary": {
+          "background": "#2C1FA8",
+          "color": "#FFFFFF",
+          "borderRadius": "100px",
+          "padding": "10px 22px",
+          "fontWeight": 700,
+          "fontSize": "14px",
+          "fontFamily": "Space Grotesk"
+        },
+        "secondary": {
+          "background": "transparent",
+          "color": "#2C1FA8",
+          "border": "1.5px solid #2C1FA8",
+          "borderRadius": "100px",
+          "padding": "10px 22px",
+          "fontWeight": 700,
+          "fontSize": "14px",
+          "fontFamily": "Space Grotesk"
+        },
+        "dark": {
+          "background": "#111015",
+          "color": "#FFFFFF",
+          "borderRadius": "100px",
+          "padding": "10px 22px",
+          "fontWeight": 700,
+          "fontSize": "14px",
+          "fontFamily": "Space Grotesk"
+        },
+        "ghost": {
+          "background": "transparent",
+          "color": "rgba(255,255,255,0.7)",
+          "border": "1.5px solid rgba(255,255,255,0.30)",
+          "borderRadius": "100px",
+          "padding": "10px 22px",
+          "fontWeight": 700,
+          "fontSize": "14px",
+          "fontFamily": "Space Grotesk"
+        }
+      },
+      "cards": {
+        "default": {
+          "background": "#FFFFFF",
+          "borderRadius": "14px",
+          "border": "0.5px solid rgba(44,31,168,0.15)",
+          "padding": "24px"
+        },
+        "dark": {
+          "background": "#1A2030",
+          "borderRadius": "14px",
+          "border": "0.5px solid rgba(255,255,255,0.10)",
+          "padding": "24px"
+        }
+      }
+    },
+  
+    "pageStructure": {
+      "sections": [
+        {
+          "name": "Hero",
+          "background": "#FFFFFF",
+          "textColor": "#111015",
+          "notes": "White background with centered headline. Serif italic accent on key word. Indigo Mid CTA pill. Hero image with indigo wave shapes."
+        },
+        {
+          "name": "Work Grid",
+          "background": "#F5F4FF",
+          "textColor": "#111015",
+          "notes": "2-column card grid. White card bg, 14px radius. Project title in H3 Bold, category label in uppercase lilac (#A09CF5)."
+        },
+        {
+          "name": "About / Services",
+          "background": "#111015",
+          "textColor": "#FFFFFF",
+          "notes": "Dark section. Bold H2 in white, body copy in muted gray. Lilac accent (#A09CF5) for bullet markers or section dividers."
+        },
+        {
+          "name": "Contact / Footer",
+          "background": "#111015",
+          "textColor": "#FFFFFF",
+          "notes": "Dark CTA with lilac semicircle. Indigo pill CTA. Footer: near-black bg, small uppercase nav links, logo mark."
+        }
+      ]
+    },
+  
+    "signatureElement": {
+      "name": "Ghost Headline",
+      "description": "In the hero, the main headline's second line renders at 30% opacity (rgba(255,255,255,0.30)), creating a fading ghost effect. Bold and decisive in the first line, retreating in the second — communicating depth and restraint simultaneously."
+    }
+  }

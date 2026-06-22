@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+:root {
+  --sanct-indigo: #2c1fa8;
+  --indigo-mid: #3d35b0;
+  --lilac: #a09cf5;
+  --ghost-indigo: #f5f4ff;
+  --near-black: #111015;
+  --dark-surface: #1c1629;
+  --text-secondary: rgba(255, 255, 255, 0.55);
+  --text-muted: rgba(255, 255, 255, 0.3);
+  --text-on-light-muted: #555360;
+  --border-dark: rgba(255, 255, 255, 0.12);
+  --border-light: rgba(44, 31, 168, 0.15);
+  --section-padding-x: clamp(16px, 4vw, 56px);
+  --section-padding-y: clamp(56px, 7vw, 88px);
+  --max-width-container: 1400px;
+  --motion-micro: 150ms ease-out;
+  --motion-transition: 300ms ease-in-out;
+}
+
+@theme inline {
+  --color-sanct-indigo: var(--sanct-indigo);
+  --color-indigo-mid: var(--indigo-mid);
+  --color-lilac: var(--lilac);
+  --color-ghost-indigo: var(--ghost-indigo);
+  --color-near-black: var(--near-black);
+  --color-dark-surface: var(--dark-surface);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-on-light-muted: var(--text-on-light-muted);
+  --color-border-dark: var(--border-dark);
+  --color-border-light: var(--border-light);
+  --spacing-section-x: var(--section-padding-x);
+  --spacing-section-y: var(--section-padding-y);
+  --font-display: var(--font-plus-jakarta), system-ui, sans-serif;
+  --font-body: var(--font-plus-jakarta), system-ui, sans-serif;
+  --radius-tag: 4px;
+  --radius-input: 8px;
+  --radius-card: 16px;
+  --radius-pill: 100px;
+  --max-width-container: 1400px;
+}
+
+body {
+  background: var(--ghost-indigo);
+  color: var(--near-black);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--lilac);
+  outline-offset: 2px;
+}
