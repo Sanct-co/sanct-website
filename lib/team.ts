@@ -8,22 +8,22 @@ export const team: TeamMember[] = [
   {
     name: "Deo Talip",
     title: "Founder & CEO",
-    image: "/profiles/deo.png",
+    image: "/profiles/deo_profile.webp",
   },
   {
     name: "KC Ajero",
     title: "CTO",
-    image: "/profiles/kc.png",
+    image: "/profiles/kc_profile.webp",
   },
   {
     name: "Tristan James Tolentino",
     title: "DevOps & Security Analyst",
-    image: "/profiles/tristan.png",
+    image: "/profiles/tristan_profile.webp",
   },
   {
     name: "Jether Omictin",
     title: "Senior Software Engineer",
-    image: "/profiles/jether.png",
+    image: "/profiles/jeth_profile.webp",
   },
 ];
 

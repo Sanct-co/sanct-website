@@ -23,8 +23,8 @@ export const metadata: Metadata = {
   },
   description: site.tagline,
   icons: {
-    icon: "/sanct-logo.png",
-    apple: "/sanct-logo.png",
+    icon: "/sanct-fav.png",
+    apple: "/sanct-fav.png",
   },
   openGraph: {
     siteName: site.name,

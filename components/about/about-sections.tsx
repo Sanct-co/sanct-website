@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { ValueCard } from "@/components/about/value-card";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { team, values } from "@/lib/team";
@@ -29,10 +30,9 @@ export function StorySection() {
         <Reveal delay={0.1}>
           <div className="space-y-5 text-lg leading-relaxed text-on-light-muted">
             <p>
-              Sanct was founded in Philippines, not because it
-              was trendy, but because it&apos;s home. We saw local businesses
-              struggling with software that was either too expensive, too
-              complicated, or simply not built for how people here actually work.
+              Sanct started as a group of computer science students who kept
+              seeing the same problem, software that was either too expensive,
+              too complicated, or simply not built for how people actually work.
             </p>
             <p>
               We started Sanct with a simple conviction: technology should
@@ -77,14 +77,7 @@ export function ValuesSection() {
       <div className="mt-14 grid gap-8 sm:grid-cols-2">
         {values.map((value, i) => (
           <Reveal key={value.title} delay={i * 0.08}>
-            <div className="rounded-card border border-border-dark p-7">
-              <h3 className="font-display text-xl font-bold text-lilac">
-                {value.title}
-              </h3>
-              <p className="mt-4 text-base leading-relaxed text-text-secondary">
-                {value.description}
-              </p>
-            </div>
+            <ValueCard title={value.title} description={value.description} />
           </Reveal>
         ))}
       </div>
