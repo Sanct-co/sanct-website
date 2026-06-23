@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ScrollLink } from "@/components/ui/scroll-link";
 import { SocialLinks } from "@/components/ui/social-links";
 import { contact, navLinks, site } from "@/lib/site";
 
@@ -35,12 +36,12 @@ export function Footer() {
             <ul className="mt-5 space-y-3">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <Link
+                  <ScrollLink
                     href={link.href}
                     className="text-base text-white/70 transition-colors duration-150 ease-out hover:text-lilac focus-visible:text-lilac"
                   >
                     {link.label}
-                  </Link>
+                  </ScrollLink>
                 </li>
               ))}
             </ul>

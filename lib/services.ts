@@ -8,19 +8,19 @@ export type Service = {
 export const services: Service[] = [
   {
     id: "custom-software",
-    name: "Custom Software Development",
+    name: "Custom Software",
     description:
       "We build web and mobile applications from the ground up, scoped to your actual workflows, not a template. Every feature earns its place.",
     idealClient:
       "Businesses ready to replace spreadsheets, legacy systems, or off-the-shelf tools that don't fit.",
   },
   {
-    id: "product-design",
-    name: "Product Design & UX",
+    id: "ai-tools",
+    name: "AI Tools",
     description:
-      "Interfaces that feel obvious the first time someone uses them. We design for clarity, not complexity, from wireframes through to production-ready UI.",
+      "We build AI tools that help your team work smarter, not harder. From automations to data analysis, we help you leverage the power of AI to drive efficiency and innovation.",
     idealClient:
-      "Teams with a product vision who need design partners that prioritize simplicity.",
+      "Teams looking to automate repetitive tasks, analyze data, or improve productivity using AI.",
   },
   {
     id: "consulting",
@@ -31,11 +31,13 @@ export const services: Service[] = [
       "Founders and engineering leads navigating build-vs-buy, scaling, or modernization.",
   },
   {
-    id: "internal-tools",
-    name: "Internal Tools",
+    id: "product-design",
+    name: "Product Design & UX",
     description:
-      "Software your team actually wants to use. Dashboards, admin panels, and workflow tools that eliminate the busywork slowing people down.",
+      "Interfaces that feel obvious the first time someone uses them. We design for clarity, not complexity, from wireframes through to production-ready UI.",
     idealClient:
-      "Operations-heavy businesses where internal efficiency directly impacts the bottom line.",
+      "Teams with a product vision who need design partners that prioritize simplicity.",
   },
+  
+  
 ];

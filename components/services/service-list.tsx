@@ -58,7 +58,7 @@ export function ServiceList() {
 
 export function ServicesIntro() {
   return (
-    <Section background="dark">
+    <Section background="indigo">
       <Reveal>
         <p className="text-sm font-bold uppercase tracking-[0.1em] text-lilac">
           Services

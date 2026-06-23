@@ -2,6 +2,7 @@
 
 import { ReactLenis, useLenis } from "lenis/react";
 import { useEffect, type ReactNode } from "react";
+import { HashScrollSync } from "@/components/providers/hash-scroll-sync";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import "lenis/dist/lenis.css";
@@ -63,7 +64,12 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
   const reducedMotion = useReducedMotion();
 
   if (reducedMotion) {
-    return children;
+    return (
+      <>
+        <HashScrollSync />
+        {children}
+      </>
+    );
   }
 
   return (
@@ -78,6 +84,7 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
       }}
     >
       <GsapLenisSync />
+      <HashScrollSync />
       {children}
     </ReactLenis>
   );

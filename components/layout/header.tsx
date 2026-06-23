@@ -3,10 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState, type MouseEventHandler } from "react";
 import { ButtonLink } from "@/components/ui/button";
 import { EASE_OUT, gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
+import { getHashFromHref } from "@/lib/scroll-to-hash";
 import { navLinks } from "@/lib/site";
+import { useHashLink } from "@/lib/use-hash-link";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { useLenis } from "lenis/react";
 
@@ -24,12 +26,20 @@ function NavLink({
   onNavigate?: () => void;
 }) {
   const pathname = usePathname();
+  const { onHashLinkClick } = useHashLink();
   const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
+
+  const handleClick: MouseEventHandler<HTMLAnchorElement> = (event) => {
+    if (getHashFromHref(href)) {
+      onHashLinkClick(event, href);
+    }
+    onNavigate?.();
+  };
 
   return (
     <Link
       href={href}
-      onClick={onNavigate}
+      onClick={handleClick}
       className={`header-nav-item rounded-tag px-3 py-2 text-sm font-medium uppercase tracking-[0.08em] transition-colors duration-150 ease-out hover:text-sanct-indigo focus-visible:text-sanct-indigo ${
         isActive ? "text-sanct-indigo" : "text-on-light-muted"
       } ${className}`}

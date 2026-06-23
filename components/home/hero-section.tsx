@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type MouseEventHandler, type ReactNode } from "react";
 import { ButtonLink } from "@/components/ui/button";
 import { BrandMarquee } from "@/components/home/brand-marquee";
+import { ScrollLink } from "@/components/ui/scroll-link";
 import { EASE_OUT, gsap, useGSAP } from "@/lib/gsap";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 
@@ -485,13 +485,13 @@ export function HeroSection() {
             <ButtonLink href="/work" variant="primary" className="hero-cta">
               What We Built
             </ButtonLink>
-            <Link
-              href="/contact"
+            <ScrollLink
+              href="/#contact"
               className="hero-cta inline-flex items-center gap-2 text-sm font-medium uppercase tracking-[0.08em] text-near-black transition-colors duration-150 ease-out hover:text-sanct-indigo"
             >
               Work With Us
               <span aria-hidden="true">→</span>
-            </Link>
+            </ScrollLink>
           </div>
         </div>
 

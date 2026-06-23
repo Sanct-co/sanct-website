@@ -7,7 +7,7 @@ export const navLinks = [
 ] as const;
 
 export const contact = {
-  phone: "0968 467 0926",
+  phone: "+63 968 4670926",
   phoneHref: "tel:+639684670926",
   facebook: "https://www.facebook.com/profile.php?id=61589366583515",
 } as const;

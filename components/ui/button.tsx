@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { type ComponentPropsWithoutRef } from "react";
+import { type ComponentPropsWithoutRef, type MouseEventHandler } from "react";
+import { getHashFromHref } from "@/lib/scroll-to-hash";
 import { useButtonHover } from "@/lib/use-button-hover";
+import { useHashLink } from "@/lib/use-hash-link";
 
 type ButtonVariant = "primary" | "secondary" | "dark" | "ghost" | "cta";
 
@@ -63,13 +65,24 @@ export function ButtonLink({
   children,
   onMouseEnter,
   onMouseLeave,
+  href,
+  onClick,
   ...props
 }: ButtonLinkProps) {
   const { ref, ...hoverHandlers } = useButtonHover();
+  const { onHashLinkClick } = useHashLink();
+
+  const handleClick: MouseEventHandler<HTMLAnchorElement> = (event) => {
+    if (typeof href === "string" && getHashFromHref(href)) {
+      onHashLinkClick(event, href);
+    }
+    onClick?.(event);
+  };
 
   return (
     <Link
       ref={ref}
+      href={href}
       className={`${baseClass} ${variantClasses[variant]} ${className}`}
       onMouseEnter={(event) => {
         hoverHandlers.onMouseEnter();
@@ -79,6 +92,7 @@ export function ButtonLink({
         hoverHandlers.onMouseLeave();
         onMouseLeave?.(event);
       }}
+      onClick={handleClick}
       {...props}
     >
       {children}
