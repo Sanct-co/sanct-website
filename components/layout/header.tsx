@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState, type MouseEventHandler } from "react";
 import { ButtonLink } from "@/components/ui/button";
+import { useIntro } from "@/components/providers/intro-provider";
 import { EASE_OUT, gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { getHashFromHref } from "@/lib/scroll-to-hash";
 import { navLinks } from "@/lib/site";
@@ -54,6 +55,12 @@ export function Header() {
   const menuId = useId();
   const lenis = useLenis();
   const reducedMotion = useReducedMotion();
+  const { introComplete } = useIntro();
+  const headerMotionMode = !introComplete
+    ? "hold"
+    : reducedMotion
+      ? "static"
+      : "animate";
 
   const headerRef = useRef<HTMLElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
@@ -101,6 +108,17 @@ export function Header() {
         });
       };
 
+      const hideHeaderElements = () => {
+        gsap.set(header, {
+          y: -72,
+          backgroundColor: "#ffffff",
+          boxShadow: "0 0 0 rgba(0, 0, 0, 0)",
+        });
+        gsap.set(logo, { autoAlpha: 0, x: -20 });
+        gsap.set(navItems, { autoAlpha: 0, y: -14 });
+        gsap.set(menuButton, { autoAlpha: 0, y: -10 });
+      };
+
       const setScrolledState = (scrolled: boolean) => {
         if (isScrolledRef.current === scrolled) return;
         isScrolledRef.current = scrolled;
@@ -134,21 +152,21 @@ export function Header() {
 
       let openTimeline: gsap.core.Timeline | undefined;
 
-      if (reducedMotion) {
+      if (headerMotionMode === "hold") {
+        if (!reducedMotion) hideHeaderElements();
+        return () => {
+          scrollTrigger.kill();
+        };
+      }
+
+      if (headerMotionMode === "static") {
         showHeaderElements();
         gsap.set(header, {
           backgroundColor: "#ffffff",
           boxShadow: "0 0 0 rgba(0, 0, 0, 0)",
         });
       } else {
-        gsap.set(header, {
-          y: -72,
-          backgroundColor: "#ffffff",
-          boxShadow: "0 0 0 rgba(0, 0, 0, 0)",
-        });
-        gsap.set(logo, { autoAlpha: 0, x: -20 });
-        gsap.set(navItems, { autoAlpha: 0, y: -14 });
-        gsap.set(menuButton, { autoAlpha: 0, y: -10 });
+        hideHeaderElements();
 
         openTimeline = gsap.timeline({
           defaults: { ease: EASE_OUT },
@@ -169,7 +187,7 @@ export function Header() {
         showHeaderElements();
       };
     },
-    { scope: headerRef, dependencies: [reducedMotion] },
+    { scope: headerRef, dependencies: [headerMotionMode] },
   );
 
   return (

@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { IntroProvider } from "@/components/providers/intro-provider";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll-provider";
+import { INTRO_BOOT_SCRIPT } from "@/lib/intro";
 import { baseUrl } from "@/lib/metadata";
 import { site } from "@/lib/site";
 import "./globals.css";
@@ -39,13 +41,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${plusJakartaSans.variable} h-full antialiased`}>
+    <html
+      lang="en"
+      data-env={process.env.NODE_ENV}
+      className={`${plusJakartaSans.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
+      <head />
       <body className="flex min-h-full flex-col font-body">
-        <SmoothScrollProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </SmoothScrollProvider>
+        <div id="intro-fallback" aria-hidden="true" suppressHydrationWarning />
+        <script dangerouslySetInnerHTML={{ __html: INTRO_BOOT_SCRIPT }} />
+        <IntroProvider>
+          <SmoothScrollProvider>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </SmoothScrollProvider>
+        </IntroProvider>
       </body>
     </html>
   );

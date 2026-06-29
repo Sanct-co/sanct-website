@@ -15,10 +15,10 @@ export const services: Service[] = [
       "Businesses ready to replace spreadsheets, legacy systems, or off-the-shelf tools that don't fit.",
   },
   {
-    id: "ai-tools",
-    name: "AI Tools",
+    id: "ai-tools-and-automations",
+    name: "AI Tools and Automations",
     description:
-      "We build AI tools that help your team work smarter, not harder. From automations to data analysis, we help you leverage the power of AI to drive efficiency and innovation.",
+      "We build AI tools and automations that help your team work smarter, not harder. From automations to data analysis, we help you leverage the power of AI to drive efficiency and innovation.",
     idealClient:
       "Teams looking to automate repetitive tasks, analyze data, or improve productivity using AI.",
   },

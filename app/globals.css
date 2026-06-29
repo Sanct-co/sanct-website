@@ -56,3 +56,37 @@ body {
   outline: 2px solid var(--lilac);
   outline-offset: 2px;
 }
+
+#intro-fallback {
+  display: none;
+}
+
+#intro-fallback[data-active="true"] {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 199;
+  background: radial-gradient(
+    ellipse at center,
+    var(--indigo-mid) 0%,
+    var(--sanct-indigo) 52%,
+    #17124f 100%
+  );
+}
+
+html[data-intro="pending"] #site-root {
+  visibility: hidden;
+}
+
+html[data-intro="complete"] #site-root {
+  visibility: visible;
+}
+
+html[data-intro="pending"] body {
+  overflow: hidden;
+}
+
+html[data-intro="complete"] .intro-overlay,
+#intro-fallback[data-active="false"] {
+  display: none;
+}

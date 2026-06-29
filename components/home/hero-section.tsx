@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState, type MouseEventHandler, type ReactNode } from "react";
+import { useEffect, useRef, useState, Fragment, type MouseEventHandler, type ReactNode } from "react";
 import { ButtonLink } from "@/components/ui/button";
 import { BrandMarquee } from "@/components/home/brand-marquee";
 import { ScrollLink } from "@/components/ui/scroll-link";
+import { useIntro } from "@/components/providers/intro-provider";
 import { EASE_OUT, gsap, useGSAP } from "@/lib/gsap";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 
@@ -435,23 +436,57 @@ export function HeroSection() {
   const imageRef = useRef<HTMLDivElement>(null);
   const marqueeRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
+  const { introComplete, introWasPlayed } = useIntro();
+  const heroMotionMode = introWasPlayed && !introComplete
+    ? "prime"
+    : introComplete && !reducedMotion
+      ? "enter"
+      : "idle";
 
   useGSAP(
     () => {
-      if (reducedMotion) return;
+      if (heroMotionMode !== "prime") return;
 
-      const tl = gsap.timeline({ defaults: { ease: EASE_OUT } });
-
-      tl.from(".hero-word", { y: "110%", duration: 0.85, stagger: 0.07 })
-        .from(subtitleRef.current, { autoAlpha: 0, y: 20, duration: 0.6 }, "-=0.35")
-        .from(".hero-cta", { autoAlpha: 0, y: 16, duration: 0.5, stagger: 0.12 }, "-=0.3")
-        .from(imageBlockRef.current, { autoAlpha: 0, y: 32, duration: 0.7 }, "-=0.2")
-        .from(leftWingRef.current, { autoAlpha: 0, x: -48, duration: 0.9 }, "-=0.55")
-        .from(rightWingRef.current, { autoAlpha: 0, x: 48, duration: 0.9 }, "<")
-        .from(imageRef.current, { scale: 0.96, duration: 0.8 }, "-=0.7")
-        .from(marqueeRef.current, { autoAlpha: 0, y: 20, duration: 0.6 }, "-=0.35");
+      gsap.set(".hero-word", { y: "110%" });
+      gsap.set(subtitleRef.current, { autoAlpha: 0, y: 20 });
+      gsap.set(".hero-cta", { autoAlpha: 0, y: 16 });
+      gsap.set(imageBlockRef.current, { autoAlpha: 0, y: 32 });
+      gsap.set(leftWingRef.current, { autoAlpha: 0, x: -48 });
+      gsap.set(rightWingRef.current, { autoAlpha: 0, x: 48 });
+      gsap.set(imageRef.current, { scale: 0.96, autoAlpha: 1 });
+      gsap.set(marqueeRef.current, { autoAlpha: 0, y: 20 });
     },
-    { scope: sectionRef, dependencies: [reducedMotion] },
+    { scope: sectionRef, dependencies: [heroMotionMode] },
+  );
+
+  useGSAP(
+    () => {
+      if (heroMotionMode !== "enter") return;
+
+      const tl = gsap.timeline({
+        defaults: { ease: EASE_OUT },
+        onComplete: () => {
+          gsap.set(".hero-word", { clearProps: "transform" });
+          gsap.set(subtitleRef.current, { clearProps: "opacity,visibility,transform" });
+          gsap.set(".hero-cta", { clearProps: "opacity,visibility,transform" });
+          gsap.set(imageBlockRef.current, { clearProps: "opacity,visibility,transform" });
+          gsap.set(leftWingRef.current, { clearProps: "opacity,visibility,transform" });
+          gsap.set(rightWingRef.current, { clearProps: "opacity,visibility,transform" });
+          gsap.set(imageRef.current, { clearProps: "transform" });
+          gsap.set(marqueeRef.current, { clearProps: "opacity,visibility,transform" });
+        },
+      });
+
+      tl.to(".hero-word", { y: "0%", duration: 0.85, stagger: 0.07 })
+        .to(subtitleRef.current, { autoAlpha: 1, y: 0, duration: 0.6 }, "-=0.35")
+        .to(".hero-cta", { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.12 }, "-=0.3")
+        .to(imageBlockRef.current, { autoAlpha: 1, y: 0, duration: 0.7 }, "-=0.2")
+        .to(leftWingRef.current, { autoAlpha: 1, x: 0, duration: 0.9 }, "-=0.55")
+        .to(rightWingRef.current, { autoAlpha: 1, x: 0, duration: 0.9 }, "<")
+        .to(imageRef.current, { scale: 1, duration: 0.8 }, "-=0.7")
+        .to(marqueeRef.current, { autoAlpha: 1, y: 0, duration: 0.6 }, "-=0.35");
+    },
+    { scope: sectionRef, dependencies: [heroMotionMode] },
   );
 
   return (
@@ -462,10 +497,11 @@ export function HeroSection() {
       <div className="mx-auto w-full max-w-(--max-width-container)">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="font-display text-[clamp(2.75rem,7vw,5.25rem)] font-extrabold leading-[1.05] tracking-[-0.03em]">
-            {HERO_WORDS.map((word) => (
-              <WordMask key={word}>
-                {word}
-              </WordMask>
+            {HERO_WORDS.map((word, index) => (
+              <Fragment key={word}>
+                {index > 0 ? " " : null}
+                <WordMask>{word}</WordMask>
+              </Fragment>
             ))}
             {" "}
             <WordMask>
@@ -477,7 +513,7 @@ export function HeroSection() {
             ref={subtitleRef}
             className="mx-auto mt-8 max-w-2xl text-lg font-normal leading-relaxed text-on-light-muted md:text-xl"
           >
-            We build intuitive products that give you mental space to focus on
+            We build intuitive systems that give you mental space to focus on
             what truly matters, not on the tools you use.
           </p>
 
