@@ -18,7 +18,7 @@ export default function ContactPage() {
       <section className="bg-white py-(--spacing-section-y) text-near-black">
         <div className="mx-auto max-w-(--max-width-container) px-(--spacing-section-x)">
           <Reveal>
-            <p className="text-sm font-bold uppercase tracking-[0.1em] text-sanct-indigo">
+            <p className="font-terminal text-[12px] uppercase tracking-[0.08em] text-sanct-indigo">
               Contact
             </p>
             <h1 className="mt-3 font-display text-5xl font-extrabold leading-[1.05] tracking-[-0.03em] md:text-6xl">
@@ -43,7 +43,7 @@ export default function ContactPage() {
               <h2 className="font-display text-2xl font-bold">Direct contact</h2>
               <ul className="mt-8 space-y-6 text-base">
                 <li>
-                  <span className="block text-sm font-bold uppercase tracking-[0.1em] text-lilac">
+                  <span className="block font-terminal text-[12px] uppercase tracking-[0.08em] text-lilac">
                     Phone
                   </span>
                   <a
@@ -54,7 +54,7 @@ export default function ContactPage() {
                   </a>
                 </li>
                 <li>
-                  <span className="block text-sm font-bold uppercase tracking-[0.1em] text-lilac">
+                  <span className="block font-terminal text-[12px] uppercase tracking-[0.08em] text-lilac">
                     Social
                   </span>
                   <SocialLinks variant="contact" />

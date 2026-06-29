@@ -288,13 +288,13 @@ function HeroCodeAnimation() {
   }, []);
 
   return (
-    <div className="absolute inset-0 flex flex-col overflow-hidden bg-[#0d0f16] font-mono">
+    <div className="absolute inset-0 flex flex-col overflow-hidden bg-[#0d0f16] font-terminal">
       {/* title bar */}
       <div className="flex shrink-0 items-center gap-2 border-b border-white/[0.06] bg-[#13151f] px-4 py-2.5">
         <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
         <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
         <span className="h-3 w-3 rounded-full bg-[#28c840]" />
-        <div className="ml-3 flex gap-0.5 text-xs">
+        <div className="ml-3 flex gap-0.5 text-[12px]">
           {TABS.map((tab) => {
             const isActive = tab === activeTab;
             return (
@@ -316,10 +316,10 @@ function HeroCodeAnimation() {
       </div>
 
       {/* code area */}
-      <div className="flex-1 overflow-hidden p-5 text-sm leading-7">
+      <div className="flex-1 overflow-hidden p-5 text-[14px] leading-[22px]">
         {codeLines.slice(0, lineCount).map((line, i) => (
           <div key={`${activeTab}-${i}`} className="flex items-start">
-            <span className="mr-5 mt-0.5 w-5 shrink-0 select-none text-right text-xs text-white/20">
+            <span className="mr-5 mt-0.5 w-5 shrink-0 select-none text-right text-[12px] text-white/20">
               {i + 1}
             </span>
             <span>
@@ -345,7 +345,7 @@ function HeroCodeAnimation() {
       </div>
 
       {/* status bar */}
-      <div className="flex shrink-0 items-center gap-4 bg-[#2C1FA8] px-4 py-1.5 text-xs text-white/70">
+      <div className="flex shrink-0 items-center gap-4 bg-[#2C1FA8] px-4 py-1.5 text-[12px] text-white/70">
         <span className="text-white/90">{activeFile.language}</span>
         <span>● Ready</span>
         <span className="ml-auto">Ln {lineCount}&nbsp;&nbsp;Col 1</span>
@@ -363,7 +363,7 @@ function HeroCodeAnimation() {
         {activeFile.badges.map((badge) => (
           <div
             key={badge.text}
-            className="flex items-center gap-2 rounded-lg border border-white/[0.08] bg-[#1a1d2e] px-3 py-2 text-xs text-white shadow-xl"
+            className="flex items-center gap-2 rounded-lg border border-white/[0.08] bg-[#1a1d2e] px-3 py-2 text-[12px] text-white shadow-xl"
           >
             <span style={{ color: badge.iconColor }}>{badge.icon}</span>
             {badge.text}
@@ -407,6 +407,7 @@ function HeroWingRight() {
 }
 
 const HERO_WORDS = ["Software", "that", "strips", "away"];
+const COMPLEXITY_WORD = "complexity.";
 
 function WordMask({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
@@ -436,12 +437,51 @@ export function HeroSection() {
   const imageRef = useRef<HTMLDivElement>(null);
   const marqueeRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
+  const [typedChars, setTypedChars] = useState(COMPLEXITY_WORD.length);
+  const [showTypingCursor, setShowTypingCursor] = useState(false);
   const { introComplete, introWasPlayed } = useIntro();
   const heroMotionMode = introWasPlayed && !introComplete
     ? "prime"
     : introComplete && !reducedMotion
       ? "enter"
       : "idle";
+
+  useEffect(() => {
+    if (reducedMotion) {
+      setTypedChars(COMPLEXITY_WORD.length);
+      setShowTypingCursor(false);
+      return;
+    }
+
+    if (heroMotionMode === "prime") {
+      setTypedChars(0);
+      setShowTypingCursor(false);
+      return;
+    }
+
+    setTypedChars(0);
+    setShowTypingCursor(true);
+
+    const typingDelay = heroMotionMode === "enter" ? 900 : 180;
+    let typingInterval: ReturnType<typeof setInterval> | undefined;
+    const startTyping = setTimeout(() => {
+      typingInterval = setInterval(() => {
+        setTypedChars((current) => {
+          if (current >= COMPLEXITY_WORD.length) {
+            if (typingInterval) clearInterval(typingInterval);
+            setTimeout(() => setShowTypingCursor(false), 550);
+            return current;
+          }
+          return current + 1;
+        });
+      }, 85);
+    }, typingDelay);
+
+    return () => {
+      clearTimeout(startTyping);
+      if (typingInterval) clearInterval(typingInterval);
+    };
+  }, [heroMotionMode, reducedMotion]);
 
   useGSAP(
     () => {
@@ -505,7 +545,10 @@ export function HeroSection() {
             ))}
             {" "}
             <WordMask>
-              <span className="italic text-sanct-indigo">complexity.</span>
+              <span className="font-terminal text-sanct-indigo">
+                {COMPLEXITY_WORD.slice(0, typedChars)}
+                {showTypingCursor ? <span aria-hidden="true">|</span> : null}
+              </span>
             </WordMask>
           </h1>
 

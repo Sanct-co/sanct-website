@@ -30,7 +30,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h2 className="text-sm font-bold uppercase tracking-[0.1em] text-lilac">
+            <h2 className="font-terminal text-[12px] uppercase tracking-[0.08em] text-lilac">
               Navigate
             </h2>
             <ul className="mt-5 space-y-3">
@@ -48,7 +48,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h2 className="text-sm font-bold uppercase tracking-[0.1em] text-lilac">
+            <h2 className="font-terminal text-[12px] uppercase tracking-[0.08em] text-lilac">
               Contact
             </h2>
             <ul className="mt-5 space-y-4 text-base text-white/70">
@@ -64,7 +64,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h2 className="text-sm font-bold uppercase tracking-[0.1em] text-lilac">
+            <h2 className="font-terminal text-[12px] uppercase tracking-[0.08em] text-lilac">
               Follow
             </h2>
             <SocialLinks variant="footer" />

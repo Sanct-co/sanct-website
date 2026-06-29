@@ -9,7 +9,7 @@ export function MissionSection() {
   return (
     <Section background="indigo">
       <Reveal>
-        <p className="text-sm font-bold uppercase tracking-[0.1em] text-lilac">
+        <p className="font-terminal text-[12px] uppercase tracking-[0.08em] text-lilac">
           Our Mission
         </p>
         <h2 className="mt-5 max-w-4xl font-display text-4xl font-extrabold leading-tight md:text-6xl">
@@ -67,7 +67,7 @@ export function ValuesSection() {
   return (
     <Section background="dark">
       <Reveal>
-        <p className="text-sm font-bold uppercase tracking-[0.1em] text-lilac">
+        <p className="font-terminal text-[12px] uppercase tracking-[0.08em] text-lilac">
           Values
         </p>
         <h2 className="mt-3 font-display text-4xl font-extrabold md:text-5xl">
@@ -89,7 +89,7 @@ export function TeamSection() {
   return (
     <Section background="ghost">
       <Reveal>
-        <p className="text-sm font-bold uppercase tracking-[0.1em] text-lilac">
+        <p className="font-terminal text-[12px] uppercase tracking-[0.08em] text-lilac">
           Team
         </p>
         <h2 className="mt-3 font-display text-4xl font-extrabold md:text-5xl">

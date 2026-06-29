@@ -60,7 +60,7 @@ export function ServicesIntro() {
   return (
     <Section background="indigo">
       <Reveal>
-        <p className="text-sm font-bold uppercase tracking-[0.1em] text-lilac">
+        <p className="font-terminal text-[12px] uppercase tracking-[0.08em] text-lilac">
           Services
         </p>
         <h2 className="mt-3 max-w-3xl font-display text-4xl font-extrabold md:text-5xl">

@@ -76,7 +76,7 @@ export function CaseStudyContent({
 
           <Reveal delay={0.15} className="lg:col-span-1">
             <div className="rounded-card border border-border-light bg-white p-7">
-              <h3 className="text-sm font-bold uppercase tracking-[0.1em] text-lilac">
+              <h3 className="font-terminal text-[12px] uppercase tracking-[0.08em] text-lilac">
                 Project Type
               </h3>
               <ul className="mt-5 flex flex-wrap gap-2">
@@ -97,7 +97,7 @@ export function CaseStudyContent({
       {nextProject && (
         <Section background="dark">
           <Reveal>
-            <p className="text-sm font-bold uppercase tracking-[0.1em] text-lilac">
+            <p className="font-terminal text-[12px] uppercase tracking-[0.08em] text-lilac">
               Next Project
             </p>
             <Link

@@ -20,7 +20,6 @@ export function OpeningTransition({ onComplete }: OpeningTransitionProps) {
   const ringRef = useRef<SVGCircleElement>(null);
   const logoStageRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
-  const wordmarkRef = useRef<HTMLParagraphElement>(null);
   const revealRef = useRef<HTMLDivElement>(null);
   const pulseRefs = useRef<(HTMLDivElement | null)[]>([]);
   const onCompleteRef = useRef(onComplete);
@@ -52,11 +51,10 @@ export function OpeningTransition({ onComplete }: OpeningTransitionProps) {
       const ring = ringRef.current;
       const logoStage = logoStageRef.current;
       const logo = logoRef.current;
-      const wordmark = wordmarkRef.current;
       const reveal = revealRef.current;
       const pulses = pulseRefs.current.filter(Boolean) as HTMLDivElement[];
 
-      if (!root || !backdrop || !glow || !ring || !logoStage || !logo || !wordmark || !reveal) {
+      if (!root || !backdrop || !glow || !ring || !logoStage || !logo || !reveal) {
         return;
       }
 
@@ -68,7 +66,6 @@ export function OpeningTransition({ onComplete }: OpeningTransitionProps) {
         strokeDashoffset: RING_CIRCUMFERENCE,
       });
       gsap.set(logo, { scale: 0.35, rotation: -18, autoAlpha: 0, filter: "blur(8px)" });
-      gsap.set(wordmark, { autoAlpha: 0, y: 18, letterSpacing: "0.35em" });
       gsap.set(pulses, { scale: 0.55, autoAlpha: 0 });
       gsap.set(reveal, {
         clipPath: "circle(0% at 50% 50%)",
@@ -108,16 +105,6 @@ export function OpeningTransition({ onComplete }: OpeningTransitionProps) {
           0.35,
         )
         .to(
-          wordmark,
-          {
-            autoAlpha: 1,
-            y: 0,
-            letterSpacing: "0.22em",
-            duration: 0.65,
-          },
-          0.75,
-        )
-        .to(
           pulses,
           {
             scale: 2.35,
@@ -150,15 +137,6 @@ export function OpeningTransition({ onComplete }: OpeningTransitionProps) {
             duration: 0.55,
           },
           2.05,
-        )
-        .to(
-          wordmark,
-          {
-            autoAlpha: 0,
-            y: -12,
-            duration: 0.35,
-          },
-          2.1,
         )
         .to(logoStage, { autoAlpha: 0, duration: 0.2 }, 2.1)
         .to(backdrop, { autoAlpha: 0, duration: 0.3 }, REVEAL_START)
@@ -248,12 +226,6 @@ export function OpeningTransition({ onComplete }: OpeningTransitionProps) {
           </div>
         </div>
 
-        <p
-          ref={wordmarkRef}
-          className="mt-8 font-display text-sm font-bold uppercase tracking-[0.22em] text-white/90 md:text-base"
-        >
-          Sanct
-        </p>
       </div>
 
       <div

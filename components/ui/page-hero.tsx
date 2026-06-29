@@ -30,7 +30,7 @@ export function PageHero({
       <div className="mx-auto max-w-(--max-width-container) px-(--spacing-section-x)">
         <Reveal>
           {eyebrow && (
-            <p className="text-sm font-medium uppercase tracking-[0.1em] text-lilac">
+            <p className="font-terminal text-[12px] uppercase tracking-[0.08em] text-lilac">
               {eyebrow}
             </p>
           )}

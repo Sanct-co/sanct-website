@@ -8,7 +8,7 @@ export function ServicesSnapshot() {
   return (
     <Section background="dark">
       <Reveal>
-        <p className="text-sm font-bold uppercase tracking-[0.1em] text-lilac">
+        <p className="font-terminal text-[12px] uppercase tracking-[0.08em] text-lilac">
           What We Do
         </p>
       </Reveal>

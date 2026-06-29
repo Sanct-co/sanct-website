@@ -13,7 +13,7 @@ const variants = {
 export function Tag({ children, variant = "lilac", className = "" }: TagProps) {
   return (
     <span
-      className={`text-xs font-medium uppercase tracking-[0.1em] ${variants[variant]} ${className}`}
+      className={`font-terminal text-[11px] uppercase tracking-[0.08em] ${variants[variant]} ${className}`}
     >
       {children}
     </span>

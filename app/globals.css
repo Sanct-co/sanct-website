@@ -35,6 +35,8 @@
   --spacing-section-y: var(--section-padding-y);
   --font-display: var(--font-plus-jakarta), system-ui, sans-serif;
   --font-body: var(--font-plus-jakarta), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-terminal: var(--font-geist-pixel-square), var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
   --radius-tag: 4px;
   --radius-input: 8px;
   --radius-card: 16px;
@@ -89,4 +91,14 @@ html[data-intro="pending"] body {
 html[data-intro="complete"] .intro-overlay,
 #intro-fallback[data-active="false"] {
   display: none;
+}
+
+@utility font-terminal {
+  font-family: var(--font-terminal);
+  font-weight: 500;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+  font-synthesis: none;
+  text-rendering: optimizeSpeed;
+  letter-spacing: 0.01em;
 }

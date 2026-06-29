@@ -41,7 +41,7 @@ function NavLink({
     <Link
       href={href}
       onClick={handleClick}
-      className={`header-nav-item rounded-tag px-3 py-2 text-sm font-medium uppercase tracking-[0.08em] transition-colors duration-150 ease-out hover:text-sanct-indigo focus-visible:text-sanct-indigo ${
+      className={`header-nav-item font-terminal rounded-tag px-3 py-2 text-[13px] uppercase tracking-[0.04em] transition-colors duration-150 ease-out hover:text-sanct-indigo focus-visible:text-sanct-indigo ${
         isActive ? "text-sanct-indigo" : "text-on-light-muted"
       } ${className}`}
     >
@@ -215,8 +215,8 @@ export function Header() {
               priority
             />
           </span>
-          <span className="font-display text-lg font-bold tracking-[0.06em] text-near-black">
-            SANCT
+          <span className="font-terminal text-[15px] leading-none tracking-[0.02em] text-near-black">
+            sanct
           </span>
         </Link>
 
