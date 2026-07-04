@@ -1,7 +1,13 @@
 "use client";
 
-import { useRef } from "react";
+import { useActionState, useEffect, useRef } from "react";
+import toast from "react-hot-toast";
+import {
+  submitHomeContact,
+  type ContactFormState,
+} from "@/app/(site)/contact/actions";
 import { EASE_OUT, gsap, useGSAP } from "@/lib/gsap";
+import { services } from "@/lib/services";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 const labelClass =
@@ -9,6 +15,16 @@ const labelClass =
 
 const inputClass =
   "w-full border-b border-border-dark bg-transparent pb-2.5 pt-1.5 text-base text-white placeholder:text-text-muted focus:border-lilac focus:outline-none transition-[border-color] duration-150 ease-out";
+
+const serviceOptions = [
+  ...services.map((s) => ({ id: s.id, name: s.name })),
+  { id: "other", name: "Other" },
+];
+
+const initialState: ContactFormState = {
+  success: false,
+  message: "",
+};
 
 function CharMask({ char }: { char: string }) {
   return (
@@ -20,7 +36,23 @@ function CharMask({ char }: { char: string }) {
 
 export function HomeContactSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   const reducedMotion = useReducedMotion();
+
+  const [state, formAction, pending] = useActionState(
+    submitHomeContact,
+    initialState,
+  );
+
+  useEffect(() => {
+    if (!state.message) return;
+    if (state.success) {
+      toast.success(state.message);
+      formRef.current?.reset();
+    } else {
+      toast.error(state.message);
+    }
+  }, [state]);
 
   useGSAP(
     () => {
@@ -97,7 +129,13 @@ export function HomeContactSection() {
         </div>
 
         {/* Right: form */}
-        <form data-contact-form="" className="space-y-8" noValidate>
+        <form
+          ref={formRef}
+          data-contact-form=""
+          action={formAction}
+          className="space-y-8"
+          noValidate
+        >
           <div className="grid gap-8 sm:grid-cols-2">
             <div>
               <label htmlFor="hs-name" className={labelClass}>
@@ -107,10 +145,18 @@ export function HomeContactSection() {
                 id="hs-name"
                 name="name"
                 type="text"
+                required
                 placeholder="What is your name?"
                 autoComplete="name"
                 className={inputClass}
+                aria-invalid={!!state.errors?.name}
+                aria-describedby={state.errors?.name ? "hs-name-error" : undefined}
               />
+              {state.errors?.name && (
+                <p id="hs-name-error" className="mt-1 text-xs text-red-400">
+                  {state.errors.name}
+                </p>
+              )}
             </div>
             <div>
               <label htmlFor="hs-email" className={labelClass}>
@@ -120,86 +166,91 @@ export function HomeContactSection() {
                 id="hs-email"
                 name="email"
                 type="email"
+                required
                 placeholder="What is your email address?"
                 autoComplete="email"
                 className={inputClass}
+                aria-invalid={!!state.errors?.email}
+                aria-describedby={state.errors?.email ? "hs-email-error" : undefined}
               />
+              {state.errors?.email && (
+                <p id="hs-email-error" className="mt-1 text-xs text-red-400">
+                  {state.errors.email}
+                </p>
+              )}
             </div>
           </div>
 
           <div>
-            <label htmlFor="hs-company" className={labelClass}>
-              Company (Optional)
+            <label htmlFor="hs-phone" className={labelClass}>
+              Phone (Optional)
             </label>
             <input
-              id="hs-company"
-              name="company"
-              type="text"
-              placeholder="What is your company's name? (Optional)"
-              autoComplete="organization"
+              id="hs-phone"
+              name="phone"
+              type="tel"
+              placeholder="What is your phone number? (Optional)"
+              autoComplete="tel"
               className={inputClass}
             />
           </div>
 
-          <div>
-            <label htmlFor="hs-looking" className={labelClass}>
-              What Are You Looking For?
-            </label>
-            <input
-              id="hs-looking"
-              name="looking"
-              type="text"
-              placeholder="What are you looking for?"
-              className={inputClass}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="hs-source" className={labelClass}>
-              How Did You Hear About Us?
-            </label>
-            <select
-              id="hs-source"
-              name="source"
-              defaultValue=""
-              className={`${inputClass} appearance-none`}
+          <fieldset>
+            <legend className={labelClass}>What Service Are You Looking For?</legend>
+            <div
+              className="mt-3 flex flex-wrap gap-x-6 gap-y-3"
+              aria-invalid={!!state.errors?.service}
+              aria-describedby={state.errors?.service ? "hs-service-error" : undefined}
             >
-              <option value="" disabled className="bg-near-black">
-                How did you hear about us?
-              </option>
-              <option value="referral" className="bg-near-black">
-                Referral
-              </option>
-              <option value="social" className="bg-near-black">
-                Social Media
-              </option>
-              <option value="search" className="bg-near-black">
-                Search Engine
-              </option>
-              <option value="other" className="bg-near-black">
-                Other
-              </option>
-            </select>
-          </div>
+              {serviceOptions.map((option) => (
+                <label
+                  key={option.id}
+                  className="flex cursor-pointer items-center gap-2 text-sm text-white/80"
+                >
+                  <input
+                    type="checkbox"
+                    name="service"
+                    value={option.id}
+                    className="size-4 accent-[var(--lilac)]"
+                  />
+                  {option.name}
+                </label>
+              ))}
+            </div>
+            {state.errors?.service && (
+              <p id="hs-service-error" className="mt-1 text-xs text-red-400">
+                {state.errors.service}
+              </p>
+            )}
+          </fieldset>
 
           <div>
-            <label htmlFor="hs-details" className={labelClass}>
-              Any Additional Info About What You&apos;re Looking For? (Optional)
+            <label htmlFor="hs-message" className={labelClass}>
+              Message
             </label>
             <textarea
-              id="hs-details"
-              name="details"
+              id="hs-message"
+              name="message"
               rows={3}
-              placeholder="Feel free to share any additional details. (Optional)"
+              required
+              placeholder="Tell us what you need."
               className={`${inputClass} resize-none`}
+              aria-invalid={!!state.errors?.message}
+              aria-describedby={state.errors?.message ? "hs-message-error" : undefined}
             />
+            {state.errors?.message && (
+              <p id="hs-message-error" className="mt-1 text-xs text-red-400">
+                {state.errors.message}
+              </p>
+            )}
           </div>
 
           <button
             type="submit"
-            className="mt-2 w-full rounded-pill bg-sanct-indigo py-4 text-sm font-bold uppercase tracking-[0.1em] text-white transition-[background-color] duration-150 ease-out hover:bg-indigo-mid focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac"
+            disabled={pending}
+            className="mt-2 w-full rounded-pill bg-sanct-indigo py-4 text-sm font-bold uppercase tracking-[0.1em] text-white transition-[background-color] duration-150 ease-out hover:bg-indigo-mid focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac disabled:opacity-60"
           >
-            Send Message
+            {pending ? "Sending…" : "Send Message"}
           </button>
         </form>
       </div>

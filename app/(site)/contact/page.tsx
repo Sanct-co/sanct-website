@@ -1,9 +1,7 @@
 import { ContactForm } from "@/components/contact/contact-form";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
-import { SocialLinks } from "@/components/ui/social-links";
 import { createMetadata } from "@/lib/metadata";
-import { contact } from "@/lib/site";
 
 export const metadata = createMetadata({
   title: "Contact",
@@ -34,35 +32,9 @@ export default function ContactPage() {
       </section>
 
       <Section background="ghost">
-        <div className="grid gap-14 lg:grid-cols-5">
-          <Reveal className="lg:col-span-3">
-            <ContactForm />
-          </Reveal>
-          <Reveal delay={0.15} className="lg:col-span-2">
-            <div className="rounded-card border border-border-light bg-white p-9">
-              <h2 className="font-display text-2xl font-bold">Direct contact</h2>
-              <ul className="mt-8 space-y-6 text-base">
-                <li>
-                  <span className="block font-terminal text-[12px] uppercase tracking-[0.08em] text-lilac">
-                    Phone
-                  </span>
-                  <a
-                    href={contact.phoneHref}
-                    className="mt-2 block text-lg font-bold text-sanct-indigo transition-colors duration-150 ease-out hover:text-indigo-mid"
-                  >
-                    {contact.phone}
-                  </a>
-                </li>
-                <li>
-                  <span className="block font-terminal text-[12px] uppercase tracking-[0.08em] text-lilac">
-                    Social
-                  </span>
-                  <SocialLinks variant="contact" />
-                </li>
-              </ul>
-            </div>
-          </Reveal>
-        </div>
+        <Reveal>
+          <ContactForm />
+        </Reveal>
       </Section>
     </>
   );

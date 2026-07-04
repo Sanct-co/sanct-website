@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { GeistMono } from "geist/font/mono";
 import { GeistPixelSquare } from "geist/font/pixel";
 import { Plus_Jakarta_Sans } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import { baseUrl } from "@/lib/metadata";
 import { site } from "@/lib/site";
 import "./globals.css";
@@ -47,6 +48,15 @@ export default function RootLayout({
       <head />
       <body className="flex min-h-full flex-col font-body antialiased">
         {children}
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            style: {
+              background: "var(--color-near-black)",
+              color: "#fff",
+            },
+          }}
+        />
       </body>
     </html>
   );
