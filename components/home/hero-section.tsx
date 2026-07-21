@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState, Fragment, type MouseEventHandler, type ReactNode } from "react";
 import { ButtonLink } from "@/components/ui/button";
 import { BrandMarquee } from "@/components/home/brand-marquee";
-import { ScrollLink } from "@/components/ui/scroll-link";
 import { useIntro } from "@/components/providers/intro-provider";
 import { EASE_OUT, gsap, useGSAP } from "@/lib/gsap";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
@@ -374,38 +373,6 @@ function HeroCodeAnimation() {
   );
 }
 
-function HeroWingLeft() {
-  return (
-    <svg
-      viewBox="0 0 320 520"
-      fill="none"
-      preserveAspectRatio="none"
-      className="h-full w-full"
-      aria-hidden="true"
-    >
-      <path d="M0 0h320v68H0V0z" fill="#2C1FA8" />
-      <path d="M0 68h320L148 520H0V68z" fill="#2C1FA8" />
-      <path d="M0 68h320v20H0V68z" fill="#3D35B0" opacity="0.55" />
-    </svg>
-  );
-}
-
-function HeroWingRight() {
-  return (
-    <svg
-      viewBox="0 0 320 520"
-      fill="none"
-      preserveAspectRatio="none"
-      className="h-full w-full"
-      aria-hidden="true"
-    >
-      <path d="M0 0h320v68H0V0z" fill="#2C1FA8" />
-      <path d="M320 68L172 520H0L0 68h320z" fill="#2C1FA8" />
-      <path d="M0 68h320v20H0V68z" fill="#3D35B0" opacity="0.55" />
-    </svg>
-  );
-}
-
 const HERO_WORDS = ["Software", "that", "strips", "away"];
 const COMPLEXITY_WORD = "complexity.";
 
@@ -432,8 +399,6 @@ export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const imageBlockRef = useRef<HTMLDivElement>(null);
-  const leftWingRef = useRef<HTMLDivElement>(null);
-  const rightWingRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const marqueeRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
@@ -491,8 +456,6 @@ export function HeroSection() {
       gsap.set(subtitleRef.current, { autoAlpha: 0, y: 20 });
       gsap.set(".hero-cta", { autoAlpha: 0, y: 16 });
       gsap.set(imageBlockRef.current, { autoAlpha: 0, y: 32 });
-      gsap.set(leftWingRef.current, { autoAlpha: 0, x: -48 });
-      gsap.set(rightWingRef.current, { autoAlpha: 0, x: 48 });
       gsap.set(imageRef.current, { scale: 0.96, autoAlpha: 1 });
       gsap.set(marqueeRef.current, { autoAlpha: 0, y: 20 });
     },
@@ -510,8 +473,6 @@ export function HeroSection() {
           gsap.set(subtitleRef.current, { clearProps: "opacity,visibility,transform" });
           gsap.set(".hero-cta", { clearProps: "opacity,visibility,transform" });
           gsap.set(imageBlockRef.current, { clearProps: "opacity,visibility,transform" });
-          gsap.set(leftWingRef.current, { clearProps: "opacity,visibility,transform" });
-          gsap.set(rightWingRef.current, { clearProps: "opacity,visibility,transform" });
           gsap.set(imageRef.current, { clearProps: "transform" });
           gsap.set(marqueeRef.current, { clearProps: "opacity,visibility,transform" });
         },
@@ -521,9 +482,7 @@ export function HeroSection() {
         .to(subtitleRef.current, { autoAlpha: 1, y: 0, duration: 0.6 }, "-=0.35")
         .to(".hero-cta", { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.12 }, "-=0.3")
         .to(imageBlockRef.current, { autoAlpha: 1, y: 0, duration: 0.7 }, "-=0.2")
-        .to(leftWingRef.current, { autoAlpha: 1, x: 0, duration: 0.9 }, "-=0.55")
-        .to(rightWingRef.current, { autoAlpha: 1, x: 0, duration: 0.9 }, "<")
-        .to(imageRef.current, { scale: 1, duration: 0.8 }, "-=0.7")
+        .to(imageRef.current, { scale: 1, duration: 0.8 }, "-=0.55")
         .to(marqueeRef.current, { autoAlpha: 1, y: 0, duration: 0.6 }, "-=0.35");
     },
     { scope: sectionRef, dependencies: [heroMotionMode] },
@@ -545,7 +504,7 @@ export function HeroSection() {
             ))}
             {" "}
             <WordMask>
-              <span className="font-terminal text-sanct-indigo">
+              <span className="font-terminal text-sanct-indigo ">
                 {COMPLEXITY_WORD.slice(0, typedChars)}
                 {showTypingCursor ? <span aria-hidden="true">|</span> : null}
               </span>
@@ -556,21 +515,24 @@ export function HeroSection() {
             ref={subtitleRef}
             className="mx-auto mt-8 max-w-2xl text-lg font-normal leading-relaxed text-on-light-muted md:text-xl"
           >
-            We build intuitive systems that give you mental space to focus on
+            We build intuitive software that give you mental space to focus on
             what truly matters, not on the tools you use.
           </p>
 
-          <div className="mt-10 flex flex-col items-center justify-center gap-5 sm:flex-row">
+          <div className="mt-10 flex flex-row flex-wrap items-center justify-center gap-x-6 gap-y-3">
             <ButtonLink href="/work" variant="primary" className="hero-cta">
               What We Built
             </ButtonLink>
-            <ScrollLink
-              href="/#contact"
-              className="hero-cta inline-flex items-center gap-2 text-sm font-medium uppercase tracking-[0.08em] text-near-black transition-colors duration-150 ease-out hover:text-sanct-indigo"
+            <button
+              type="button"
+              data-cal-link="deo-talip-iwfmht/secret"
+              data-cal-namespace="secret"
+              data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+              className="hero-cta inline-flex cursor-pointer items-center gap-2 text-sm font-medium uppercase tracking-[0.08em] text-near-black transition-colors duration-150 ease-out hover:text-sanct-indigo"
             >
-              Work With Us
+              Let&apos;s Talk
               <span aria-hidden="true">→</span>
-            </ScrollLink>
+            </button>
           </div>
         </div>
 
@@ -578,19 +540,6 @@ export function HeroSection() {
           ref={imageBlockRef}
           className="relative mx-auto mt-16 max-w-5xl md:mt-24"
         >
-          <div
-            ref={leftWingRef}
-            className="pointer-events-none absolute -left-[5%] top-1/2 h-[112%] w-[34%] -translate-y-1/2 md:-left-[8%] md:w-[38%]"
-          >
-            <HeroWingLeft />
-          </div>
-          <div
-            ref={rightWingRef}
-            className="pointer-events-none absolute -right-[5%] top-1/2 h-[112%] w-[34%] -translate-y-1/2 md:-right-[8%] md:w-[38%]"
-          >
-            <HeroWingRight />
-          </div>
-
           <div
             ref={imageRef}
             className="relative z-10 mx-auto aspect-[16/10] max-w-3xl overflow-hidden rounded-card shadow-2xl shadow-sanct-indigo/20"

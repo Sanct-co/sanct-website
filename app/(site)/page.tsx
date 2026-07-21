@@ -1,6 +1,9 @@
 import { CtaBanner } from "@/components/ui/cta-banner";
+import { FaqSection } from "@/components/home/faq-section";
 import { HomePanels } from "@/components/home/home-panels";
 import { HomeContactSection } from "@/components/home/home-contact-section";
+import { ProcessSection } from "@/components/home/process-section";
+import { ProofGallery } from "@/components/home/proof-gallery";
 import { ServicesSnapshot } from "@/components/home/services-snapshot";
 import { SocialProof } from "@/components/home/social-proof";
 import { createMetadata } from "@/lib/metadata";
@@ -20,7 +23,10 @@ export default function Home() {
       <div className="relative z-30 bg-near-black">
         <ServicesSnapshot />
       </div>
+      <ProcessSection />
       <SocialProof />
+      <ProofGallery />
+      <FaqSection />
       <CtaBanner
         headline="Ready to build something that matters?"
         subtext="Tell us about your project. We'll respond within one business day."

@@ -68,6 +68,8 @@ export function Header() {
   const navRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const borderRef = useRef<HTMLDivElement>(null);
+  const mobileNavRef = useRef<HTMLElement>(null);
+  const mobileNavInnerRef = useRef<HTMLDivElement>(null);
   const isScrolledRef = useRef(false);
 
   useEffect(() => {
@@ -190,6 +192,46 @@ export function Header() {
     { scope: headerRef, dependencies: [headerMotionMode] },
   );
 
+  useGSAP(
+    () => {
+      const mobileNav = mobileNavRef.current;
+      const mobileNavInner = mobileNavInnerRef.current;
+      if (!mobileNav || !mobileNavInner) return;
+
+      const items = mobileNavInner.querySelectorAll(".mobile-nav-item");
+
+      if (reducedMotion) {
+        gsap.set(mobileNav, { height: menuOpen ? "auto" : 0, autoAlpha: menuOpen ? 1 : 0 });
+        gsap.set(items, { autoAlpha: 1, y: 0 });
+        return;
+      }
+
+      if (menuOpen) {
+        gsap.set(items, { autoAlpha: 0, y: -10 });
+        const tl = gsap.timeline({ defaults: { ease: EASE_OUT } });
+        tl.to(mobileNav, { height: "auto", autoAlpha: 1, duration: 0.4 }).to(
+          items,
+          { autoAlpha: 1, y: 0, duration: 0.35, stagger: 0.05 },
+          "-=0.2",
+        );
+        return () => {
+          tl.kill();
+        };
+      }
+
+      const tl = gsap.timeline({ defaults: { ease: EASE_OUT } });
+      tl.to(items, { autoAlpha: 0, y: -8, duration: 0.2, stagger: 0.03 }).to(
+        mobileNav,
+        { height: 0, autoAlpha: 0, duration: 0.3 },
+        "-=0.1",
+      );
+      return () => {
+        tl.kill();
+      };
+    },
+    { scope: headerRef, dependencies: [menuOpen, reducedMotion] },
+  );
+
   return (
     <header
       ref={headerRef}
@@ -215,8 +257,8 @@ export function Header() {
               priority
             />
           </span>
-          <span className="font-terminal text-[15px] leading-none tracking-[0.02em] text-near-black">
-            sanct
+          <span className="font-bold text-[15px] leading-none tracking-[0.02em] text-near-black">
+            SANCT
           </span>
         </Link>
 
@@ -229,7 +271,7 @@ export function Header() {
             <NavLink key={link.href} href={link.href} label={link.label} />
           ))}
           <ButtonLink href="/#contact" variant="primary" className="header-nav-item ml-4">
-            Let&apos;s Talk
+            Contact Us
           </ButtonLink>
         </nav>
 
@@ -276,29 +318,36 @@ export function Header() {
       />
 
       <nav
+        ref={mobileNavRef}
         id={menuId}
-        className={`border-t border-border-light bg-white md:hidden ${
-          menuOpen ? "block" : "hidden"
-        }`}
+        className="overflow-hidden border-t border-border-light bg-white opacity-0 md:hidden"
+        style={{ height: 0 }}
         aria-label="Mobile navigation"
+        inert={menuOpen ? undefined : true}
       >
-        <div className="mx-auto flex max-w-(--max-width-container) flex-col gap-1 px-(--spacing-section-x) py-5">
+        <div
+          ref={mobileNavInnerRef}
+          className="mx-auto flex max-w-(--max-width-container) flex-col gap-1 px-(--spacing-section-x) py-5"
+        >
           {navLinks.map((link) => (
             <NavLink
               key={link.href}
               href={link.href}
               label={link.label}
+              className="mobile-nav-item"
               onNavigate={() => setMenuOpen(false)}
             />
           ))}
-          <ButtonLink
-            href="/#contact"
-            variant="primary"
-            className="mt-3 w-full"
+          <button
+            type="button"
+            data-cal-link="deo-talip-iwfmht/secret"
+            data-cal-namespace="secret"
+            data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+            className="mobile-nav-item mt-3 inline-flex w-full cursor-pointer items-center justify-center rounded-pill bg-sanct-indigo px-7 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-white transition-colors duration-150 ease-out hover:bg-indigo-mid focus-visible:bg-indigo-mid focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac"
             onClick={() => setMenuOpen(false)}
           >
             Let&apos;s Talk
-          </ButtonLink>
+          </button>
         </div>
       </nav>
     </header>

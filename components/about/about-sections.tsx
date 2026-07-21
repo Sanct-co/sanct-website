@@ -30,7 +30,7 @@ export function StorySection() {
         <Reveal delay={0.1}>
           <div className="space-y-5 text-lg leading-relaxed text-on-light-muted">
             <p>
-              Sanct started as a group of computer science students who kept
+              Sanct is founded by Deo Talip, a computer science graduate who kept
               seeing the same problem, software that was either too expensive,
               too complicated, or simply not built for how people actually work.
             </p>
@@ -41,9 +41,9 @@ export function StorySection() {
               clarity.
             </p>
             <p>
-              Today we work with clients across the Philippines and Southeast
-              Asia, from retail chains in Mindanao to hospitality brands in
-              Siargao. Our roots keep us grounded. Our ambition keeps us
+              Today we work with clients across the Philippines and US,
+              from custom erp systems in Mindanao to product brands in
+              US. Our roots keep us grounded. Our ambition keeps us
               reaching.
             </p>
           </div>
@@ -63,27 +63,27 @@ export function StorySection() {
   );
 }
 
-export function ValuesSection() {
-  return (
-    <Section background="dark">
-      <Reveal>
-        <p className="font-terminal text-[12px] uppercase tracking-[0.08em] text-lilac">
-          Values
-        </p>
-        <h2 className="mt-3 font-display text-4xl font-extrabold md:text-5xl">
-          How we work.
-        </h2>
-      </Reveal>
-      <div className="mt-14 grid gap-8 sm:grid-cols-2">
-        {values.map((value, i) => (
-          <Reveal key={value.title} delay={i * 0.08}>
-            <ValueCard title={value.title} description={value.description} />
-          </Reveal>
-        ))}
-      </div>
-    </Section>
-  );
-}
+// export function ValuesSection() {
+//   return (
+//     <Section background="dark">
+//       <Reveal>
+//         <p className="font-terminal text-[12px] uppercase tracking-[0.08em] text-lilac">
+//           Values
+//         </p>
+//         <h2 className="mt-3 font-display text-4xl font-extrabold md:text-5xl">
+//           How we work.
+//         </h2>
+//       </Reveal>
+//       <div className="mt-14 grid gap-8 sm:grid-cols-2">
+//         {values.map((value, i) => (
+//           <Reveal key={value.title} delay={i * 0.08}>
+//             <ValueCard title={value.title} description={value.description} />
+//           </Reveal>
+//         ))}
+//       </div>
+//     </Section>
+//   );
+// }
 
 export function TeamSection() {
   return (
@@ -92,21 +92,21 @@ export function TeamSection() {
         <p className="font-terminal text-[12px] uppercase tracking-[0.08em] text-lilac">
           Team
         </p>
-        <h2 className="mt-3 font-display text-4xl font-extrabold md:text-5xl">
-          The people behind Sanct.
+        <h2 className="mt-3 max-w-2xl font-display text-4xl font-extrabold md:text-5xl">
+          Meet the people behind Sanct.
         </h2>
       </Reveal>
-      <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-14 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
         {team.map((member, i) => (
           <Reveal key={member.name} delay={i * 0.1}>
-            <div className="text-center">
-              <div className="relative mx-auto h-28 w-28 overflow-hidden rounded-full">
+            <div className="group">
+              <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-sanct-indigo/5">
                 <Image
                   src={member.image}
                   alt={member.name}
                   fill
-                  className="object-cover"
-                  sizes="112px"
+                  className="scale-90 object-cover transition-transform duration-500 group-hover:scale-95"
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 50vw"
                 />
               </div>
               <h3 className="mt-5 font-display text-xl font-bold">

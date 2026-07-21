@@ -42,7 +42,7 @@ export function SocialProof() {
   );
 
   return (
-    <Section background="ghost">
+    <Section id="clients" background="ghost">
       <Reveal>
         <div className="mx-auto mb-14 max-w-3xl text-center md:mb-20">
           <Tag variant="indigo">What Clients Say</Tag>
@@ -74,7 +74,7 @@ export function SocialProof() {
               Elena Morales
             </span>
             <span className="mt-1 block text-base text-on-light-muted md:text-lg">
-              Operations Director, MetroMart PH
+              Operations Manager, CrowdHomes US
             </span>
           </cite>
         </footer>

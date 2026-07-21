@@ -1,9 +1,9 @@
 export const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/work", label: "Work" },
+  { href: "/#work", label: "Work" },
+  { href: "/#services", label: "Services" },
+  { href: "/#process", label: "Process" },
+  { href: "/#clients", label: "Clients" },
   { href: "/about", label: "About" },
-  { href: "/services", label: "Services" },
- 
 ] as const;
 
 export const contact = {

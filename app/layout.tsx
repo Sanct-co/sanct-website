@@ -3,6 +3,7 @@ import { GeistMono } from "geist/font/mono";
 import { GeistPixelSquare } from "geist/font/pixel";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Toaster } from "react-hot-toast";
+import { CalEmbed } from "@/components/cal-embed";
 import { baseUrl } from "@/lib/metadata";
 import { site } from "@/lib/site";
 import "./globals.css";
@@ -48,6 +49,7 @@ export default function RootLayout({
       <head />
       <body className="flex min-h-full flex-col font-body antialiased">
         {children}
+        <CalEmbed />
         <Toaster
           position="bottom-right"
           toastOptions={{

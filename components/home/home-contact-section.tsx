@@ -6,6 +6,8 @@ import {
   submitHomeContact,
   type ContactFormState,
 } from "@/app/(site)/contact/actions";
+import { BudgetSelect } from "@/components/contact/budget-select";
+import { ServiceSelect } from "@/components/contact/service-select";
 import { EASE_OUT, gsap, useGSAP } from "@/lib/gsap";
 import { services } from "@/lib/services";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
@@ -189,40 +191,21 @@ export function HomeContactSection() {
               id="hs-phone"
               name="phone"
               type="tel"
-              placeholder="What is your phone number? (Optional)"
+              placeholder="What is your phone number?"
               autoComplete="tel"
               className={inputClass}
             />
           </div>
 
-          <fieldset>
-            <legend className={labelClass}>What Service Are You Looking For?</legend>
-            <div
-              className="mt-3 flex flex-wrap gap-x-6 gap-y-3"
-              aria-invalid={!!state.errors?.service}
-              aria-describedby={state.errors?.service ? "hs-service-error" : undefined}
-            >
-              {serviceOptions.map((option) => (
-                <label
-                  key={option.id}
-                  className="flex cursor-pointer items-center gap-2 text-sm text-white/80"
-                >
-                  <input
-                    type="checkbox"
-                    name="service"
-                    value={option.id}
-                    className="size-4 accent-[var(--lilac)]"
-                  />
-                  {option.name}
-                </label>
-              ))}
-            </div>
-            {state.errors?.service && (
-              <p id="hs-service-error" className="mt-1 text-xs text-red-400">
-                {state.errors.service}
-              </p>
-            )}
-          </fieldset>
+          <ServiceSelect
+            options={serviceOptions}
+            variant="dark"
+            legend="What Service Are You Looking For?"
+            error={state.errors?.service}
+            errorTextClass="mt-1 text-xs text-red-400"
+          />
+
+          <BudgetSelect variant="dark" legend="What's Your Budget?" />
 
           <div>
             <label htmlFor="hs-message" className={labelClass}>
