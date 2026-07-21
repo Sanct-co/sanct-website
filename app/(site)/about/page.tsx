@@ -3,7 +3,7 @@ import {
   PhilippinesSection,
   StorySection,
   TeamSection,
-  ValuesSection,
+  // ValuesSection,
 } from "@/components/about/about-sections";
 import { CtaBanner } from "@/components/ui/cta-banner";
 import { createMetadata } from "@/lib/metadata";
@@ -20,7 +20,7 @@ export default function AboutPage() {
     <>
       <MissionSection />
       <StorySection />
-      <ValuesSection />
+      {/* <ValuesSection /> */}
       <TeamSection />
       <PhilippinesSection />
       <CtaBanner

@@ -20,7 +20,6 @@ export default function ServicesPage() {
       <CtaBanner
         headline="Not sure which service fits?"
         subtext="Tell us about your situation, and we'll point you in the right direction."
-        ctaLabel="Get in Touch"
       />
     </>
   );

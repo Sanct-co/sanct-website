@@ -21,6 +21,18 @@ function serviceLabels(ids: string[]): string {
   return ids.map(serviceLabel).join(", ");
 }
 
+const budgetLabels: Record<string, string> = {
+  "100k-250k": "$100K – $250K",
+  "250k-500k": "$250K – $500K",
+  "500k-1m": "$500K – $1M",
+  "1m-plus": "$1M+",
+};
+
+function budgetLabel(id: string, details: string): string {
+  if (id === "custom") return details || "Custom";
+  return budgetLabels[id] ?? id;
+}
+
 function validateEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
@@ -73,6 +85,8 @@ export async function submitContact(
   const email = (formData.get("email") as string)?.trim();
   const phone = (formData.get("phone") as string)?.trim();
   const service = formData.getAll("service") as string[];
+  const budget = (formData.get("budget") as string)?.trim();
+  const budgetDetails = (formData.get("budgetDetails") as string)?.trim();
   const message = (formData.get("message") as string)?.trim();
 
   const errors: Record<string, string> = {};
@@ -106,6 +120,7 @@ export async function submitContact(
       <p><strong>Email:</strong> ${email}</p>
       <p><strong>Phone:</strong> ${phone || "—"}</p>
       <p><strong>Service:</strong> ${serviceLabels(service)}</p>
+      <p><strong>Budget:</strong> ${budget ? budgetLabel(budget, budgetDetails) : "—"}</p>
       <p><strong>Message:</strong></p>
       <p>${message}</p>
     `,
@@ -132,6 +147,8 @@ export async function submitHomeContact(
   const email = (formData.get("email") as string)?.trim();
   const phone = (formData.get("phone") as string)?.trim();
   const service = formData.getAll("service") as string[];
+  const budget = (formData.get("budget") as string)?.trim();
+  const budgetDetails = (formData.get("budgetDetails") as string)?.trim();
   const message = (formData.get("message") as string)?.trim();
 
   const errors: Record<string, string> = {};
@@ -165,6 +182,7 @@ export async function submitHomeContact(
       <p><strong>Email:</strong> ${email}</p>
       <p><strong>Phone:</strong> ${phone || "—"}</p>
       <p><strong>Service:</strong> ${serviceLabels(service)}</p>
+      <p><strong>Budget:</strong> ${budget ? budgetLabel(budget, budgetDetails) : "—"}</p>
       <p><strong>Message:</strong></p>
       <p>${message}</p>
     `,

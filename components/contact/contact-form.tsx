@@ -3,6 +3,8 @@
 import { useActionState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { submitContact, type ContactFormState } from "@/app/(site)/contact/actions";
+import { BudgetSelect } from "@/components/contact/budget-select";
+import { ServiceSelect } from "@/components/contact/service-select";
 import { SocialLinks } from "@/components/ui/social-links";
 import { services } from "@/lib/services";
 import { contact } from "@/lib/site";
@@ -162,37 +164,14 @@ export function ContactForm() {
               />
             </div>
 
-            <fieldset>
-              <legend className={labelClass}>
-                What service are you looking for?{" "}
-                <span className="text-sanct-indigo">*</span>
-              </legend>
-              <div
-                className="mt-3 flex flex-wrap gap-x-6 gap-y-3"
-                aria-invalid={!!state.errors?.service}
-                aria-describedby={state.errors?.service ? "service-error" : undefined}
-              >
-                {serviceOptions.map((option) => (
-                  <label
-                    key={option.id}
-                    className="flex cursor-pointer items-center gap-2 text-base text-near-black"
-                  >
-                    <input
-                      type="checkbox"
-                      name="service"
-                      value={option.id}
-                      className="size-4 accent-[var(--sanct-indigo)]"
-                    />
-                    {option.name}
-                  </label>
-                ))}
-              </div>
-              {state.errors?.service && (
-                <p id="service-error" className="mt-1 text-sm text-red-600">
-                  {state.errors.service}
-                </p>
-              )}
-            </fieldset>
+            <ServiceSelect
+              options={serviceOptions}
+              variant="light"
+              legend="What service are you looking for?"
+              error={state.errors?.service}
+            />
+
+            <BudgetSelect variant="light" legend="What's your budget?" />
 
             <div>
               <label htmlFor="message" className={labelClass}>

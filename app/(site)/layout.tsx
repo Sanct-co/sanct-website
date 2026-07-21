@@ -2,6 +2,7 @@ import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { IntroProvider } from "@/components/providers/intro-provider";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll-provider";
+import { ScrollToTopButton } from "@/components/ui/scroll-to-top-button";
 import { INTRO_BOOT_SCRIPT } from "@/lib/intro";
 
 export default function SiteLayout({
@@ -18,6 +19,7 @@ export default function SiteLayout({
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />
+          <ScrollToTopButton />
         </SmoothScrollProvider>
       </IntroProvider>
     </>

@@ -26,7 +26,6 @@ export default function WorkPage() {
       <CtaBanner
         headline="Have a project in mind?"
         subtext="We'd love to hear what you're building."
-        ctaLabel="Start a Conversation"
       />
     </>
   );

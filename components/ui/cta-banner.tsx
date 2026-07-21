@@ -5,14 +5,12 @@ type CtaBannerProps = {
   headline: string;
   subtext?: string;
   ctaLabel?: string;
-  ctaHref?: string;
 };
 
 export function CtaBanner({
   headline,
   subtext,
-  ctaLabel = "Message Us",
-  ctaHref = "/contact",
+  ctaLabel = "Book a Call",
 }: CtaBannerProps) {
   return (
     <section className="relative overflow-hidden bg-near-black py-(--spacing-section-y) text-white">
@@ -35,9 +33,17 @@ export function CtaBanner({
             </p>
           </Reveal>
         )}
-        {/* <ButtonLink href={ctaHref} variant="cta" className="mt-10">
-          {ctaLabel}
-        </ButtonLink> */}
+        <Reveal delay={0.4}>
+          <button
+            type="button"
+            data-cal-link="deo-talip-iwfmht/secret"
+            data-cal-namespace="secret"
+            data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+            className="mt-10 inline-flex cursor-pointer items-center justify-center rounded-pill bg-sanct-indigo px-7 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-white transition-[background-color,border-color,color] duration-150 ease-out hover:bg-indigo-mid focus-visible:bg-indigo-mid focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac"
+          >
+            {ctaLabel}
+          </button>
+        </Reveal>
       </div>
     </section>
   );
