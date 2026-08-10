@@ -1,6 +1,8 @@
 import {
+  JoinTeamSection,
   MissionSection,
   PhilippinesSection,
+  PhilosophySection,
   StorySection,
   TeamSection,
   // ValuesSection,
@@ -20,9 +22,10 @@ export default function AboutPage() {
     <>
       <MissionSection />
       <StorySection />
-      {/* <ValuesSection /> */}
+      <PhilosophySection />
       <TeamSection />
       <PhilippinesSection />
+      <JoinTeamSection />
       <CtaBanner
         headline="Want to work with us?"
         subtext="We're always open to conversations with people who care about craft."

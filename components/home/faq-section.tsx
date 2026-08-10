@@ -18,9 +18,9 @@ const FAQS: Faq[] = [
       "Most projects run 6-12 weeks from kickoff to launch, depending on scope. You'll get a firm timeline during the planning stage, before any code ships.",
   },
   {
-    question: "What does it cost?",
+    question: "How much does it cost?",
     answer:
-      "Pricing may differ per project, not hourly. We scope the work upfront so you know the total cost before we start building.",
+      "Pricing may differ per project, not hourly. We scope the work upfront so you know the total cost before we start building the solution.",
   },
   {
     question: "Do you work with businesses outside the Philippines?",
