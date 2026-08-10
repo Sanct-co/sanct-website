@@ -24,12 +24,12 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: "depedmps",
-    title: "Mean Percentage Score monitoring for schools and divisions",
+    title: "DEPEDMPS — A Digital MPS Infrastructure for DepEd",
     client: "DepEd Misamis Occidental",
     industry: "Education",
     category: "Web App",
     description:
-      "A single workspace for encoding scores, review division wide mps performance across schools and districts, aligned with how DepEd divisions and schools actually operate.",
+      "A centralized MPS platform purpose-built for DepEd, streamlining score encoding, automating MPS calculations and item analysis, reducing manual workload, and providing a clear view of performance across schools, districts, and the entire division.",
     featured: true,
     coverImage: "/video/depedmps_vid.gif",
     coverGradient: "from-[#1a237e] to-[#3D35B0]",
@@ -41,7 +41,6 @@ export const projects: Project[] = [
       "Teams can encode learner scores with clear section context and review division-wide performance from one place instead of reconciling multiple files.",
     projectTypes: ["Performance Dashboard", "Internal Tool", "Data Management"],
   },
- 
 ];
 
 export function getProject(slug: string): Project | undefined {

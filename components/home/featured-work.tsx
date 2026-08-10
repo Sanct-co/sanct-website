@@ -14,7 +14,7 @@ export function FeaturedWork() {
     <Section id="work" background="dark" className="!pb-24 md:!pb-32">
       <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
         <Reveal>
-          <Tag>See Proven Results</Tag>
+          <Tag>Real Work, Real Results</Tag>
           <h2 className="mt-3 font-display text-4xl font-extrabold md:text-5xl">
             Projects that speak for themselves.
           </h2>

@@ -1,46 +1,19 @@
 "use client";
 
-import { useRef } from "react";
-import { gsap, useGSAP } from "@/lib/gsap";
-import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { Tag } from "@/components/ui/tag";
 
-const QUOTE_WORDS =
-  "Sanct didn’t just build us software, they understood how our stores actually run. The dashboard feels like it was designed by someone who’s worked a shift on the floor.".split(
-    " ",
-  );
+const TESTIMONIAL = {
+  quote:
+    "Sanct didn’t just build us software, they understood how our stores actually run. The dashboard feels like it was designed by someone who’s worked a shift on the floor.",
+  name: "Elena Morales",
+  role: "Operations Manager, CrowdHomes US",
+};
+
+const INDICATOR_COUNT = 3;
 
 export function SocialProof() {
-  const quoteRef = useRef<HTMLParagraphElement>(null);
-  const reducedMotion = useReducedMotion();
-
-  useGSAP(
-    () => {
-      if (reducedMotion) return;
-      const words = quoteRef.current?.querySelectorAll<HTMLElement>("[data-quote-word]");
-      if (!words?.length) return;
-
-      gsap.fromTo(
-        words,
-        { color: "rgba(17,16,31,0.15)" },
-        {
-          color: "rgba(17,16,31,1)",
-          stagger: 0.6,
-          ease: "none",
-          scrollTrigger: {
-            trigger: quoteRef.current,
-            start: "top 80%",
-            end: "bottom 25%",
-            scrub: 1.2,
-          },
-        },
-      );
-    },
-    { scope: quoteRef, dependencies: [reducedMotion] },
-  );
-
   return (
     <Section id="clients" background="ghost">
       <Reveal>
@@ -52,33 +25,55 @@ export function SocialProof() {
         </div>
       </Reveal>
 
-      <blockquote className="mx-auto max-w-5xl text-center">
-        <p
-          ref={quoteRef}
-          suppressHydrationWarning
-          className={`font-display text-4xl font-extrabold leading-[1.1] tracking-[-0.02em] md:text-5xl lg:text-6xl${reducedMotion ? " text-near-black" : ""}`}
-          style={reducedMotion ? undefined : { color: "rgba(17,16,31,0.15)" }}
-        >
-          &ldquo;
-          {QUOTE_WORDS.map((word, i) => (
-            <span key={i}>
-              <span data-quote-word="">{word}</span>
-              {i < QUOTE_WORDS.length - 1 && " "}
-            </span>
-          ))}
-          &rdquo;
-        </p>
-        <footer className="mt-10 md:mt-12">
-          <cite className="not-italic">
-            <span className="block text-lg font-bold text-near-black md:text-xl">
-              Elena Morales
-            </span>
-            <span className="mt-1 block text-base text-on-light-muted md:text-lg">
-              Operations Manager, CrowdHomes US
-            </span>
-          </cite>
-        </footer>
-      </blockquote>
+      <div className="mx-auto max-w-2xl">
+        <blockquote>
+          <p className="text-xl leading-relaxed text-near-black md:text-2xl">
+            &ldquo;{TESTIMONIAL.quote}&rdquo;
+          </p>
+          <footer className="mt-8">
+            <cite className="not-italic">
+              <span className="block font-bold text-near-black">{TESTIMONIAL.name}</span>
+              <span className="mt-1 block text-sm text-on-light-muted">{TESTIMONIAL.role}</span>
+            </cite>
+          </footer>
+        </blockquote>
+
+        <div className="mt-10 flex items-center justify-between">
+          <div className="flex items-center gap-1.5">
+            {Array.from({ length: INDICATOR_COUNT }).map((_, i) => (
+              <span
+                key={i}
+                className={`h-1.5 rounded-full bg-sanct-indigo ${
+                  i === 0 ? "w-6 opacity-100" : "w-1.5 opacity-30"
+                }`}
+              />
+            ))}
+          </div>
+
+          <div className="flex items-center gap-4">
+            <button
+              type="button"
+              aria-label="Previous testimonial"
+              disabled
+              className="cursor-not-allowed text-on-light-muted opacity-40"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M19 12H5M5 12l6-6M5 12l6 6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              aria-label="Next testimonial"
+              disabled
+              className="cursor-not-allowed text-on-light-muted opacity-40"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
     </Section>
   );
 }

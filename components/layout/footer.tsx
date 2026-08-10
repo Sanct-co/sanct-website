@@ -60,6 +60,16 @@ export function Footer() {
                   {contact.phone}
                 </a>
               </li>
+              <li>
+                <a
+                  href={contact.addressHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors duration-150 ease-out hover:text-lilac focus-visible:text-lilac"
+                >
+                  {contact.address}
+                </a>
+              </li>
             </ul>
           </div>
 
