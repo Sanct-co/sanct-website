@@ -15,7 +15,7 @@ export function CtaBanner({
   return (
     <section className="relative overflow-hidden bg-near-black py-(--spacing-section-y) text-white">
       <div
-        className="pointer-events-none absolute -bottom-32 left-1/2 h-72 w-[140%] -translate-x-1/2 rounded-[50%] bg-sanct-indigo"
+        className="pointer-events-none absolute -bottom-16 left-1/2 h-40 w-[200%] -translate-x-1/2 rounded-[50%] bg-sanct-indigo sm:-bottom-24 sm:h-56 sm:w-[170%] md:-bottom-32 md:h-72 md:w-[140%]"
         aria-hidden="true"
       />
       <div className="relative mx-auto max-w-(--max-width-container) px-(--spacing-section-x) text-center">
