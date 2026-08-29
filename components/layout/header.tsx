@@ -20,11 +20,13 @@ function NavLink({
   label,
   className = "",
   onNavigate,
+  large = false,
 }: {
   href: string;
   label: string;
   className?: string;
   onNavigate?: () => void;
+  large?: boolean;
 }) {
   const pathname = usePathname();
   const { onHashLinkClick } = useHashLink();
@@ -41,9 +43,11 @@ function NavLink({
     <Link
       href={href}
       onClick={handleClick}
-      className={`header-nav-item font-terminal rounded-tag px-3 py-2 text-[13px] uppercase tracking-[0.04em] transition-colors duration-150 ease-out hover:text-sanct-indigo focus-visible:text-sanct-indigo ${
-        isActive ? "text-sanct-indigo" : "text-on-light-muted"
-      } ${className}`}
+      className={`header-nav-item font-terminal rounded-tag uppercase transition-colors duration-150 ease-out hover:text-sanct-indigo focus-visible:text-sanct-indigo ${
+        large
+          ? "py-3 text-3xl tracking-[0.02em]"
+          : "px-3 py-2 text-[13px] tracking-[0.04em]"
+      } ${isActive ? "text-sanct-indigo" : "text-on-light-muted"} ${className}`}
     >
       {label}
     </Link>
@@ -98,7 +102,7 @@ export function Header() {
 
       if (!header || !logo || !nav || !menuButton || !border) return;
 
-      const navItems = nav.querySelectorAll(".header-nav-item");
+      const navItems = header.querySelectorAll(".header-nav-item");
 
       const showHeaderElements = () => {
         gsap.set(header, { y: 0, clearProps: "transform" });
@@ -201,18 +205,18 @@ export function Header() {
       const items = mobileNavInner.querySelectorAll(".mobile-nav-item");
 
       if (reducedMotion) {
-        gsap.set(mobileNav, { height: menuOpen ? "auto" : 0, autoAlpha: menuOpen ? 1 : 0 });
+        gsap.set(mobileNav, { autoAlpha: menuOpen ? 1 : 0 });
         gsap.set(items, { autoAlpha: 1, y: 0 });
         return;
       }
 
       if (menuOpen) {
-        gsap.set(items, { autoAlpha: 0, y: -10 });
+        gsap.set(items, { autoAlpha: 0, y: 16 });
         const tl = gsap.timeline({ defaults: { ease: EASE_OUT } });
-        tl.to(mobileNav, { height: "auto", autoAlpha: 1, duration: 0.4 }).to(
+        tl.to(mobileNav, { autoAlpha: 1, duration: 0.3 }).to(
           items,
-          { autoAlpha: 1, y: 0, duration: 0.35, stagger: 0.05 },
-          "-=0.2",
+          { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.06 },
+          "-=0.1",
         );
         return () => {
           tl.kill();
@@ -220,9 +224,9 @@ export function Header() {
       }
 
       const tl = gsap.timeline({ defaults: { ease: EASE_OUT } });
-      tl.to(items, { autoAlpha: 0, y: -8, duration: 0.2, stagger: 0.03 }).to(
+      tl.to(items, { autoAlpha: 0, y: 12, duration: 0.2, stagger: 0.03 }).to(
         mobileNav,
-        { height: 0, autoAlpha: 0, duration: 0.3 },
+        { autoAlpha: 0, duration: 0.25 },
         "-=0.1",
       );
       return () => {
@@ -239,7 +243,7 @@ export function Header() {
     >
       <div
         ref={innerRef}
-        className="mx-auto flex h-[4.5rem] max-w-(--max-width-container) items-center justify-between px-(--spacing-section-x)"
+        className="mx-auto flex h-[4.5rem] max-w-(--max-width-container) items-center justify-between gap-4 px-(--spacing-section-x) lg:grid lg:grid-cols-[1fr_auto_1fr]"
       >
         <Link
           ref={logoRef}
@@ -264,51 +268,60 @@ export function Header() {
 
         <nav
           ref={navRef}
-          className="hidden items-center gap-1 md:flex"
+          className="hidden items-center justify-center gap-1 lg:flex"
           aria-label="Main navigation"
         >
           {navLinks.map((link) => (
             <NavLink key={link.href} href={link.href} label={link.label} />
           ))}
-          <ButtonLink href="/#contact" variant="primary" className="header-nav-item ml-4">
-            Contact Us
-          </ButtonLink>
         </nav>
 
-        <button
-          ref={menuButtonRef}
-          type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-input text-near-black transition-colors duration-150 ease-out hover:bg-near-black/5 focus-visible:bg-near-black/5 md:hidden"
-          aria-expanded={menuOpen}
-          aria-controls={menuId}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          onClick={() => setMenuOpen((open) => !open)}
-        >
-          <span className="sr-only">{menuOpen ? "Close menu" : "Open menu"}</span>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            aria-hidden="true"
+        <div className="flex items-center justify-end">
+          <div className="hidden lg:block">
+            <ButtonLink
+              href="/#contact"
+              variant="primary"
+              className="header-nav-item"
+            >
+              Contact Us
+            </ButtonLink>
+          </div>
+
+          <button
+            ref={menuButtonRef}
+            type="button"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-input text-near-black transition-colors duration-150 ease-out hover:bg-near-black/5 focus-visible:bg-near-black/5 lg:hidden"
+            aria-expanded={menuOpen}
+            aria-controls={menuId}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            onClick={() => setMenuOpen((open) => !open)}
           >
-            {menuOpen ? (
-              <path
-                d="M6 6l12 12M18 6L6 18"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            ) : (
-              <path
-                d="M4 7h16M4 12h16M4 17h16"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            )}
-          </svg>
-        </button>
+            <span className="sr-only">{menuOpen ? "Close menu" : "Open menu"}</span>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              {menuOpen ? (
+                <path
+                  d="M6 6l12 12M18 6L6 18"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
+              ) : (
+                <path
+                  d="M4 7h16M4 12h16M4 17h16"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div
@@ -320,20 +333,20 @@ export function Header() {
       <nav
         ref={mobileNavRef}
         id={menuId}
-        className="overflow-hidden border-t border-border-light bg-white opacity-0 md:hidden"
-        style={{ height: 0 }}
+        className="invisible fixed inset-x-0 top-18 bottom-0 z-40 overflow-y-auto overscroll-contain border-t border-border-light bg-white opacity-0 lg:hidden"
         aria-label="Mobile navigation"
         inert={menuOpen ? undefined : true}
       >
         <div
           ref={mobileNavInnerRef}
-          className="mx-auto flex max-w-(--max-width-container) flex-col gap-1 px-(--spacing-section-x) py-5"
+          className="mx-auto flex min-h-full max-w-(--max-width-container) flex-col gap-2 px-(--spacing-section-x) py-8"
         >
           {navLinks.map((link) => (
             <NavLink
               key={link.href}
               href={link.href}
               label={link.label}
+              large
               className="mobile-nav-item"
               onNavigate={() => setMenuOpen(false)}
             />
@@ -343,7 +356,7 @@ export function Header() {
             data-cal-link="deo-talip-iwfmht/secret"
             data-cal-namespace="secret"
             data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
-            className="mobile-nav-item mt-3 inline-flex w-full cursor-pointer items-center justify-center rounded-pill bg-sanct-indigo px-7 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-white transition-colors duration-150 ease-out hover:bg-indigo-mid focus-visible:bg-indigo-mid focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac"
+            className="mobile-nav-item mt-auto inline-flex w-full cursor-pointer items-center justify-center rounded-pill bg-sanct-indigo px-7 py-4 text-base font-semibold uppercase tracking-[0.06em] text-white transition-colors duration-150 ease-out hover:bg-indigo-mid focus-visible:bg-indigo-mid focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac"
             onClick={() => setMenuOpen(false)}
           >
             Let&apos;s Talk

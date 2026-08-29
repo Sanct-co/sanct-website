@@ -56,7 +56,7 @@ export function StorySection() {
       </div>
       <Reveal delay={0.2}>
         <Image
-          src="/company-pic2.jpg"
+          src="/company-pic2.webp"
           alt="Sanct team"
           width={0}
           height={0}
@@ -201,28 +201,27 @@ export function JoinTeamSection() {
   return (
     <Section background="white">
       <Reveal>
-        <div className="relative overflow-hidden rounded-card bg-linear-to-br from-sanct-indigo via-lilac/60 to-white px-8 py-10 sm:px-12 sm:py-14 lg:px-16">
+        <div className="relative overflow-hidden rounded-card bg-linear-to-br from-sanct-indigo via-indigo-mid to-sanct-indigo px-8 py-10 sm:px-12 sm:py-14 lg:px-16">
           <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
             <div>
-              <p className="font-terminal text-[12px] uppercase tracking-[0.08em] text-sanct-indigo">
+              <p className="font-terminal text-[12px] uppercase tracking-[0.08em] text-lilac">
                 Join The Team
               </p>
-              <h2 className="mt-3 font-display text-3xl font-extrabold uppercase leading-tight text-near-black sm:text-4xl">
+              <h2 className="mt-3 font-display text-3xl font-extrabold uppercase leading-tight text-white sm:text-4xl">
                 Grow with us, thrive as you
               </h2>
-              <p className="mt-5 max-w-lg text-lg leading-relaxed text-on-light-muted">
-                We welcome both new talent and experienced professionals who are
-                passionate about entrepreneurship. You&apos;ll build on your
-                strengths and grow toward your goals. This journey is about your
-                ambitions and who you aspire to become.
+              <p className="mt-5 max-w-lg text-lg leading-relaxed text-white/85">
+                For new talent and seasoned professionals alike: build on your
+                strengths, chase your ambitions, and grow into who you want to
+                become.
               </p>
-              <ButtonLink href="/contact" variant="primary" className="mt-8">
+              <ButtonLink href="/contact" variant="light" className="mt-8">
                 Join Now
               </ButtonLink>
             </div>
             <div className="relative aspect-16/10 w-full overflow-hidden rounded-2xl shadow-xl">
               <Image
-                src="/company-pic.jpg"
+                src="/company-pic.webp"
                 alt="The Sanct team"
                 fill
                 className="object-cover"
