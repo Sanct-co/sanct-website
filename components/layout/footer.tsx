@@ -9,7 +9,7 @@ export function Footer() {
 
   return (
     <footer className="mt-auto bg-near-black text-white">
-      <div className="mx-auto max-w-(--max-width-container) px-(--spacing-section-x) py-20">
+      <div className="mx-auto max-w-(--max-width-container) border-t border-border-dark px-(--spacing-section-x) py-20">
         <div className="grid gap-14 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-1">
             <Link
@@ -81,8 +81,8 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 border-t border-border-dark pt-8">
-          <p className="text-sm text-text-muted">
+        <div className="mt-14">
+          <p className="text-center text-sm font-bold text-text-muted">
             &copy; {year} {site.name}. All rights reserved.
           </p>
         </div>

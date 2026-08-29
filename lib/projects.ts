@@ -25,11 +25,11 @@ export const projects: Project[] = [
   {
     slug: "depedmps",
     title: "DEPEDMPS — A Digital MPS Infrastructure for DepEd",
-    client: "DepEd Misamis Occidental",
+    client: "Department of Education (DepEd)",
     industry: "Education",
     category: "Web App",
     description:
-      "A centralized MPS platform purpose-built for DepEd, streamlining score encoding, automating MPS calculations and item analysis, reducing manual workload, and providing a clear view of performance across schools, districts, and the entire division.",
+      "A centralized MPS platform purpose-built for DepEd Division Offices. Currently serving 600+ schools, reducing manual workload and improved data accessibility by 90%.",
     featured: true,
     coverImage: "/video/depedmps_vid.gif",
     coverGradient: "from-[#1a237e] to-[#3D35B0]",

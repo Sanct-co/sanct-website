@@ -30,8 +30,16 @@ const initialState: ContactFormState = {
 
 function CharMask({ char }: { char: string }) {
   return (
-    <span style={{ display: "inline-block", overflow: "hidden", verticalAlign: "bottom" }}>
-      <span data-contact-char="" style={{ display: "inline-block" }}>{char}</span>
+    <span
+      style={{
+        display: "inline-block",
+        overflow: "hidden",
+        verticalAlign: "bottom",
+      }}
+    >
+      <span data-contact-char="" style={{ display: "inline-block" }}>
+        {char}
+      </span>
     </span>
   );
 }
@@ -60,9 +68,15 @@ export function HomeContactSection() {
     () => {
       if (reducedMotion) return;
 
-      const chars = sectionRef.current?.querySelectorAll<HTMLElement>("[data-contact-char]");
-      const details = sectionRef.current?.querySelector<HTMLElement>("[data-contact-details]");
-      const form = sectionRef.current?.querySelector<HTMLElement>("[data-contact-form]");
+      const chars = sectionRef.current?.querySelectorAll<HTMLElement>(
+        "[data-contact-char]",
+      );
+      const details = sectionRef.current?.querySelector<HTMLElement>(
+        "[data-contact-details]",
+      );
+      const form = sectionRef.current?.querySelector<HTMLElement>(
+        "[data-contact-form]",
+      );
 
       if (chars?.length) {
         gsap.from(chars, {
@@ -111,24 +125,32 @@ export function HomeContactSection() {
   );
 
   return (
-    <section ref={sectionRef} id="contact" className="bg-near-black py-(--spacing-section-y) px-(--spacing-section-x)">
+    <section
+      ref={sectionRef}
+      id="contact"
+      className="bg-near-black py-(--spacing-section-y) px-(--spacing-section-x)"
+    >
       <div className="mx-auto grid w-full max-w-(--max-width-container) gap-16 lg:grid-cols-2 lg:gap-24">
         {/* Left */}
         <div className="flex flex-col justify-center">
           <h2 className="font-display text-[clamp(3.5rem,8vw,6rem)] font-extrabold leading-[0.95] tracking-[-0.03em] text-white">
-            {"LET'S".split("").map((char, i) => (
+            {"LAUNCH".split("").map((char, i) => (
               <CharMask key={`l${i}`} char={char} />
             ))}
             <br />
-            {"BUILD.".split("").map((char, i) => (
+            {"FAST.".split("").map((char, i) => (
               <CharMask key={`b${i}`} char={char} />
             ))}
           </h2>
-          <p data-contact-details="" className="mt-8 max-w-sm text-lg leading-relaxed text-text-secondary">
+          <p
+            data-contact-details=""
+            className="mt-8 max-w-sm text-lg leading-relaxed text-text-secondary"
+          >
             Tell us what you need. We&apos;ll show you how fast we can make it
             happen.
           </p>
         </div>
+
 
         {/* Right: form */}
         <form
@@ -152,7 +174,9 @@ export function HomeContactSection() {
                 autoComplete="name"
                 className={inputClass}
                 aria-invalid={!!state.errors?.name}
-                aria-describedby={state.errors?.name ? "hs-name-error" : undefined}
+                aria-describedby={
+                  state.errors?.name ? "hs-name-error" : undefined
+                }
               />
               {state.errors?.name && (
                 <p id="hs-name-error" className="mt-1 text-xs text-red-400">
@@ -173,7 +197,9 @@ export function HomeContactSection() {
                 autoComplete="email"
                 className={inputClass}
                 aria-invalid={!!state.errors?.email}
-                aria-describedby={state.errors?.email ? "hs-email-error" : undefined}
+                aria-describedby={
+                  state.errors?.email ? "hs-email-error" : undefined
+                }
               />
               {state.errors?.email && (
                 <p id="hs-email-error" className="mt-1 text-xs text-red-400">
@@ -219,7 +245,9 @@ export function HomeContactSection() {
               placeholder="Tell us what you need."
               className={`${inputClass} resize-none`}
               aria-invalid={!!state.errors?.message}
-              aria-describedby={state.errors?.message ? "hs-message-error" : undefined}
+              aria-describedby={
+                state.errors?.message ? "hs-message-error" : undefined
+              }
             />
             {state.errors?.message && (
               <p id="hs-message-error" className="mt-1 text-xs text-red-400">

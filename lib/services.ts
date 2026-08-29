@@ -11,28 +11,27 @@ export const services: Service[] = [
     id: "custom-software",
     name: "Custom Software",
     description:
-      "We build web and mobile applications, ERP systems from the ground up, scoped to your actual workflows, not a template. Every feature earns its place.",
+      "We build web and mobile applications, ERP systems from the ground up, scoped to your actual workflows.",
     idealClient:
       "Businesses ready to replace spreadsheets, legacy systems, or off-the-shelf tools that don't fit.",
     tags: ["Web Apps", "Mobile Apps", "ERP Systems"],
   },
   {
     id: "ai-tools-and-automations",
-    name: "AI Tools and Automations",
+    name: "AI Solutions",
     description:
-      "We build AI tools and automations that help your team work smarter, not harder. From automations to data analysis, we help you leverage the power of AI to drive efficiency and innovation.",
+      "We build AI tools, agents and automations that help your team work smarter, not harder. ",
     idealClient:
       "Teams looking to automate repetitive tasks, analyze data, or improve productivity using AI.",
-    tags: ["Workflow Automation", "AI Agents", "AI Integration"],
+    tags: ["AI Agents", "AI Integration", "Automation"],
   },
   {
     id: "consulting",
-    name: "Technical Consulting",
+    name: "Tech Consultancy",
     description:
-      "Honest advice on architecture, stack choices, and technical debt. We help teams make decisions they'll still be happy with two years from now.",
+      " We help businesses make decisions they'll thank themselves for in the future.",
     idealClient:
       "Founders and engineering leads navigating build-vs-buy, scaling, or modernization.",
-    tags: ["Architecture Review", "Tech Stack", "Scaling Strategy"],
+    tags: ["Strategy", "Modernization", "Scaling"],
   },
-  
 ];

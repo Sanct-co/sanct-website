@@ -6,7 +6,13 @@ import { getHashFromHref } from "@/lib/scroll-to-hash";
 import { useButtonHover } from "@/lib/use-button-hover";
 import { useHashLink } from "@/lib/use-hash-link";
 
-type ButtonVariant = "primary" | "secondary" | "dark" | "ghost" | "cta";
+type ButtonVariant =
+  | "primary"
+  | "secondary"
+  | "dark"
+  | "ghost"
+  | "cta"
+  | "light";
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
@@ -14,6 +20,8 @@ const variantClasses: Record<ButtonVariant, string> = {
   secondary:
     "border-[1.5px] border-sanct-indigo bg-transparent text-sanct-indigo hover:bg-sanct-indigo/5",
   dark: "bg-near-black text-white hover:bg-near-black/90",
+  light:
+    "bg-white text-sanct-indigo hover:bg-lilac hover:text-white focus-visible:bg-lilac focus-visible:text-white",
   ghost:
     "border-[1.5px] border-white/30 bg-transparent text-white/70 hover:border-white/50 hover:text-white",
   cta: "bg-sanct-indigo text-white hover:bg-indigo-mid focus-visible:bg-indigo-mid",
