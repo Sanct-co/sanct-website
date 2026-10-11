@@ -76,7 +76,7 @@ export function BrandMarquee() {
   return (
     <div
       ref={containerRef}
-      className="relative mt-16 w-full md:mt-20"
+      className="relative mt-8 w-full md:mt-20"
       aria-label="Accreditations and partnerships"
     >
       <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-white to-transparent md:w-24" />

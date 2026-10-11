@@ -127,7 +127,7 @@ export function HomeContactSection() {
     <section
       ref={sectionRef}
       id="contact"
-      className="flex items-center bg-near-black px-(--spacing-section-x) py-8 lg:min-h-[calc(100dvh-4.5rem)] lg:py-6"
+      className="flex items-center bg-near-black px-(--spacing-section-x) pt-8 pb-28 md:pb-8 lg:min-h-[calc(100dvh-4.5rem)] lg:py-6"
     >
       <div className="mx-auto grid w-full max-w-(--max-width-container) items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,38rem)] lg:gap-x-16">
         <div>

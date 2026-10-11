@@ -66,7 +66,7 @@ export function HomePanels() {
     <div ref={containerRef} className="relative">
       <section
         ref={heroPanelRef}
-        className="home-panel relative min-h-svh bg-white"
+        className="home-panel relative min-h-[calc(100svh-4.5rem)] bg-white"
       >
         <HeroSection />
       </section>

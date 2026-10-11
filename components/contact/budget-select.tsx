@@ -73,7 +73,7 @@ export function BudgetSelect({
         role="group"
         className={
           variant === "dark"
-            ? "mt-2 grid grid-cols-2 gap-2 lg:grid-cols-3"
+            ? "mt-2 grid grid-cols-1 gap-2 min-[520px]:grid-cols-2 lg:grid-cols-3"
             : "mt-2.5 flex flex-wrap gap-2"
         }
       >
@@ -87,7 +87,7 @@ export function BudgetSelect({
               onClick={() => select(option.id)}
               className={
                 variant === "dark"
-                  ? `rounded-input border px-3 py-2.5 text-base font-semibold transition-colors duration-150 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac ${
+                  ? `rounded-input border px-3 py-2.5 text-center text-base font-semibold leading-snug transition-colors duration-150 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac ${
                       active
                         ? "border-lilac bg-lilac/15 text-white"
                         : "border-white/10 bg-white/[0.03] text-white/80 hover:border-white/25"
@@ -112,7 +112,7 @@ export function BudgetSelect({
           onClick={() => select("custom")}
           className={
             variant === "dark"
-              ? `rounded-input border px-3 py-2.5 text-base font-semibold transition-colors duration-150 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac ${
+              ? `rounded-input border px-3 py-2.5 text-center text-base font-semibold leading-snug transition-colors duration-150 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac min-[520px]:col-span-2 lg:col-span-1 ${
                   isCustom
                     ? "border-lilac bg-lilac/15 text-white"
                     : "border-white/10 bg-white/[0.03] text-white/80 hover:border-white/25"

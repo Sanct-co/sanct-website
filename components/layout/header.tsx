@@ -545,13 +545,13 @@ export function Header() {
           aria-label="Sanct home"
           className="relative flex shrink-0 items-center gap-2.5 rounded-tag transition-opacity duration-150 ease-out hover:opacity-80 focus-visible:opacity-80"
         >
-          <span className="relative h-9 w-9 shrink-0 overflow-hidden">
+          <span className="relative h-9 w-9 shrink-0">
             <Image
-              src="/sanct-logo.png"
+              src="/sanct-mark.png"
               alt=""
-              width={877}
-              height={887}
-              className="h-[175%] w-full max-w-none object-cover object-top"
+              width={606}
+              height={606}
+              className="h-full w-full"
               priority
             />
           </span>
@@ -684,79 +684,14 @@ export function Header() {
           className="mx-auto flex min-h-full max-w-(--max-width-container) flex-col gap-2 px-(--spacing-section-x) py-8"
         >
           {navLinks.map((link) => (
-            <Fragment key={link.href}>
-              <NavLink
-                href={link.href}
-                label={link.label}
-                large
-                className="mobile-nav-item"
-                onNavigate={() => setMenuOpen(false)}
-              />
-              {link.label === "Services" && (
-                <div className="mb-2 flex flex-col gap-1 pl-3">
-                  {services.map((service) => (
-                    <Link
-                      key={service.id}
-                      href={`/services#${service.id}`}
-                      className="mobile-nav-item py-1 text-base text-on-light-muted transition-colors duration-150 ease-out hover:text-sanct-indigo"
-                      onClick={() => setMenuOpen(false)}
-                    >
-                      {service.name}
-                    </Link>
-                  ))}
-                </div>
-              )}
-              {link.label === "Industries" && (
-                <div className="mb-2 flex flex-col gap-1 pl-3">
-                  {industries.map((industry) => (
-                    <div key={industry.id} className="mobile-nav-item flex flex-col">
-                      <Link
-                        href={`/#${industry.id}`}
-                        className="py-1 text-base text-on-light-muted transition-colors duration-150 ease-out hover:text-sanct-indigo"
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        {industry.name}
-                      </Link>
-                      {industry.offerings.map((offering) => (
-                        <Link
-                          key={offering.name}
-                          href={`/#${industry.id}`}
-                          className="py-0.5 pl-3 text-sm text-on-light-muted transition-colors duration-150 ease-out hover:text-sanct-indigo"
-                          onClick={() => setMenuOpen(false)}
-                        >
-                          {offering.name}
-                        </Link>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              )}
-              {link.label === "Company" && (
-                <div className="mb-2 flex flex-col gap-1 pl-3">
-                  {company.map((group) => (
-                    <div key={group.id} className="mobile-nav-item flex flex-col">
-                      <Link
-                        href={group.href}
-                        className="py-1 text-base text-on-light-muted transition-colors duration-150 ease-out hover:text-sanct-indigo"
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        {group.name}
-                      </Link>
-                      {group.offerings.map((offering) => (
-                        <Link
-                          key={offering.name}
-                          href={offering.href}
-                          className="py-0.5 pl-3 text-sm text-on-light-muted transition-colors duration-150 ease-out hover:text-sanct-indigo"
-                          onClick={() => setMenuOpen(false)}
-                        >
-                          {offering.name}
-                        </Link>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </Fragment>
+            <NavLink
+              key={link.href}
+              href={link.href}
+              label={link.label}
+              large
+              className="mobile-nav-item"
+              onNavigate={() => setMenuOpen(false)}
+            />
           ))}
           <button
             type="button"

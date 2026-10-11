@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { Section } from "@/components/ui/section";
 import { Tag } from "@/components/ui/tag";
@@ -14,6 +14,8 @@ const BUBBLE_EASE = "power4.out";
 export function IndustriesSection() {
   const [active, setActive] = useState<number | null>(null);
   const bubbleRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const rowRef = useRef<HTMLDivElement>(null);
+  const desktopRef = useRef(false);
   const reducedMotion = useReducedMotion();
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
@@ -27,6 +29,52 @@ export function IndustriesSection() {
     setActive(index);
     if (shouldScroll) emblaApi?.scrollTo(index);
   }
+
+  useEffect(() => {
+    const row = rowRef.current;
+    if (!row) return;
+
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    let inView = false;
+
+    const syncDesktop = () => {
+      desktopRef.current = desktop.matches;
+      if (desktop.matches) setActive(null);
+    };
+
+    const openSelected = () => {
+      if (desktopRef.current) return;
+      setActive(emblaApi?.selectedScrollSnap() ?? 0);
+    };
+
+    syncDesktop();
+    emblaApi?.on("select", openSelected);
+    emblaApi?.on("reInit", openSelected);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        inView = entry.isIntersecting;
+        if (desktopRef.current) return;
+        if (entry.isIntersecting) openSelected();
+        else setActive(null);
+      },
+      { threshold: 0.45 },
+    );
+    observer.observe(row);
+
+    const onDesktopChange = () => {
+      syncDesktop();
+      if (!desktop.matches && inView) openSelected();
+    };
+    desktop.addEventListener("change", onDesktopChange);
+
+    return () => {
+      emblaApi?.off("select", openSelected);
+      emblaApi?.off("reInit", openSelected);
+      observer.disconnect();
+      desktop.removeEventListener("change", onDesktopChange);
+    };
+  }, [emblaApi]);
 
   useGSAP(
     () => {
@@ -94,13 +142,18 @@ export function IndustriesSection() {
       />
 
       <div
-        ref={emblaRef}
+        ref={(node) => {
+          rowRef.current = node;
+          emblaRef(node);
+        }}
         className="mt-12 overflow-hidden md:mt-16 lg:overflow-visible"
       >
         <div
           className="flex border-y border-near-black/10 lg:border-l"
           role="list"
-          onMouseLeave={() => setActive(null)}
+          onMouseLeave={() => {
+            if (desktopRef.current) setActive(null);
+          }}
         >
           {industries.map((industry, index) => {
             const selected = index === active;
@@ -115,9 +168,17 @@ export function IndustriesSection() {
                 <button
                   type="button"
                   aria-pressed={selected}
-                  onMouseEnter={() => selectIndustry(index, false)}
-                  onFocus={() => selectIndustry(index, true)}
+                  onMouseEnter={() => {
+                    if (desktopRef.current) selectIndustry(index, false);
+                  }}
+                  onFocus={() => {
+                    if (desktopRef.current) selectIndustry(index, true);
+                  }}
+                  onClick={() => {
+                    if (!desktopRef.current) selectIndustry(index, true);
+                  }}
                   onBlur={(event) => {
+                    if (!desktopRef.current) return;
                     const next = event.relatedTarget;
                     if (!(next instanceof Node) || !event.currentTarget.parentElement?.parentElement?.contains(next)) {
                       setActive(null);
@@ -177,6 +238,25 @@ export function IndustriesSection() {
                     <span className="absolute top-1/2 right-0 size-11 -translate-y-1/2 translate-x-1/2 rounded-full bg-white" />
                   </div>
                 </div>
+
+                {selected && index < industries.length - 1 && (
+                  <button
+                    type="button"
+                    aria-label={`Next: ${industries[index + 1].name}`}
+                    onClick={() => selectIndustry(index + 1, true)}
+                    className="absolute top-1/2 right-3 z-30 flex size-11 -translate-y-1/2 translate-x-1/2 items-center justify-start pl-1.5 text-near-black lg:hidden"
+                  >
+                    <svg viewBox="0 0 12 12" className="size-3.5" fill="none" aria-hidden>
+                      <path
+                        d="M4.25 2.25 8 6l-3.75 3.75"
+                        stroke="currentColor"
+                        strokeWidth="1.6"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                )}
               </div>
             );
           })}
