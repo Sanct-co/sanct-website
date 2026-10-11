@@ -5,23 +5,17 @@ import { useId, useState } from "react";
 type ServiceSelectOption = { id: string; name: string };
 
 const lightLabelClass = "block text-base font-bold text-near-black";
-const darkLabelClass =
-  "block text-[0.65rem] font-bold uppercase tracking-[0.12em] text-text-secondary";
+const darkLabelClass = "block text-base font-semibold text-white";
 
 const pillBase =
-  "inline-flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-pill border px-4 py-2 text-sm font-semibold transition-colors duration-150 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2";
+  "inline-flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-pill border transition-colors duration-150 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2";
 
-const pillVariant = {
-  light: {
-    inactive:
-      "border-border-light bg-white text-near-black hover:border-sanct-indigo/50 focus-visible:outline-sanct-indigo",
-    active: "border-sanct-indigo bg-sanct-indigo text-white focus-visible:outline-sanct-indigo",
-  },
-  dark: {
-    inactive:
-      "border-white/15 bg-white/5 text-white/80 hover:border-white/30 focus-visible:outline-lilac",
-    active: "border-lilac bg-lilac text-near-black focus-visible:outline-lilac",
-  },
+const pillSize = "px-4 py-2 text-sm font-semibold";
+
+const pillColors = {
+  inactive:
+    "border-border-light bg-white text-near-black hover:border-sanct-indigo/50 focus-visible:outline-sanct-indigo",
+  active: "border-sanct-indigo bg-sanct-indigo text-white focus-visible:outline-sanct-indigo",
 };
 
 function CheckIcon() {
@@ -47,7 +41,6 @@ export function ServiceSelect({
 }) {
   const [selected, setSelected] = useState<string[]>([]);
   const errorId = useId();
-  const colors = pillVariant[variant];
 
   function toggle(id: string) {
     setSelected((prev) =>
@@ -58,13 +51,20 @@ export function ServiceSelect({
   return (
     <fieldset>
       <legend className={variant === "dark" ? darkLabelClass : lightLabelClass}>
-        {legend} <span className="text-sanct-indigo">*</span>
+        {legend}{" "}
+        <span className={variant === "dark" ? "text-lilac" : "text-sanct-indigo"}>
+          *
+        </span>
       </legend>
       <div
         role="group"
         aria-invalid={!!error}
         aria-describedby={error ? errorId : undefined}
-        className="mt-3 flex flex-wrap gap-2.5"
+        className={
+          variant === "dark"
+            ? "mt-2 grid grid-cols-1 gap-2 min-[420px]:grid-cols-2"
+            : "mt-2.5 flex flex-wrap gap-2"
+        }
       >
         {options.map((option) => {
           const active = selected.includes(option.id);
@@ -74,10 +74,31 @@ export function ServiceSelect({
               type="button"
               aria-pressed={active}
               onClick={() => toggle(option.id)}
-              className={`${pillBase} ${active ? colors.active : colors.inactive}`}
+              className={
+                variant === "dark"
+                  ? `flex items-center justify-between gap-3 rounded-input border px-4 py-2.5 text-left text-base font-semibold transition-colors duration-150 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac ${
+                      active
+                        ? "border-lilac bg-lilac/15 text-white"
+                        : "border-white/10 bg-white/[0.03] text-white/80 hover:border-white/25"
+                    }`
+                  : `${pillBase} ${pillSize} ${active ? pillColors.active : pillColors.inactive}`
+              }
             >
-              {active && <CheckIcon />}
-              {option.name}
+              <span>{option.name}</span>
+              {variant === "dark" ? (
+                <span
+                  aria-hidden
+                  className={`flex size-5 shrink-0 items-center justify-center rounded-full border ${
+                    active
+                      ? "border-lilac bg-lilac text-near-black"
+                      : "border-white/20"
+                  }`}
+                >
+                  {active && <CheckIcon />}
+                </span>
+              ) : (
+                active && <CheckIcon />
+              )}
               <input type="hidden" name="service" value={option.id} disabled={!active} />
             </button>
           );

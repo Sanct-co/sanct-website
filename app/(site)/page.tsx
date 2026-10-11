@@ -2,6 +2,7 @@ import { CtaBanner } from "@/components/ui/cta-banner";
 import { FaqSection } from "@/components/home/faq-section";
 import { HomePanels } from "@/components/home/home-panels";
 import { HomeContactSection } from "@/components/home/home-contact-section";
+import { IndustriesSection } from "@/components/home/industries-section";
 import { ProcessSection } from "@/components/home/process-section";
 import { ProofGallery } from "@/components/home/proof-gallery";
 import { ServicesSnapshot } from "@/components/home/services-snapshot";
@@ -23,6 +24,7 @@ export default function Home() {
       <div className="relative z-30 bg-near-black">
         <ServicesSnapshot />
       </div>
+      <IndustriesSection />
       <ProcessSection />
       <SocialProof />
       <ProofGallery />

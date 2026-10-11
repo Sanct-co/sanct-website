@@ -6,6 +6,6 @@ export type Brand = {
 export const brands: Brand[] = [
   { name: "PhilGEPS Certified", logo: "/marquee/philgeps.png" },
   { name: "DTI Registered", logo: "/marquee/dti.png" },
-  { name: "BIR Regulated", logo: "/marquee/bir.png" },
+  { name: "BIR Registered", logo: "/marquee/bir.png" },
   { name: "Deped Partner", logo: "/marquee/deped.png" },
 ];
