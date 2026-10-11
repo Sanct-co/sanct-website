@@ -8,7 +8,7 @@ import { team, values } from "@/lib/team";
 
 export function MissionSection() {
   return (
-    <Section background="indigo">
+    <Section id="mission" background="indigo" className="scroll-mt-24">
       <Reveal>
         <p className="font-terminal text-[12px] uppercase tracking-[0.08em] text-lilac">
           Our Mission
@@ -23,7 +23,7 @@ export function MissionSection() {
 
 export function StorySection() {
   return (
-    <Section background="ghost">
+    <Section id="story" background="ghost" className="scroll-mt-24">
       <div className="grid gap-14 lg:grid-cols-2">
         <Reveal>
           <h2 className="font-display text-4xl font-extrabold md:text-5xl">
@@ -116,7 +116,7 @@ const virtues = [
 
 export function PhilosophySection() {
   return (
-    <Section background="dark">
+    <Section id="philosophy" background="dark" className="scroll-mt-24">
       <Reveal>
         <p className="font-terminal text-[12px] uppercase tracking-[0.08em] text-lilac">
           Our Philosophy
@@ -160,7 +160,7 @@ export function PhilosophySection() {
 
 export function TeamSection() {
   return (
-    <Section background="ghost">
+    <Section id="team" background="ghost" className="scroll-mt-24">
       <Reveal>
         <p className="font-terminal text-[12px] uppercase tracking-[0.08em] text-lilac">
           Team

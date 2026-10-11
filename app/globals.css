@@ -120,3 +120,156 @@ html[data-intro="complete"] .intro-overlay,
 @utility animate-proof-glow {
   animation: proof-glow 3.2s ease-in-out infinite;
 }
+
+.site-header {
+  transition: background-color 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.site-header[data-surface="light"] {
+  background-color: #fff !important;
+}
+
+.site-header[data-surface="dark"] {
+  background-color: var(--near-black) !important;
+  box-shadow: none !important;
+}
+
+.site-header[data-surface="indigo"] {
+  background-color: var(--sanct-indigo) !important;
+  box-shadow: none !important;
+}
+
+.site-header[data-services-open="true"] {
+  background-color: var(--near-black) !important;
+  box-shadow: none !important;
+}
+
+.site-header .header-logo-word,
+.site-header .header-nav-item:not(.header-contact),
+.site-header .header-menu-button {
+  transition: color 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.site-header .header-contact {
+  transition:
+    background-color 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.site-header[data-surface="dark"] .header-logo-word,
+.site-header[data-surface="dark"] .header-nav-item:not(.header-contact),
+.site-header[data-surface="dark"] .header-menu-button,
+.site-header[data-surface="indigo"] .header-logo-word,
+.site-header[data-surface="indigo"] .header-nav-item:not(.header-contact),
+.site-header[data-surface="indigo"] .header-menu-button,
+.site-header[data-services-open="true"] .header-logo-word,
+.site-header[data-services-open="true"] .header-nav-item:not(.header-contact),
+.site-header[data-services-open="true"] .header-menu-button {
+  color: #fff;
+}
+
+.site-header[data-surface="indigo"]:not([data-services-open="true"]) .header-contact {
+  background-color: #fff;
+  color: var(--sanct-indigo);
+}
+
+.site-header[data-surface="dark"] .header-nav-item:not(.header-contact):hover,
+.site-header[data-surface="dark"] .header-nav-item:not(.header-contact):focus-visible,
+.site-header[data-surface="indigo"] .header-nav-item:not(.header-contact):hover,
+.site-header[data-surface="indigo"] .header-nav-item:not(.header-contact):focus-visible,
+.site-header[data-services-open="true"] .header-nav-item:not(.header-contact):hover,
+.site-header[data-services-open="true"] .header-nav-item:not(.header-contact):focus-visible {
+  color: var(--lilac);
+}
+
+.services-catalog {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 0.75s;
+}
+
+.services-catalog[data-open="true"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 0s;
+}
+
+.service-card,
+.service-card-copy,
+.service-card-tag,
+.service-card-visual {
+  transition:
+    background-color 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.service-card:hover {
+  background-color: var(--sanct-indigo);
+  border-color: color-mix(in srgb, var(--lilac) 50%, transparent);
+  box-shadow: 0 32px 80px -28px rgba(44, 31, 168, 0.9);
+  transform: translateY(-4px);
+}
+
+.service-card:hover .service-card-copy {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.service-card:hover .service-card-tag {
+  border-color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.service-card:hover .service-card-visual {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.services-chevron {
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.services-chevron[data-open="true"] {
+  transform: rotate(180deg);
+}
+
+.catalog-copy {
+  animation: catalog-copy-in 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes catalog-copy-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header,
+  .site-header .header-logo-word,
+  .site-header .header-nav-item,
+  .site-header .header-menu-button,
+  .site-header .header-contact,
+  .services-catalog,
+  .services-catalog[data-open="true"],
+  .services-chevron,
+  .catalog-copy,
+  .service-card,
+  .service-card-copy,
+  .service-card-tag,
+  .service-card-visual,
+  .service-card:hover {
+    transition: none;
+    animation: none;
+  }
+}

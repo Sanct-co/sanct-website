@@ -13,7 +13,10 @@ export function ServiceList() {
       <div className="flex flex-col">
         {services.map((service, i) => (
           <Reveal key={service.id} delay={i * 0.08}>
-            <article className="group relative grid gap-8 border-b border-border-light py-14 last:border-b-0 lg:grid-cols-[5rem_minmax(0,1fr)] lg:gap-16 lg:py-20">
+            <article
+              id={service.id}
+              className="group relative scroll-mt-24 grid gap-8 border-b border-border-light py-14 last:border-b-0 lg:grid-cols-[5rem_minmax(0,1fr)] lg:gap-16 lg:py-20"
+            >
               <div className="flex items-start gap-5 lg:flex-col lg:items-end lg:gap-3 lg:pt-2">
                 <span className="font-display text-5xl font-extrabold leading-none tracking-tighter text-sanct-indigo/12 transition-colors duration-300 group-hover:text-sanct-indigo/25 md:text-6xl lg:text-right">
                   {String(i + 1).padStart(2, "0")}

@@ -3,37 +3,31 @@
 import { useId, useState } from "react";
 
 const budgetOptions = [
-  { id: "100k", name: "Under ₱100K " },
+  { id: "100k", name: "Under ₱100K" },
   { id: "100k-250k", name: "₱100K – ₱250K" },
   { id: "250k-500k", name: "₱250K – ₱500K" },
-  { id: "500k-1m", name: "₱500K – ₱1M+" }
+  { id: "500k-1m", name: "₱500K – ₱1M+" },
 ];
 
 const lightLabelClass = "block text-base font-bold text-near-black";
-const darkLabelClass =
-  "block text-[0.65rem] font-bold uppercase tracking-[0.12em] text-text-secondary";
+const darkLabelClass = "block text-base font-semibold text-white";
 
 const pillBase =
-  "inline-flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-pill border px-4 py-2 text-sm font-semibold transition-colors duration-150 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2";
+  "inline-flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-pill border transition-colors duration-150 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2";
 
-const pillVariant = {
-  light: {
-    inactive:
-      "border-border-light bg-white text-near-black hover:border-sanct-indigo/50 focus-visible:outline-sanct-indigo",
-    active: "border-sanct-indigo bg-sanct-indigo text-white focus-visible:outline-sanct-indigo",
-  },
-  dark: {
-    inactive:
-      "border-white/15 bg-white/5 text-white/80 hover:border-white/30 focus-visible:outline-lilac",
-    active: "border-lilac bg-lilac text-near-black focus-visible:outline-lilac",
-  },
+const pillSize = "px-4 py-2 text-sm font-semibold";
+
+const pillColors = {
+  inactive:
+    "border-border-light bg-white text-near-black hover:border-sanct-indigo/50 focus-visible:outline-sanct-indigo",
+  active: "border-sanct-indigo bg-sanct-indigo text-white focus-visible:outline-sanct-indigo",
 };
 
 const customInputClass = {
   light:
     "w-full rounded-input border border-border-light bg-white px-4 py-3.5 text-base text-near-black placeholder:text-on-light-muted/60 focus:border-sanct-indigo focus:outline-none",
   dark:
-    "w-full border-b border-border-dark bg-transparent pb-2.5 pt-1.5 text-base text-white placeholder:text-text-muted focus:border-lilac focus:outline-none",
+    "w-full rounded-input border border-white/10 bg-white/[0.04] px-4 py-3 text-base text-white placeholder:text-white/35 focus:border-lilac focus:outline-none",
 };
 
 function CheckIcon() {
@@ -55,7 +49,6 @@ export function BudgetSelect({
 }) {
   const [selected, setSelected] = useState<string | null>(null);
   const customInputId = useId();
-  const colors = pillVariant[variant];
   const isCustom = selected === "custom";
 
   function select(id: string) {
@@ -66,9 +59,24 @@ export function BudgetSelect({
     <fieldset>
       <legend className={variant === "dark" ? darkLabelClass : lightLabelClass}>
         {legend}{" "}
-        <span className="font-normal text-on-light-muted">(Optional)</span>
+        <span
+          className={
+            variant === "dark"
+              ? "font-normal text-white/35"
+              : "font-normal text-on-light-muted"
+          }
+        >
+          (Optional)
+        </span>
       </legend>
-      <div role="group" className="mt-3 flex flex-wrap gap-2.5">
+      <div
+        role="group"
+        className={
+          variant === "dark"
+            ? "mt-2 grid grid-cols-2 gap-2 lg:grid-cols-3"
+            : "mt-2.5 flex flex-wrap gap-2"
+        }
+      >
         {budgetOptions.map((option) => {
           const active = selected === option.id;
           return (
@@ -77,9 +85,17 @@ export function BudgetSelect({
               type="button"
               aria-pressed={active}
               onClick={() => select(option.id)}
-              className={`${pillBase} ${active ? colors.active : colors.inactive}`}
+              className={
+                variant === "dark"
+                  ? `rounded-input border px-3 py-2.5 text-base font-semibold transition-colors duration-150 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac ${
+                      active
+                        ? "border-lilac bg-lilac/15 text-white"
+                        : "border-white/10 bg-white/[0.03] text-white/80 hover:border-white/25"
+                    }`
+                  : `${pillBase} ${pillSize} ${active ? pillColors.active : pillColors.inactive}`
+              }
             >
-              {active && <CheckIcon />}
+              {variant !== "dark" && active && <CheckIcon />}
               {option.name}
               <input
                 type="hidden"
@@ -94,9 +110,17 @@ export function BudgetSelect({
           type="button"
           aria-pressed={isCustom}
           onClick={() => select("custom")}
-          className={`${pillBase} ${isCustom ? colors.active : colors.inactive}`}
+          className={
+            variant === "dark"
+              ? `rounded-input border px-3 py-2.5 text-base font-semibold transition-colors duration-150 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac ${
+                  isCustom
+                    ? "border-lilac bg-lilac/15 text-white"
+                    : "border-white/10 bg-white/[0.03] text-white/80 hover:border-white/25"
+                }`
+              : `${pillBase} ${pillSize} ${isCustom ? pillColors.active : pillColors.inactive}`
+          }
         >
-          {isCustom && <CheckIcon />}
+          {variant !== "dark" && isCustom && <CheckIcon />}
           Custom
           <input
             type="hidden"

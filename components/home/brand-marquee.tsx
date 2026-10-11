@@ -65,7 +65,7 @@ export function BrandMarquee() {
 
       gsap.to(track, {
         x: -trackWidth,
-        duration: 25,
+        duration: 60,
         ease: "none",
         repeat: -1,
       });

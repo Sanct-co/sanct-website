@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, Fragment, type MouseEventHandler, type ReactNode } from "react";
 import { ButtonLink } from "@/components/ui/button";
 import { BrandMarquee } from "@/components/home/brand-marquee";
+import { HeroPixelField } from "@/components/home/hero-pixel-field";
 import { useIntro } from "@/components/providers/intro-provider";
 import { EASE_OUT, gsap, useGSAP } from "@/lib/gsap";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
@@ -491,9 +492,9 @@ export function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-white px-(--spacing-section-x) pb-20 pt-14 text-near-black md:pb-28 md:pt-20"
+      className="relative min-h-[calc(100svh-4.5rem)] overflow-hidden bg-white pt-14 text-near-black md:pt-20"
     >
-      <div className="mx-auto w-full max-w-(--max-width-container)">
+      <div className="relative z-10 mx-auto w-full max-w-(--max-width-container) px-(--spacing-section-x)">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="font-display text-[clamp(2.75rem,7vw,5.25rem)] font-extrabold leading-[1.05] tracking-[-0.03em]">
             {HERO_WORDS.map((word, index) => (
@@ -536,7 +537,7 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div
+        {/* <div
           ref={imageBlockRef}
           className="relative mx-auto mt-16 max-w-5xl md:mt-24"
         >
@@ -546,11 +547,15 @@ export function HeroSection() {
           >
             <HeroCodeAnimation />
           </div>
-        </div>
+        </div> */}
 
         <div ref={marqueeRef}>
           <BrandMarquee />
         </div>
+      </div>
+
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[clamp(180px,30vh,360px)]">
+        <HeroPixelField mode={heroMotionMode} />
       </div>
     </section>
   );

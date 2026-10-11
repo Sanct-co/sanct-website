@@ -12,11 +12,10 @@ import { EASE_OUT, gsap, useGSAP } from "@/lib/gsap";
 import { services } from "@/lib/services";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 
-const labelClass =
-  "block text-[0.65rem] font-bold uppercase tracking-[0.12em] text-text-secondary";
+const labelClass = "block text-base font-semibold text-white";
 
 const inputClass =
-  "w-full border-b border-border-dark bg-transparent pb-2.5 pt-1.5 text-base text-white placeholder:text-text-muted focus:border-lilac focus:outline-none transition-[border-color] duration-150 ease-out";
+  "mt-1.5 w-full rounded-input border border-white/10 bg-white/[0.04] px-4 py-3 text-base text-white placeholder:text-white/35 transition-[border-color,background-color] duration-150 ease-out focus:border-lilac focus:bg-white/[0.06] focus:outline-none";
 
 const serviceOptions = [
   ...services.map((s) => ({ id: s.id, name: s.name })),
@@ -128,12 +127,11 @@ export function HomeContactSection() {
     <section
       ref={sectionRef}
       id="contact"
-      className="bg-near-black py-(--spacing-section-y) px-(--spacing-section-x)"
+      className="flex items-center bg-near-black px-(--spacing-section-x) py-8 lg:min-h-[calc(100dvh-4.5rem)] lg:py-6"
     >
-      <div className="mx-auto grid w-full max-w-(--max-width-container) gap-16 lg:grid-cols-2 lg:gap-24">
-        {/* Left */}
-        <div className="flex flex-col justify-center">
-          <h2 className="font-display text-[clamp(3.5rem,8vw,6rem)] font-extrabold leading-[0.95] tracking-[-0.03em] text-white">
+      <div className="mx-auto grid w-full max-w-(--max-width-container) items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,38rem)] lg:gap-x-16">
+        <div>
+          <h2 className="font-display text-[clamp(3.5rem,7vw,5.5rem)] font-extrabold leading-[0.9] tracking-[-0.04em] text-white">
             {"LAUNCH".split("").map((char, i) => (
               <CharMask key={`l${i}`} char={char} />
             ))}
@@ -144,33 +142,31 @@ export function HomeContactSection() {
           </h2>
           <p
             data-contact-details=""
-            className="mt-8 max-w-sm text-lg leading-relaxed text-text-secondary"
+            className="mt-6 max-w-sm text-lg leading-relaxed text-white/55"
           >
             Tell us what you need. We&apos;ll show you how fast we can make it
             happen.
           </p>
         </div>
 
-
-        {/* Right: form */}
         <form
           ref={formRef}
           data-contact-form=""
           action={formAction}
-          className="space-y-8"
+          className="flex flex-col gap-3.5 rounded-card border border-white/10 bg-white/[0.03] p-5"
           noValidate
         >
-          <div className="grid gap-8 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2">
             <div>
               <label htmlFor="hs-name" className={labelClass}>
-                Name
+                Name <span className="text-lilac">*</span>
               </label>
               <input
                 id="hs-name"
                 name="name"
                 type="text"
                 required
-                placeholder="What is your name?"
+                placeholder="Your name"
                 autoComplete="name"
                 className={inputClass}
                 aria-invalid={!!state.errors?.name}
@@ -179,21 +175,21 @@ export function HomeContactSection() {
                 }
               />
               {state.errors?.name && (
-                <p id="hs-name-error" className="mt-1 text-xs text-red-400">
+                <p id="hs-name-error" className="mt-1.5 text-xs text-red-400">
                   {state.errors.name}
                 </p>
               )}
             </div>
             <div>
               <label htmlFor="hs-email" className={labelClass}>
-                Email Address
+                Email <span className="text-lilac">*</span>
               </label>
               <input
                 id="hs-email"
                 name="email"
                 type="email"
                 required
-                placeholder="What is your email address?"
+                placeholder="you@company.com"
                 autoComplete="email"
                 className={inputClass}
                 aria-invalid={!!state.errors?.email}
@@ -202,67 +198,72 @@ export function HomeContactSection() {
                 }
               />
               {state.errors?.email && (
-                <p id="hs-email-error" className="mt-1 text-xs text-red-400">
+                <p id="hs-email-error" className="mt-1.5 text-xs text-red-400">
                   {state.errors.email}
                 </p>
               )}
             </div>
-          </div>
-
-          <div>
-            <label htmlFor="hs-phone" className={labelClass}>
-              Phone (Optional)
-            </label>
-            <input
-              id="hs-phone"
-              name="phone"
-              type="tel"
-              placeholder="What is your phone number?"
-              autoComplete="tel"
-              className={inputClass}
-            />
+            <div className="sm:col-span-2">
+              <label htmlFor="hs-phone" className={labelClass}>
+                Phone{" "}
+                <span className="font-normal text-white/35">(Optional)</span>
+              </label>
+              <input
+                id="hs-phone"
+                name="phone"
+                type="tel"
+                placeholder="09xx xxx xxxx"
+                autoComplete="tel"
+                className={inputClass}
+              />
+            </div>
           </div>
 
           <ServiceSelect
             options={serviceOptions}
             variant="dark"
-            legend="What Service Are You Looking For?"
+            legend="What service are you looking for?"
             error={state.errors?.service}
-            errorTextClass="mt-1 text-xs text-red-400"
+            errorTextClass="mt-2 text-xs text-red-400"
           />
 
-          <BudgetSelect variant="dark" legend="What's Your Budget?" />
+          <BudgetSelect variant="dark" legend="What's your budget?" />
 
           <div>
             <label htmlFor="hs-message" className={labelClass}>
-              Message
+              Message <span className="text-lilac">*</span>
             </label>
             <textarea
               id="hs-message"
               name="message"
-              rows={3}
+              rows={2}
               required
               placeholder="Tell us what you need."
-              className={`${inputClass} resize-none`}
+              className={`${inputClass} resize-y`}
               aria-invalid={!!state.errors?.message}
               aria-describedby={
                 state.errors?.message ? "hs-message-error" : undefined
               }
             />
             {state.errors?.message && (
-              <p id="hs-message-error" className="mt-1 text-xs text-red-400">
+              <p id="hs-message-error" className="mt-1.5 text-xs text-red-400">
                 {state.errors.message}
               </p>
             )}
           </div>
 
-          <button
-            type="submit"
-            disabled={pending}
-            className="mt-2 w-full rounded-pill bg-sanct-indigo py-4 text-sm font-bold uppercase tracking-[0.1em] text-white transition-[background-color] duration-150 ease-out hover:bg-indigo-mid focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac disabled:opacity-60"
-          >
-            {pending ? "Sending…" : "Send Message"}
-          </button>
+          <div className="flex flex-col gap-3 border-t border-white/10 pt-3">
+            <p className="text-base text-white/50">
+              We reply within one business day.
+            </p>
+            <button
+              type="submit"
+              disabled={pending}
+              className="inline-flex w-full items-center justify-center rounded-pill bg-sanct-indigo px-7 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-white transition-[background-color] duration-150 ease-out hover:bg-indigo-mid focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac disabled:opacity-60"
+            >
+              {pending ? "Sending…" : "Send message"}
+            </button>
+          </div>
         </form>
       </div>
     </section>
