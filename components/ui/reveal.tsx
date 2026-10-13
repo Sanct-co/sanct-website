@@ -33,15 +33,24 @@ export function Reveal({
       const element = ref.current;
       if (!element || reducedMotion) return;
 
+      const compact = window.matchMedia("(max-width: 1023px)").matches;
+      const offset = compact
+        ? direction === "down"
+          ? { y: -16 }
+          : direction === "none"
+            ? {}
+            : { y: 16 }
+        : offsets[direction];
+
       gsap.from(element, {
         autoAlpha: 0,
-        ...offsets[direction],
+        ...offset,
         duration: 0.6,
         ease: EASE_OUT,
         delay,
         scrollTrigger: {
           trigger: element,
-          start: "top 85%",
+          start: compact ? "top 92%" : "top 85%",
           once: true,
         },
       });

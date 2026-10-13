@@ -1,6 +1,6 @@
 "use client";
 
-import { type FocusEvent, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type FocusEvent, type PointerEvent } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ConnectionPath } from "./connection-path";
 import { DataPacket } from "./data-packet";
@@ -70,26 +70,65 @@ export function ProcessMobile({
   blurNode,
 }: ProcessMobileProps) {
   const transition = diagramTransition(reducedMotion, 0.28);
+  const touchRef = useRef({ x: 0, y: 0, moved: false });
+  const listRef = useRef<HTMLOListElement>(null);
+  const [reached, setReached] = useState(-1);
+
+  useEffect(() => {
+    const list = listRef.current;
+    if (!list || reducedMotion) return;
+
+    const items = [...list.querySelectorAll<HTMLElement>("[data-process-step]")];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const indexes = entries
+          .filter((entry) => entry.isIntersecting)
+          .map((entry) => items.indexOf(entry.target as HTMLElement))
+          .filter((index) => index >= 0);
+        if (indexes.length === 0) return;
+        const next = Math.max(...indexes);
+        setReached((current) => Math.max(current, next));
+      },
+      { rootMargin: "-32% 0px -40% 0px", threshold: [0, 0.2, 0.6] },
+    );
+
+    items.forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
+  }, [reducedMotion]);
 
   return (
     <div className="mt-10">
       <p className="font-terminal text-[11px] uppercase tracking-[0.16em] text-text-muted">
         Tap a step
       </p>
-      <ol className="mt-6">
+      <ol ref={listRef} className="mt-6 [overflow-anchor:none]">
         {processSteps.map((step, index) => {
           const active = activeNode === step.id;
-          const dimmed = activeNode !== null && !active;
+          const played = index <= reached;
+          const dimmed = activeNode !== null && !active && !played;
           const next = processSteps[index + 1];
-          const pathState = next ? connectionState(activeNode, step.id, next.id) : "idle";
+          const pathState = next
+            ? played || active
+              ? "hot"
+              : connectionState(activeNode, step.id, next.id)
+            : "idle";
 
           return (
-            <li key={step.id}>
+            <li key={step.id} data-process-step="">
               <motion.div
-                initial={false}
-                animate={{ opacity: dimmed ? 0.3 : 1 }}
-                transition={diagramTransition(reducedMotion, 0.35)}
+                initial={reducedMotion ? false : { opacity: 0, y: 36 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "0px 0px -8% 0px" }}
+                transition={{
+                  ...diagramTransition(reducedMotion, 0.6),
+                  delay: reducedMotion ? 0 : index * 0.05,
+                }}
               >
+                <motion.div
+                  initial={false}
+                  animate={{ opacity: dimmed ? 0.3 : 1 }}
+                  transition={diagramTransition(reducedMotion, 0.35)}
+                >
                 <button
                   type="button"
                   data-process-node=""
@@ -104,8 +143,20 @@ export function ProcessMobile({
                     if (event.pointerType === "touch") return;
                     leave(step.id, event.relatedTarget);
                   }}
-                  onPointerUp={(event: PointerEvent<HTMLButtonElement>) => {
+                  onPointerDown={(event: PointerEvent<HTMLButtonElement>) => {
                     if (event.pointerType !== "touch") return;
+                    touchRef.current = { x: event.clientX, y: event.clientY, moved: false };
+                  }}
+                  onPointerMove={(event: PointerEvent<HTMLButtonElement>) => {
+                    if (event.pointerType !== "touch" || touchRef.current.moved) return;
+                    const distance = Math.hypot(
+                      event.clientX - touchRef.current.x,
+                      event.clientY - touchRef.current.y,
+                    );
+                    if (distance > 8) touchRef.current.moved = true;
+                  }}
+                  onPointerUp={(event: PointerEvent<HTMLButtonElement>) => {
+                    if (event.pointerType !== "touch" || touchRef.current.moved) return;
                     toggle(step.id);
                   }}
                   onFocus={(event: FocusEvent<HTMLButtonElement>) => {
@@ -121,13 +172,13 @@ export function ProcessMobile({
                       <IsometricPlatform
                         x={0}
                         y={12}
-                        raised={active}
-                        highlighted={active}
+                        raised={played || active}
+                        highlighted={played || active}
                         reducedMotion={reducedMotion}
                       >
                         <g
                           transform="translate(0 50)"
-                          style={{ color: active ? "#f7f6ff" : "rgba(255,255,255,0.78)" }}
+                          style={{ color: played || active ? "#f7f6ff" : "rgba(255,255,255,0.78)" }}
                         >
                           <MobileIcon id={step.id} />
                         </g>
@@ -157,7 +208,7 @@ export function ProcessMobile({
                   <span className="min-w-0 flex-1 pt-3">
                     <span
                       className={`block border-l py-1 pl-4 ${
-                        active ? "border-lilac" : "border-white/10"
+                        played || active ? "border-lilac" : "border-white/10"
                       }`}
                     >
                       <span className="font-terminal text-[11px] uppercase tracking-[0.16em] text-lilac">
@@ -168,7 +219,7 @@ export function ProcessMobile({
                       </span>
                     </span>
                     <AnimatePresence initial={false}>
-                      {active && (
+                      {(played || active) && (
                         <motion.span
                           key={step.id}
                           initial={reducedMotion ? false : { opacity: 0, y: 6 }}
@@ -183,6 +234,7 @@ export function ProcessMobile({
                     </AnimatePresence>
                   </span>
                 </button>
+                </motion.div>
               </motion.div>
             </li>
           );

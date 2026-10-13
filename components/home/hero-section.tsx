@@ -385,8 +385,10 @@ function WordMask({ children, className = "" }: { children: ReactNode; className
         display: "inline-block",
         overflow: "hidden",
         verticalAlign: "bottom",
-        paddingBottom: "0.08em",
-        marginBottom: "-0.08em",
+        paddingTop: "0.08em",
+        marginTop: "-0.08em",
+        paddingBottom: "0.12em",
+        marginBottom: "-0.12em",
       }}
     >
       <span className="hero-word" style={{ display: "inline-block" }}>
@@ -456,8 +458,12 @@ export function HeroSection() {
       gsap.set(".hero-word", { y: "110%" });
       gsap.set(subtitleRef.current, { autoAlpha: 0, y: 20 });
       gsap.set(".hero-cta", { autoAlpha: 0, y: 16 });
-      gsap.set(imageBlockRef.current, { autoAlpha: 0, y: 32 });
-      gsap.set(imageRef.current, { scale: 0.96, autoAlpha: 1 });
+      if (imageBlockRef.current) {
+        gsap.set(imageBlockRef.current, { autoAlpha: 0, y: 32 });
+      }
+      if (imageRef.current) {
+        gsap.set(imageRef.current, { scale: 0.96, autoAlpha: 1 });
+      }
       gsap.set(marqueeRef.current, { autoAlpha: 0, y: 20 });
     },
     { scope: sectionRef, dependencies: [heroMotionMode] },
@@ -473,18 +479,28 @@ export function HeroSection() {
           gsap.set(".hero-word", { clearProps: "transform" });
           gsap.set(subtitleRef.current, { clearProps: "opacity,visibility,transform" });
           gsap.set(".hero-cta", { clearProps: "opacity,visibility,transform" });
-          gsap.set(imageBlockRef.current, { clearProps: "opacity,visibility,transform" });
-          gsap.set(imageRef.current, { clearProps: "transform" });
+          if (imageBlockRef.current) {
+            gsap.set(imageBlockRef.current, { clearProps: "opacity,visibility,transform" });
+          }
+          if (imageRef.current) {
+            gsap.set(imageRef.current, { clearProps: "transform" });
+          }
           gsap.set(marqueeRef.current, { clearProps: "opacity,visibility,transform" });
         },
       });
 
       tl.to(".hero-word", { y: "0%", duration: 0.85, stagger: 0.07 })
         .to(subtitleRef.current, { autoAlpha: 1, y: 0, duration: 0.6 }, "-=0.35")
-        .to(".hero-cta", { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.12 }, "-=0.3")
-        .to(imageBlockRef.current, { autoAlpha: 1, y: 0, duration: 0.7 }, "-=0.2")
-        .to(imageRef.current, { scale: 1, duration: 0.8 }, "-=0.55")
-        .to(marqueeRef.current, { autoAlpha: 1, y: 0, duration: 0.6 }, "-=0.35");
+        .to(".hero-cta", { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.12 }, "-=0.3");
+
+      if (imageBlockRef.current) {
+        tl.to(imageBlockRef.current, { autoAlpha: 1, y: 0, duration: 0.7 }, "-=0.2");
+      }
+      if (imageRef.current) {
+        tl.to(imageRef.current, { scale: 1, duration: 0.8 }, "-=0.55");
+      }
+
+      tl.to(marqueeRef.current, { autoAlpha: 1, y: 0, duration: 0.6 }, "-=0.35");
     },
     { scope: sectionRef, dependencies: [heroMotionMode] },
   );
@@ -554,7 +570,7 @@ export function HeroSection() {
         </div>
       </div>
 
-      <div className="pointer-events-none mt-6 h-[clamp(132px,18vh,200px)] w-full md:mt-auto">
+      <div className="pointer-events-none mt-6 h-[132px] w-full sm:h-40 md:mt-auto md:h-[clamp(160px,18vh,200px)]">
         <HeroPixelField mode={heroMotionMode} />
       </div>
     </section>

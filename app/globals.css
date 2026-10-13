@@ -44,7 +44,12 @@
   --max-width-container: 1400px;
 }
 
+html {
+  overflow-anchor: none;
+}
+
 body {
+  overflow-x: clip;
   background: var(--ghost-indigo);
   color: var(--near-black);
   font-family: var(--font-body), system-ui, sans-serif;
@@ -213,24 +218,26 @@ html[data-intro="complete"] .intro-overlay,
     transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.service-card:hover {
-  background-color: var(--sanct-indigo);
-  border-color: color-mix(in srgb, var(--lilac) 50%, transparent);
-  box-shadow: 0 32px 80px -28px rgba(44, 31, 168, 0.9);
-  transform: translateY(-4px);
-}
+@media (hover: hover) and (pointer: fine) {
+  .service-card:hover {
+    background-color: var(--sanct-indigo);
+    border-color: color-mix(in srgb, var(--lilac) 50%, transparent);
+    box-shadow: 0 32px 80px -28px rgba(44, 31, 168, 0.9);
+    transform: translateY(-4px);
+  }
 
-.service-card:hover .service-card-copy {
-  color: rgba(255, 255, 255, 0.75);
-}
+  .service-card:hover .service-card-copy {
+    color: rgba(255, 255, 255, 0.75);
+  }
 
-.service-card:hover .service-card-tag {
-  border-color: rgba(255, 255, 255, 0.25);
-  color: rgba(255, 255, 255, 0.85);
-}
+  .service-card:hover .service-card-tag {
+    border-color: rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.85);
+  }
 
-.service-card:hover .service-card-visual {
-  border-color: rgba(255, 255, 255, 0.15);
+  .service-card:hover .service-card-visual {
+    border-color: rgba(255, 255, 255, 0.15);
+  }
 }
 
 .services-chevron {

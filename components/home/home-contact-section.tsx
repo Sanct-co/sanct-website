@@ -77,15 +77,18 @@ export function HomeContactSection() {
         "[data-contact-form]",
       );
 
+      const compact = window.matchMedia("(max-width: 1023px)").matches;
+      const start = compact ? "top 92%" : "top 75%";
+
       if (chars?.length) {
         gsap.from(chars, {
-          y: "100%",
+          y: compact ? "40%" : "100%",
           duration: 0.75,
           ease: EASE_OUT,
-          stagger: 0.035,
+          stagger: compact ? 0.02 : 0.035,
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 75%",
+            start,
             once: true,
           },
         });
@@ -100,7 +103,7 @@ export function HomeContactSection() {
           delay: 0.5,
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 75%",
+            start,
             once: true,
           },
         });
@@ -109,12 +112,12 @@ export function HomeContactSection() {
       if (form) {
         gsap.from(form, {
           autoAlpha: 0,
-          y: 32,
+          y: compact ? 16 : 32,
           duration: 0.8,
           ease: EASE_OUT,
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 70%",
+            start: compact ? "top 94%" : "top 70%",
             once: true,
           },
         });

@@ -55,10 +55,10 @@ export function IndustriesSection() {
       ([entry]) => {
         inView = entry.isIntersecting;
         if (desktopRef.current) return;
-        if (entry.isIntersecting) openSelected();
-        else setActive(null);
+        if (entry.intersectionRatio >= 0.35) openSelected();
+        else if (entry.intersectionRatio <= 0.08) setActive(null);
       },
-      { threshold: 0.45 },
+      { threshold: [0, 0.08, 0.35, 0.6] },
     );
     observer.observe(row);
 
@@ -147,6 +147,7 @@ export function IndustriesSection() {
           emblaRef(node);
         }}
         className="mt-12 overflow-hidden md:mt-16 lg:overflow-visible"
+        data-lenis-prevent-touch=""
       >
         <div
           className="flex border-y border-near-black/10 lg:border-l"

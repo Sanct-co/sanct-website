@@ -6,6 +6,7 @@ import { useRef } from "react";
 import { Tag } from "@/components/ui/tag";
 import { EASE_OUT, gsap, useGSAP } from "@/lib/gsap";
 import { type Project } from "@/lib/projects";
+import { useMediaQuery } from "@/lib/use-media-query";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 type ProjectShowcaseProps = {
@@ -40,6 +41,7 @@ export function ProjectShowcase({
   const imageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
+  const allowParallax = useMediaQuery("(min-width: 1024px)");
   const reversed = index % 2 === 1;
   const styles = themes[theme];
 
@@ -52,12 +54,13 @@ export function ProjectShowcase({
 
       gsap.from(content, {
         autoAlpha: 0,
-        x: reversed ? 48 : -48,
+        x: allowParallax ? (reversed ? 48 : -48) : 0,
+        y: allowParallax ? 0 : 20,
         duration: 0.85,
         ease: EASE_OUT,
         scrollTrigger: {
           trigger: container,
-          start: "top 78%",
+          start: allowParallax ? "top 78%" : "top 92%",
           once: true,
         },
       });
@@ -75,18 +78,20 @@ export function ProjectShowcase({
         },
       });
 
-      gsap.to(image, {
-        y: -24,
-        ease: "none",
-        scrollTrigger: {
-          trigger: container,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.2,
-        },
-      });
+      if (allowParallax) {
+        gsap.to(image, {
+          y: -24,
+          ease: "none",
+          scrollTrigger: {
+            trigger: container,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.2,
+          },
+        });
+      }
     },
-    { scope: containerRef, dependencies: [reducedMotion, reversed] },
+    { scope: containerRef, dependencies: [reducedMotion, reversed, allowParallax] },
   );
 
   return (

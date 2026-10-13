@@ -39,9 +39,19 @@ export function TextSplit({
       const inners = containerRef.current?.querySelectorAll<HTMLElement>("[data-split-inner]");
       if (!inners?.length) return;
 
-      const vars: gsap.TweenVars = { y: fromY, duration, ease: EASE_OUT, stagger };
+      const compact = window.matchMedia("(max-width: 1023px)").matches;
+      const vars: gsap.TweenVars = {
+        y: compact ? "40%" : fromY,
+        duration,
+        ease: EASE_OUT,
+        stagger,
+      };
       if (scrollTrigger) {
-        vars.scrollTrigger = { trigger: containerRef.current, start: scrollStart, once: true };
+        vars.scrollTrigger = {
+          trigger: containerRef.current,
+          start: compact ? "top 92%" : scrollStart,
+          once: true,
+        };
       } else {
         vars.delay = delay;
       }
@@ -61,8 +71,10 @@ export function TextSplit({
             overflow: "hidden",
             verticalAlign: "bottom",
             lineHeight: "inherit",
-            paddingBottom: "0.1em",
-            marginBottom: "-0.1em",
+            paddingTop: "0.08em",
+            marginTop: "-0.08em",
+            paddingBottom: "0.12em",
+            marginBottom: "-0.12em",
           }}
         >
           <span data-split-inner="" style={{ display: "inline-block" }}>

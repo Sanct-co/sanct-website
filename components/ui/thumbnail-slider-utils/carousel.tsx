@@ -115,7 +115,7 @@ export function SliderContainer({
   }, [children, registerThumbs]);
 
   return (
-    <div className="overflow-hidden" ref={mainRef}>
+    <div className="overflow-hidden" ref={mainRef} data-lenis-prevent-touch="">
       <div className={`flex touch-pan-y ${className}`} {...props}>
         {children}
       </div>

@@ -4,8 +4,11 @@ import { useRef } from "react";
 import { FeaturedWork } from "@/components/home/featured-work";
 import { HeroSection } from "@/components/home/hero-section";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
+import { useMediaQuery } from "@/lib/use-media-query";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { useLenis } from "lenis/react";
+
+const PIN_QUERY = "(min-width: 1024px)";
 
 function getPanelPinStart(panel: HTMLElement) {
   return panel.offsetHeight < window.innerHeight ? "top top" : "bottom bottom";
@@ -17,19 +20,22 @@ export function HomePanels() {
   const featuredPanelRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
   const lenis = useLenis();
+  const canPin = useMediaQuery(PIN_QUERY);
 
   useGSAP(
     () => {
       const hero = heroPanelRef.current;
       const featured = featuredPanelRef.current;
 
-      if (!hero || reducedMotion || !lenis) return;
+      if (!hero || reducedMotion || !lenis || !canPin) return;
 
       gsap.set(hero, { zIndex: 10 });
       if (featured) gsap.set(featured, { zIndex: 20 });
 
       // Only pin the hero so it stacks over featured work. Featured scrolls
       // naturally into the sections below without a pin-spacer gap.
+      // Pinning on small screens fights the mobile browser chrome and snaps
+      // the scroll position backward, so this stays desktop-only.
       const trigger = ScrollTrigger.create({
         trigger: hero,
         start: () => getPanelPinStart(hero),
@@ -39,18 +45,11 @@ export function HomePanels() {
         invalidateOnRefresh: true,
       });
 
-      const refresh = () => ScrollTrigger.refresh();
-      refresh();
-      window.addEventListener("load", refresh);
-      window.addEventListener("resize", refresh);
-
       return () => {
-        window.removeEventListener("load", refresh);
-        window.removeEventListener("resize", refresh);
         trigger.kill();
       };
     },
-    { scope: containerRef, dependencies: [reducedMotion, lenis] },
+    { scope: containerRef, dependencies: [reducedMotion, lenis, canPin] },
   );
 
   if (reducedMotion) {

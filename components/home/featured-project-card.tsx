@@ -6,6 +6,7 @@ import { useRef } from "react";
 import { Tag } from "@/components/ui/tag";
 import { EASE_OUT, gsap, useGSAP } from "@/lib/gsap";
 import { type Project } from "@/lib/projects";
+import { useMediaQuery } from "@/lib/use-media-query";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 type FeaturedProjectCardProps = {
@@ -20,6 +21,7 @@ export function FeaturedProjectCard({
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
+  const allowParallax = useMediaQuery("(min-width: 1024px)");
   const order = String(index + 1).padStart(2, "0");
 
   useGSAP(
@@ -51,18 +53,20 @@ export function FeaturedProjectCard({
         },
       });
 
-      gsap.to(image, {
-        y: -28,
-        ease: "none",
-        scrollTrigger: {
-          trigger: container,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.2,
-        },
-      });
+      if (allowParallax) {
+        gsap.to(image, {
+          y: -28,
+          ease: "none",
+          scrollTrigger: {
+            trigger: container,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.2,
+          },
+        });
+      }
     },
-    { scope: containerRef, dependencies: [reducedMotion] },
+    { scope: containerRef, dependencies: [reducedMotion, allowParallax] },
   );
 
   return (

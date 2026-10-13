@@ -49,7 +49,22 @@ function GsapLenisSync() {
     gsap.ticker.lagSmoothing(0);
     ScrollTrigger.refresh();
 
+    let viewportWidth = window.innerWidth;
+    let resizeTimer = 0;
+    const onResize = () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => {
+        const nextWidth = window.innerWidth;
+        if (nextWidth === viewportWidth) return;
+        viewportWidth = nextWidth;
+        ScrollTrigger.refresh();
+      }, 200);
+    };
+    window.addEventListener("resize", onResize);
+
     return () => {
+      window.clearTimeout(resizeTimer);
+      window.removeEventListener("resize", onResize);
       lenis.off("scroll", onScroll);
       ScrollTrigger.removeEventListener("refresh", onRefresh);
       gsap.ticker.remove(ticker);
@@ -79,8 +94,11 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
         autoRaf: false,
         lerp: 0.08,
         smoothWheel: true,
+        syncTouch: false,
         wheelMultiplier: 0.9,
-        touchMultiplier: 1.5,
+        touchMultiplier: 1,
+        allowNestedScroll: true,
+        stopInertiaOnNavigate: true,
       }}
     >
       <GsapLenisSync />

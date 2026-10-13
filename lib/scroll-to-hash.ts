@@ -19,7 +19,10 @@ export function scrollToHash(hash: string, lenis?: Lenis | null): boolean {
   if (!element) return false;
 
   if (lenis) {
-    lenis.scrollTo(element, { offset: HEADER_SCROLL_OFFSET });
+    // The mobile menu stops Lenis. Starting it here lets the scroll finish
+    // after the menu closes, instead of being reset on the next start().
+    if (lenis.isStopped) lenis.start();
+    lenis.scrollTo(element, { offset: HEADER_SCROLL_OFFSET, force: true });
   } else {
     const top =
       element.getBoundingClientRect().top +

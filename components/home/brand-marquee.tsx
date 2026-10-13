@@ -61,14 +61,23 @@ export function BrandMarquee() {
       const track = trackRef.current;
       if (!track || reducedMotion) return;
 
-      const trackWidth = track.scrollWidth / 2;
-
-      gsap.to(track, {
-        x: -trackWidth,
-        duration: 60,
+      const tween = gsap.to(track, {
+        x: () => -(track.scrollWidth / 2),
+        duration: 50,
         ease: "none",
         repeat: -1,
+        repeatRefresh: true,
       });
+
+      const onLoad = (event: Event) => {
+        if (!(event.target instanceof HTMLImageElement) || !track.contains(event.target)) return;
+        tween.invalidate();
+      };
+      track.addEventListener("load", onLoad, true);
+
+      return () => {
+        track.removeEventListener("load", onLoad, true);
+      };
     },
     { scope: containerRef, dependencies: [reducedMotion] },
   );
