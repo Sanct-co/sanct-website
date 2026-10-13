@@ -422,7 +422,7 @@ export function HeroSection() {
     if (reducedMotion || heroMotionMode === "prime") return;
 
     const typingDelay = heroMotionMode === "enter" ? 900 : 180;
-    let typingInterval: ReturnType<typeof setInterval> | undefined;
+    let typingInterval: number | undefined;
     const reset = window.setTimeout(() => {
       setTypedChars(0);
       setShowTypingCursor(true);
