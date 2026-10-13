@@ -405,7 +405,7 @@ export function HeroSection() {
   const imageRef = useRef<HTMLDivElement>(null);
   const marqueeRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
-  const [typedChars, setTypedChars] = useState(COMPLEXITY_WORD.length);
+  const [typedChars, setTypedChars] = useState(0);
   const [showTypingCursor, setShowTypingCursor] = useState(false);
   const { introComplete, introWasPlayed } = useIntro();
   const heroMotionMode = introWasPlayed && !introComplete
@@ -413,31 +413,26 @@ export function HeroSection() {
     : introComplete && !reducedMotion
       ? "enter"
       : "idle";
+  const showFullWord = reducedMotion;
+  const hideWord = !reducedMotion && heroMotionMode === "prime";
+  const visibleChars = showFullWord ? COMPLEXITY_WORD.length : hideWord ? 0 : typedChars;
+  const typingCursor = !showFullWord && !hideWord && showTypingCursor;
 
   useEffect(() => {
-    if (reducedMotion) {
-      setTypedChars(COMPLEXITY_WORD.length);
-      setShowTypingCursor(false);
-      return;
-    }
-
-    if (heroMotionMode === "prime") {
-      setTypedChars(0);
-      setShowTypingCursor(false);
-      return;
-    }
-
-    setTypedChars(0);
-    setShowTypingCursor(true);
+    if (reducedMotion || heroMotionMode === "prime") return;
 
     const typingDelay = heroMotionMode === "enter" ? 900 : 180;
     let typingInterval: ReturnType<typeof setInterval> | undefined;
-    const startTyping = setTimeout(() => {
-      typingInterval = setInterval(() => {
+    const reset = window.setTimeout(() => {
+      setTypedChars(0);
+      setShowTypingCursor(true);
+    }, 0);
+    const startTyping = window.setTimeout(() => {
+      typingInterval = window.setInterval(() => {
         setTypedChars((current) => {
           if (current >= COMPLEXITY_WORD.length) {
-            if (typingInterval) clearInterval(typingInterval);
-            setTimeout(() => setShowTypingCursor(false), 550);
+            if (typingInterval) window.clearInterval(typingInterval);
+            window.setTimeout(() => setShowTypingCursor(false), 550);
             return current;
           }
           return current + 1;
@@ -446,8 +441,9 @@ export function HeroSection() {
     }, typingDelay);
 
     return () => {
-      clearTimeout(startTyping);
-      if (typingInterval) clearInterval(typingInterval);
+      window.clearTimeout(reset);
+      window.clearTimeout(startTyping);
+      if (typingInterval) window.clearInterval(typingInterval);
     };
   }, [heroMotionMode, reducedMotion]);
 
@@ -522,8 +518,8 @@ export function HeroSection() {
             {" "}
             <WordMask>
               <span className="font-terminal text-sanct-indigo ">
-                {COMPLEXITY_WORD.slice(0, typedChars)}
-                {showTypingCursor ? <span aria-hidden="true">|</span> : null}
+                {COMPLEXITY_WORD.slice(0, visibleChars)}
+                {typingCursor ? <span aria-hidden="true">|</span> : null}
               </span>
             </WordMask>
           </h1>

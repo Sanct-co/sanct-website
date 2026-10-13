@@ -25,7 +25,9 @@ export function OpeningTransition({ onComplete }: OpeningTransitionProps) {
   const onCompleteRef = useRef(onComplete);
   const completedRef = useRef(false);
 
-  onCompleteRef.current = onComplete;
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;

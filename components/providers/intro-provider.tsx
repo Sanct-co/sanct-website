@@ -37,23 +37,27 @@ export function IntroProvider({ children }: { children: ReactNode }) {
   const [introWasPlayed, setIntroWasPlayed] = useState(false);
 
   useLayoutEffect(() => {
-    setMounted(true);
+    const boot = window.setTimeout(() => {
+      setMounted(true);
 
-    const shouldPlay = shouldPlayIntroFromDom();
-    setPlayIntro(shouldPlay);
+      const shouldPlay = shouldPlayIntroFromDom();
+      setPlayIntro(shouldPlay);
 
-    if (!shouldPlay) {
-      setIntroComplete(true);
-      return;
-    }
+      if (!shouldPlay) {
+        setIntroComplete(true);
+        return;
+      }
 
-    setIntroWasPlayed(true);
+      setIntroWasPlayed(true);
 
-    if (reducedMotion) {
-      finishIntro();
-      setPlayIntro(false);
-      setIntroComplete(true);
-    }
+      if (reducedMotion) {
+        finishIntro();
+        setPlayIntro(false);
+        setIntroComplete(true);
+      }
+    }, 0);
+
+    return () => window.clearTimeout(boot);
   }, [reducedMotion]);
 
   const onIntroComplete = useCallback(() => {

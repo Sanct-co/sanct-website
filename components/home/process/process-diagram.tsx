@@ -20,6 +20,10 @@ function isProcessTarget(target: EventTarget | null) {
   return target instanceof Element && Boolean(target.closest("[data-process-node]"));
 }
 
+function now() {
+  return performance.now();
+}
+
 function IsometricGrid() {
   const lines: string[] = [];
   const gap = 54;
@@ -81,7 +85,7 @@ export function ProcessDiagram() {
   const textTransition = diagramTransition(reducedMotion, 0.24);
 
   function mouseIsSettling() {
-    return performance.now() < ignoreMouseUntil.current;
+    return now() < ignoreMouseUntil.current;
   }
 
   function enter(id: StepId) {
@@ -96,7 +100,7 @@ export function ProcessDiagram() {
   }
 
   function toggle(id: StepId) {
-    ignoreMouseUntil.current = performance.now() + 800;
+    ignoreMouseUntil.current = now() + 800;
     setActiveNode((current) => (current === id ? null : id));
   }
 
