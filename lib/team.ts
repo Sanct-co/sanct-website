@@ -11,8 +11,8 @@ export const team: TeamMember[] = [
     image: "/profiles/deo_profile.webp",
   },
   {
-    name: "KC Ajero",
-    title: "CTO",
+    name: "Karl Christian Ajero",
+    title: "Chief Technology Officer",
     image: "/profiles/kc_profile.webp",
   },
   {

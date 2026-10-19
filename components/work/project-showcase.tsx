@@ -91,7 +91,11 @@ export function ProjectShowcase({
         });
       }
     },
-    { scope: containerRef, dependencies: [reducedMotion, reversed, allowParallax] },
+    {
+      scope: containerRef,
+      dependencies: [reducedMotion, reversed, allowParallax],
+      revertOnUpdate: true,
+    },
   );
 
   return (

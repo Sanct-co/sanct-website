@@ -108,6 +108,27 @@ html[data-intro="complete"] .intro-overlay,
   letter-spacing: 0.01em;
 }
 
+/* Both halves have identical content and spacing, so the loop meets exactly. */
+@keyframes brand-marquee-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.brand-marquee-track {
+  animation: brand-marquee-scroll 50s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-marquee-track {
+    animation: none;
+    transform: none;
+  }
+}
+
 @keyframes proof-glow {
   0%,
   100% {

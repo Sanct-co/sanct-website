@@ -24,46 +24,49 @@ export function MissionSection() {
 export function StorySection() {
   return (
     <Section id="story" background="ghost" className="scroll-mt-24">
-      <div className="grid gap-14 lg:grid-cols-2">
+      <Reveal>
+        <h2 className="font-display text-4xl font-extrabold md:text-5xl">
+          Our Company
+        </h2>
+      </Reveal>
+      <div className="mt-8 grid items-start gap-8 lg:grid-cols-2 lg:gap-14">
         <Reveal>
-          <h2 className="font-display text-4xl font-extrabold md:text-5xl">
-            Our Company
-          </h2>
+          <Image
+            src="/company-pic2.webp"
+            alt="Sanct team"
+            width={0}
+            height={0}
+            sizes="(max-width: 1023px) 92vw, 650px"
+            className="h-auto w-full rounded-2xl"
+          />
         </Reveal>
         <Reveal delay={0.1}>
           <div className="space-y-5 text-lg leading-relaxed text-on-light-muted">
             <p>
-              Whether you’re a growing small or medium-sized business looking to
-              automate repetitive processes, or a larger organization seeking to
-              modernize your systems, we deliver practical technology solutions
-              designed around your unique needs. We combine technical expertise,
-              innovative thinking, and a deep understanding of business
-              operations to create solutions that deliver measurable value.
+              At Sanct Software Development Services, we believe credibility
+              in software development must be earned through expertise,
+              discipline, and delivery. A company name or a confident promise
+              is only a starting point. What matters is the knowledge behind
+              the decisions and the quality of the systems people rely on.
             </p>
             <p>
-              We started Sanct with a simple conviction: technology should
-              remove obstacles, not create them. Every product we build is
-              designed to strip away unnecessary complexity and leave teams with
-              clarity.
+              Our team brings solid technical backgrounds and practical
+              experience in designing, developing, and maintaining software.
+              We apply that foundation to understanding each organization’s
+              operations, evaluating requirements, and making technical
+              decisions we can explain and stand behind. Clear communication,
+              realistic commitments, and careful execution guide our work.
             </p>
             <p>
-              Today we work with clients across the Philippines and US, from
-              custom erp systems in Mindanao to product brands in US. Our roots
-              keep us grounded. Our ambition keeps us reaching.
+              We serve businesses and organizations in the Philippines and the
+              United States with a firm conviction: expertise must be evident
+              in the work itself. Every internal system, website, and digital
+              tool we deliver should be intuitive to use, practical to
+              maintain, and built around the people who depend on it.
             </p>
           </div>
         </Reveal>
       </div>
-      <Reveal delay={0.2}>
-        <Image
-          src="/company-pic2.webp"
-          alt="Sanct team"
-          width={0}
-          height={0}
-          sizes="100vw"
-          className="mt-14 w-full h-auto rounded-2xl mx-auto"
-        />
-      </Reveal>
     </Section>
   );
 }

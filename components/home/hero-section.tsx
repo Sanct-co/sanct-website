@@ -504,11 +504,11 @@ export function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex min-h-[calc(100svh-4.5rem)] flex-col overflow-hidden bg-white pt-14 text-near-black md:pt-20"
+      className="relative flex min-h-[calc(100dvh-4.5rem)] flex-col overflow-hidden bg-white pt-10 text-near-black sm:pt-14 lg:min-h-[calc(100svh-4.5rem)] lg:pt-20"
     >
-      <div className="relative z-10 mx-auto flex w-full flex-1 flex-col max-w-(--max-width-container) px-(--spacing-section-x)">
+      <div className="relative z-10 mx-auto flex w-full flex-1 flex-col justify-center max-w-(--max-width-container) px-(--spacing-section-x) lg:justify-start">
         <div className="mx-auto max-w-4xl text-center">
-          <h1 className="font-display text-[clamp(2.75rem,7vw,5.25rem)] font-extrabold leading-[1.05] tracking-[-0.03em]">
+          <h1 className="font-display text-[clamp(2.75rem,9vw,4.5rem)] font-extrabold leading-[1.05] tracking-[-0.03em] lg:text-[clamp(2.75rem,7vw,5.25rem)]">
             {HERO_WORDS.map((word, index) => (
               <Fragment key={word}>
                 {index > 0 ? " " : null}
@@ -526,13 +526,13 @@ export function HeroSection() {
 
           <p
             ref={subtitleRef}
-            className="mx-auto mt-8 max-w-2xl text-lg font-normal leading-relaxed text-on-light-muted md:text-xl"
+            className="mx-auto mt-6 max-w-2xl text-lg font-normal leading-relaxed text-on-light-muted md:text-xl lg:mt-8"
           >
-            We build intuitive software that give you mental space to focus on
-            what truly matters, not on the tools you use.
+            Built on expertise. Designed to scale. Focused on results that
+            matter to your business.
           </p>
 
-          <div className="mt-10 flex flex-row flex-wrap items-center justify-center gap-x-6 gap-y-3">
+          <div className="mt-7 flex flex-row flex-wrap items-center justify-center gap-x-6 gap-y-3 lg:mt-10">
             <ButtonLink href="/work" variant="primary" className="hero-cta">
               What We Built
             </ButtonLink>
@@ -561,12 +561,12 @@ export function HeroSection() {
           </div>
         </div> */}
 
-        <div ref={marqueeRef} className="mt-auto mb-10 md:mt-0 md:mb-0">
+        <div ref={marqueeRef} className="mt-6 lg:mt-0">
           <BrandMarquee />
         </div>
       </div>
 
-      <div className="pointer-events-none mt-6 h-[132px] w-full sm:h-40 md:mt-auto md:h-[clamp(160px,18vh,200px)]">
+      <div className="pointer-events-none mt-auto h-20 w-full shrink-0 sm:h-24 lg:h-[clamp(160px,18vh,200px)]">
         <HeroPixelField mode={heroMotionMode} />
       </div>
     </section>

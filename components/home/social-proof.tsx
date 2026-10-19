@@ -1,19 +1,49 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { Tag } from "@/components/ui/tag";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 
-const TESTIMONIAL = {
+const TESTIMONIALS = [{
+  quote:
+    "Working with the team was a smooth experience from start to finish. They understood what Kleros Philippines stands for and translated our vision into a website that feels warm, professional, and easy to navigate. We’re very happy with how the final website represents our organization and makes it easier for people to learn about our programs and connect with us.",
+  name: "Myra Sanchez",
+  role: "Founder & CEO, Kleros Philippines",
+},{
   quote:
     "Sanct didn’t just build us software, they understood how our stores actually run. The dashboard feels like it was designed by someone who’s worked a shift on the floor.",
   name: "Elena Gonzales",
   role: "Operations Manager, CrowdHomes",
-};
-
-const INDICATOR_COUNT = 3;
+}, ];
 
 export function SocialProof() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const reducedMotion = useReducedMotion();
+  const autoPlay = !isHovered && !isFocused && !reducedMotion;
+  const testimonial = TESTIMONIALS[activeIndex];
+
+  useEffect(() => {
+    if (!autoPlay) return;
+
+    // Give longer quotes enough reading time; restart after manual navigation.
+    const readingTime = Math.max(8000, testimonial.quote.split(/\s+/).length * 250 + 2000);
+    const timer = window.setTimeout(() => {
+      setActiveIndex((current) => (current + 1) % TESTIMONIALS.length);
+    }, readingTime);
+
+    return () => window.clearTimeout(timer);
+  }, [activeIndex, autoPlay, testimonial.quote]);
+
+  function changeTestimonial(direction: number) {
+    setActiveIndex((current) =>
+      (current + direction + TESTIMONIALS.length) % TESTIMONIALS.length,
+    );
+  }
+
   return (
     <Section id="clients" background="ghost">
       <Reveal>
@@ -25,18 +55,26 @@ export function SocialProof() {
         </div>
       </Reveal>
 
-      <div className="mx-auto max-w-2xl">
-        <blockquote>
+      <div
+        className="mx-auto max-w-2xl"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onFocusCapture={() => setIsFocused(true)}
+        onBlurCapture={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) setIsFocused(false);
+        }}
+      >
+        <blockquote aria-live={autoPlay ? "off" : "polite"} aria-atomic="true">
           <p className="text-xl leading-relaxed text-near-black md:text-2xl">
-            &ldquo;{TESTIMONIAL.quote}&rdquo;
+            &ldquo;{testimonial.quote}&rdquo;
           </p>
           <footer className="mt-8">
             <cite className="not-italic">
               <span className="block font-bold text-near-black">
-                {TESTIMONIAL.name}
+                {testimonial.name}
               </span>
               <span className="mt-1 block text-sm text-on-light-muted">
-                {TESTIMONIAL.role}
+                {testimonial.role}
               </span>
             </cite>
           </footer>
@@ -44,13 +82,21 @@ export function SocialProof() {
 
         <div className="mt-10 flex items-center justify-between">
           <div className="flex items-center gap-1.5">
-            {Array.from({ length: INDICATOR_COUNT }).map((_, i) => (
-              <span
-                key={i}
-                className={`h-1.5 rounded-full bg-sanct-indigo ${
-                  i === 0 ? "w-6 opacity-100" : "w-1.5 opacity-30"
-                }`}
-              />
+            {TESTIMONIALS.map((item, i) => (
+              <button
+                key={item.name}
+                type="button"
+                aria-label={`Show testimonial from ${item.name}`}
+                aria-pressed={i === activeIndex}
+                onClick={() => setActiveIndex(i)}
+                className="flex min-h-10 min-w-8 cursor-pointer items-center justify-center"
+              >
+                <span
+                  className={`h-1.5 rounded-full bg-sanct-indigo ${
+                    i === activeIndex ? "w-6 opacity-100" : "w-1.5 opacity-30"
+                  }`}
+                />
+              </button>
             ))}
           </div>
 
@@ -58,8 +104,8 @@ export function SocialProof() {
             <button
               type="button"
               aria-label="Previous testimonial"
-              disabled
-              className="cursor-not-allowed text-on-light-muted opacity-40"
+              onClick={() => changeTestimonial(-1)}
+              className="flex h-10 w-10 cursor-pointer items-center justify-center text-on-light-muted transition-colors hover:text-sanct-indigo"
             >
               <svg
                 width="20"
@@ -79,8 +125,8 @@ export function SocialProof() {
             <button
               type="button"
               aria-label="Next testimonial"
-              disabled
-              className="cursor-not-allowed text-on-light-muted opacity-40"
+              onClick={() => changeTestimonial(1)}
+              className="flex h-10 w-10 cursor-pointer items-center justify-center text-on-light-muted transition-colors hover:text-sanct-indigo"
             >
               <svg
                 width="20"

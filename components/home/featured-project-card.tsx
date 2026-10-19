@@ -66,7 +66,12 @@ export function FeaturedProjectCard({
         });
       }
     },
-    { scope: containerRef, dependencies: [reducedMotion, allowParallax] },
+    {
+      scope: containerRef,
+      dependencies: [reducedMotion, allowParallax],
+      // Restore visibility before rebuilding animations after a media query change.
+      revertOnUpdate: true,
+    },
   );
 
   return (
@@ -104,7 +109,7 @@ export function FeaturedProjectCard({
           </span> */}
       </Link>
 
-      <div className="flex flex-col gap-8 p-8 md:p-10">
+      <div className="flex flex-col gap-6 p-4 sm:gap-8 sm:p-6 md:p-10">
         <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
           <div className="md:max-w-sm">
             <Tag>Featured Work</Tag>
@@ -117,7 +122,7 @@ export function FeaturedProjectCard({
               </p>
             )}
           </div>
-          <p className="text-lg leading-relaxed text-text-secondary md:max-w-md">
+          <p className="text-base leading-relaxed text-text-secondary sm:text-lg md:max-w-md">
             {project.description}
           </p>
         </div>
@@ -127,44 +132,45 @@ export function FeaturedProjectCard({
           aria-hidden="true"
         />
 
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-          <div>
-            <p className="font-terminal text-[11px] uppercase tracking-[0.08em] text-white/40">
+        <dl className="grid grid-cols-[minmax(0,2fr)_minmax(0,1fr)] gap-4 sm:grid-cols-2 sm:gap-10">
+          <div className="min-w-0">
+            <dt className="font-terminal text-[11px] uppercase tracking-[0.08em] text-white/40">
               Client
-            </p>
-            <p className="mt-1.5 text-sm font-medium text-white/85">
+            </dt>
+            <dd className="mt-1.5 text-sm font-medium text-white/85">
               {project.client}
-            </p>
+            </dd>
           </div>
           <div>
-            <p className="font-terminal text-[11px] uppercase tracking-[0.08em] text-white/40">
+            <dt className="font-terminal text-[11px] uppercase tracking-[0.08em] text-white/40">
               Industry
-            </p>
-            <p className="mt-1.5 text-sm font-medium text-white/85">
+            </dt>
+            <dd className="mt-1.5 text-sm font-medium text-white/85">
               {project.industry}
-            </p>
+            </dd>
           </div>
-          <div>
-            <p className="font-terminal text-[11px] uppercase tracking-[0.08em] text-white/40">
-              Category
-            </p>
-            <p className="mt-1.5 text-sm font-medium text-white/85">
-              {project.category}
-            </p>
-          </div>
-          {/* <Link
-            href={`/work/${project.slug}`}
-            className="group/link col-span-2 flex items-end gap-2 text-sm font-medium uppercase tracking-[0.08em] text-white/70 transition-colors duration-150 ease-out hover:text-lilac md:col-span-1 md:justify-end"
-          >
-            View case study
-            <span
-              aria-hidden="true"
-              className="transition-transform duration-150 ease-out group-hover/link:translate-x-1"
+        </dl>
+
+        <dl className="grid grid-cols-3 gap-2 sm:gap-6 lg:gap-8">
+          {project.impactMetrics.map((metric) => (
+            <div
+              key={metric.label}
+              className="flex min-w-0 flex-col border-l-2 border-lilac/40 pl-2 sm:pl-4 lg:pl-5"
             >
-              →
-            </span>
-          </Link> */}
-        </div>
+              <dt className="order-2 mt-2 text-[11px] font-semibold leading-snug text-white/90 sm:mt-3 sm:text-sm lg:text-base">
+                {metric.label}
+              </dt>
+              <dd className="contents">
+                <span className="order-1 font-display text-[clamp(1.375rem,6vw,3rem)] font-extrabold leading-none tracking-tight text-lilac tabular-nums lg:text-5xl">
+                  {metric.value}
+                </span>
+                <span className="order-3 mt-2 max-w-sm text-[10px] leading-relaxed text-text-secondary sm:text-xs lg:text-sm">
+                  {metric.description}
+                </span>
+              </dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </div>
   );

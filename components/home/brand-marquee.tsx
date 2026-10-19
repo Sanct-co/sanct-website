@@ -1,8 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
-import { gsap, useGSAP } from "@/lib/gsap";
 import { brands } from "@/lib/brands";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 
@@ -16,6 +14,7 @@ function BrandItem({ name, logo }: { name: string; logo: string }) {
         alt=""
         width={56}
         height={56}
+        loading="eager"
         className="h-14 w-14 object-contain grayscale transition-all duration-300 ease-out group-hover:scale-110 group-hover:grayscale-0"
       />
       <span className="whitespace-nowrap text-sm font-medium text-on-light-muted transition-colors duration-300 ease-out group-hover:text-near-black">
@@ -36,13 +35,14 @@ function BrandTrack({
 
   return (
     <div
-      className="flex shrink-0 items-center"
+      className="flex min-w-screen shrink-0 items-center justify-around"
       aria-hidden={ariaHidden || undefined}
     >
       {items.map((brand, index) => (
         <div
           key={`${trackId}-${brand.name}-${index}`}
           className="mx-6 shrink-0 md:mx-8"
+          aria-hidden={index >= brands.length || undefined}
         >
           <BrandItem name={brand.name} logo={brand.logo} />
         </div>
@@ -52,40 +52,11 @@ function BrandTrack({
 }
 
 export function BrandMarquee() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
-
-  useGSAP(
-    () => {
-      const track = trackRef.current;
-      if (!track || reducedMotion) return;
-
-      const tween = gsap.to(track, {
-        x: () => -(track.scrollWidth / 2),
-        duration: 50,
-        ease: "none",
-        repeat: -1,
-        repeatRefresh: true,
-      });
-
-      const onLoad = (event: Event) => {
-        if (!(event.target instanceof HTMLImageElement) || !track.contains(event.target)) return;
-        tween.invalidate();
-      };
-      track.addEventListener("load", onLoad, true);
-
-      return () => {
-        track.removeEventListener("load", onLoad, true);
-      };
-    },
-    { scope: containerRef, dependencies: [reducedMotion] },
-  );
 
   return (
     <div
-      ref={containerRef}
-      className="relative mt-8 w-full md:mt-20"
+      className="relative mt-8 w-full lg:mt-20"
       aria-label="Accreditations and partnerships"
     >
       <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-white to-transparent md:w-24" />
@@ -100,8 +71,7 @@ export function BrandMarquee() {
       ) : (
         <div className="overflow-hidden">
           <div
-            ref={trackRef}
-            className="flex w-max items-center will-change-transform"
+            className="brand-marquee-track flex w-max items-center will-change-transform"
           >
             <BrandTrack trackId="a" />
             <BrandTrack trackId="b" ariaHidden />

@@ -49,7 +49,12 @@ export function HomePanels() {
         trigger.kill();
       };
     },
-    { scope: containerRef, dependencies: [reducedMotion, lenis, canPin] },
+    {
+      scope: containerRef,
+      dependencies: [reducedMotion, lenis, canPin],
+      // Remove the desktop pin and its inline styles before switching layouts.
+      revertOnUpdate: true,
+    },
   );
 
   if (reducedMotion) {
@@ -65,13 +70,13 @@ export function HomePanels() {
     <div ref={containerRef} className="relative">
       <section
         ref={heroPanelRef}
-        className="home-panel relative min-h-[calc(100svh-4.5rem)] bg-white"
+        className="home-panel sticky top-[4.5rem] z-10 bg-white lg:relative lg:top-auto lg:min-h-[calc(100svh-4.5rem)]"
       >
         <HeroSection />
       </section>
       <section
         ref={featuredPanelRef}
-        className="home-panel relative overflow-hidden rounded-t-card bg-near-black"
+        className="home-panel relative z-20 overflow-hidden rounded-t-card bg-near-black"
       >
         <FeaturedWork />
       </section>

@@ -13,6 +13,7 @@ export type Project = {
   category: ProjectCategory;
   description: string;
   featured: boolean;
+  impactMetrics: { value: string; label: string; description: string }[];
   coverImage?: string;
   coverGradient: string;
   challenge: string;
@@ -24,13 +25,30 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: "depedmps",
-    title: "DEPEDMPS — A Digital MPS Infrastructure for DepEd",
+    title: "DEPEDMPS — Digital DAIS Infrastructure for DepEd Divisions",
     client: "Department of Education (DepEd)",
     industry: "Education",
     category: "Web App",
     description:
-      "A centralized MPS platform purpose-built for DepEd Division Offices. Currently serving 600+ schools, reducing manual workload and improved data accessibility by 90%.",
+      "A centralized Division Assessment Information System (DAIS) purpose-built for DepEd Division Offices. Serving 600+ schools, improving data accessibility by 98% and reducing manual paperwork and spreadsheet work by 95%.",
     featured: true,
+    impactMetrics: [
+      {
+        value: "600+",
+        label: "Schools served",
+        description: "Connected through one centralized assessment platform.",
+      },
+      {
+        value: "98%",
+        label: "Improved data accessibility",
+        description: "School and division assessment data, easier to access.",
+      },
+      {
+        value: "95%",
+        label: "Less manual work",
+        description: "Less time spent on paperwork and manual spreadsheet tasks.",
+      },
+    ],
     coverImage: "/video/depedmps_vid.gif",
     coverGradient: "from-[#1a237e] to-[#3D35B0]",
     challenge:
