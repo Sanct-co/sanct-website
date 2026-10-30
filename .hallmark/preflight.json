@@ -1,0 +1,13 @@
+{
+  "scanned": "2026-10-30",
+  "findings": {
+    "fonts": "Plus Jakarta Sans, Geist Pixel Square, Geist Mono (app/layout.tsx:2)",
+    "palette": "Sanct indigo #2c1fa8, white, near-black (app/globals.css:3)",
+    "motion": "GSAP and Lenis; retain existing page intro and panel wiring (package.json:13)",
+    "spacing": "Capped 1400px container and responsive section gutters (app/globals.css:16)",
+    "framework": "Next.js 16.2.9, React 19.2.4, Tailwind 4"
+  },
+  "preserve": ["Brand fonts and palette", "Headline and subtitle", "Work destination and Cal booking attributes", "Four supplied accreditations", "User's pre-existing header edit"],
+  "introduce": ["Type-led asymmetric hero", "Static accreditation strip", "Scoped hero stylesheet"],
+  "authorization": "User authorized proceeding with existing header edit preserved."
+}

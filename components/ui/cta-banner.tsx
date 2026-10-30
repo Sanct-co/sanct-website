@@ -1,21 +1,52 @@
 import { Reveal } from "./reveal";
 import { TextSplit } from "./text-split";
+import "./cta-banner.css";
 
 type CtaBannerProps = {
   headline: string;
   subtext?: string;
   ctaLabel?: string;
+  variant?: "default" | "statement";
 };
 
 export function CtaBanner({
   headline,
   subtext,
   ctaLabel = "Book a Call",
+  variant = "default",
 }: CtaBannerProps) {
+  if (variant === "statement") {
+    return (
+      <section className="sanct-cta">
+        <div className="sanct-cta__inner">
+          <TextSplit
+            text={headline}
+            as="h2"
+            className="sanct-cta__headline"
+            stagger={0.035}
+            scrollStart="top 85%"
+          />
+          <div className="sanct-cta__bottom">
+            {subtext && <p className="sanct-cta__description">{subtext}</p>}
+            <button
+              type="button"
+              data-cal-link="deo-talip-iwfmht/secret"
+              data-cal-namespace="secret"
+              data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+              className="sanct-cta__button"
+            >
+              {ctaLabel}
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="relative overflow-hidden bg-near-black py-(--spacing-section-y) text-white">
       <div
-        className="pointer-events-none absolute -bottom-16 left-1/2 h-40 w-[200%] -translate-x-1/2 rounded-[50%] bg-sanct-indigo sm:-bottom-24 sm:h-56 sm:w-[170%] md:-bottom-32 md:h-72 md:w-[140%]"
+        className="pointer-events-none absolute -bottom-16 left-1/2 h-40 w-[200%] -translate-x-1/2 rounded-[50%] bg-dark-surface sm:-bottom-24 sm:h-56 sm:w-[170%] md:-bottom-32 md:h-72 md:w-[140%]"
         aria-hidden="true"
       />
       <div className="relative mx-auto max-w-(--max-width-container) px-(--spacing-section-x) text-center">

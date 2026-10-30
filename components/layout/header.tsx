@@ -55,7 +55,7 @@ function NavLink({
       onFocus={onFocus}
       aria-expanded={ariaExpanded}
       aria-controls={ariaControls}
-      className={`header-nav-item font-terminal rounded-tag uppercase transition-colors duration-150 ease-out hover:text-sanct-indigo focus-visible:text-sanct-indigo ${
+      className={`header-nav-item font-terminal rounded-tag transition-colors duration-150 ease-out hover:text-sanct-indigo focus-visible:text-sanct-indigo ${
         large
           ? "py-3 text-3xl tracking-[0.02em]"
           : "px-3.5 py-2 text-base tracking-[0.04em]"

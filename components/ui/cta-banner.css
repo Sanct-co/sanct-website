@@ -1,0 +1,26 @@
+﻿/* Hallmark · component: homepage call to action · genre: modern-minimal · theme: brand · redesign: full · copy: verbatim · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H5 E4 S4 R5 V4 · weakest: S, used the existing Sanct promise as full-scale type rather than adding decoration */
+:root {
+  --cta-paper: var(--near-black);
+  --cta-ink: #ffffff;
+  --cta-muted: #c6c5ca;
+  --cta-rule: #46444e;
+}
+.sanct-cta { padding: 96px var(--section-padding-x) 64px; background: var(--cta-paper); color: var(--cta-ink); }
+.sanct-cta__inner { max-width: var(--max-width-container); margin-inline: auto; }
+.sanct-cta__headline { max-width: 17ch; margin: 0; font-family: var(--font-display); font-size: clamp(48px, 6.7vw, 96px); font-weight: 800; letter-spacing: -.06em; line-height: 1.05; min-width: 0; overflow-wrap: break-word; text-wrap: balance; }
+.sanct-cta__bottom { display: flex; align-items: center; justify-content: space-between; gap: 40px; margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--cta-rule); }
+.sanct-cta__description { max-width: 480px; margin: 0; font-family: var(--font-body); font-size: 18px; line-height: 1.65; color: var(--cta-muted); }
+.sanct-cta__button { min-height: 52px; min-width: 180px; padding: 12px 32px; border-radius: 4px; background: var(--sanct-indigo); color: var(--cta-ink); font-family: var(--font-body); font-size: 16px; font-weight: 600; white-space: nowrap; cursor: pointer; }
+.sanct-cta__button:hover { background: var(--indigo-mid); }
+.sanct-cta__button:focus-visible { outline: 2px solid var(--lilac); outline-offset: 4px; }
+.sanct-cta__button:active { transform: translateY(1px); }
+.sanct-cta__button:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+@media (max-width: 700px) {
+  .sanct-cta { padding-block: 64px 48px; }
+  .sanct-cta__headline { font-size: clamp(42px, 10vw, 64px); max-width: 17ch; }
+  .sanct-cta__bottom { margin-top: 32px; padding-top: 24px; flex-direction: column; align-items: stretch; gap: 24px; }
+  .sanct-cta__description { font-size: 16px; }
+  .sanct-cta__button { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .sanct-cta__button:active { transform: none; } }

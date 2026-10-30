@@ -1,0 +1,3 @@
+/* Hero foundation, scoped to preserve the existing website system. */
+html, body { overflow-x: clip; }
+.sanct-hero ::selection { background: var(--sanct-indigo); color: var(--hero-paper); }

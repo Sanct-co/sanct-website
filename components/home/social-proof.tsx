@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Reveal } from "@/components/ui/reveal";
+import { useEffect, useRef, useState } from "react";
+
 import { Section } from "@/components/ui/section";
-import { Tag } from "@/components/ui/tag";
+import "./hallmark/proof.css";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 const TESTIMONIALS = [{
@@ -19,12 +19,23 @@ const TESTIMONIALS = [{
 }, ];
 
 export function SocialProof() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isInView, setIsInView] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const reducedMotion = useReducedMotion();
-  const autoPlay = !isHovered && !isFocused && !reducedMotion;
+  const [isPaused, setIsPaused] = useState(false);
+  const autoPlay = isInView && !isPaused && !isHovered && !isFocused && !reducedMotion;
   const testimonial = TESTIMONIALS[activeIndex];
+
+  useEffect(() => {
+    const element = sectionRef.current;
+    if (!element) return;
+    const observer = new IntersectionObserver(([entry]) => setIsInView(entry.isIntersecting));
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!autoPlay) return;
@@ -45,18 +56,10 @@ export function SocialProof() {
   }
 
   return (
-    <Section id="clients" background="ghost">
-      <Reveal>
-        <div className="mx-auto mb-14 max-w-3xl text-center md:mb-20">
-          <Tag variant="indigo">What Clients Say</Tag>
-          <h2 className="mt-3 font-display text-4xl font-extrabold leading-tight tracking-[-0.02em] md:text-5xl">
-            Trusted by teams who know their business inside out.
-          </h2>
-        </div>
-      </Reveal>
-
+    <Section id="clients" background="dark" className="sanct-testimonials">
       <div
-        className="mx-auto max-w-2xl"
+        ref={sectionRef}
+        className="sanct-testimonials__layout"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onFocusCapture={() => setIsFocused(true)}
@@ -64,24 +67,9 @@ export function SocialProof() {
           if (!event.currentTarget.contains(event.relatedTarget)) setIsFocused(false);
         }}
       >
-        <blockquote aria-live={autoPlay ? "off" : "polite"} aria-atomic="true">
-          <p className="text-xl leading-relaxed text-near-black md:text-2xl">
-            &ldquo;{testimonial.quote}&rdquo;
-          </p>
-          <footer className="mt-8">
-            <cite className="not-italic">
-              <span className="block font-bold text-near-black">
-                {testimonial.name}
-              </span>
-              <span className="mt-1 block text-sm text-on-light-muted">
-                {testimonial.role}
-              </span>
-            </cite>
-          </footer>
-        </blockquote>
-
-        <div className="mt-10 flex items-center justify-between">
-          <div className="flex items-center gap-1.5">
+        <div className="sanct-testimonials__intro">
+          <h2>Trusted by teams who know their business inside out.</h2>
+          <div className="sanct-testimonials__navigation" aria-label="Testimonial navigation">
             {TESTIMONIALS.map((item, i) => (
               <button
                 key={item.name}
@@ -89,60 +77,45 @@ export function SocialProof() {
                 aria-label={`Show testimonial from ${item.name}`}
                 aria-pressed={i === activeIndex}
                 onClick={() => setActiveIndex(i)}
-                className="flex min-h-10 min-w-8 cursor-pointer items-center justify-center"
+                className="sanct-testimonials__person"
               >
-                <span
-                  className={`h-1.5 rounded-full bg-sanct-indigo ${
-                    i === activeIndex ? "w-6 opacity-100" : "w-1.5 opacity-30"
-                  }`}
-                />
+                <span>{item.name}</span>
+                <span>{item.role.split(", ").slice(1).join(", ")}</span>
               </button>
             ))}
           </div>
-
-          <div className="flex items-center gap-4">
-            <button
-              type="button"
-              aria-label="Previous testimonial"
-              onClick={() => changeTestimonial(-1)}
-              className="flex h-10 w-10 cursor-pointer items-center justify-center text-on-light-muted transition-colors hover:text-sanct-indigo"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              >
-                <path
-                  d="M19 12H5M5 12l6-6M5 12l6 6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-            <button
-              type="button"
-              aria-label="Next testimonial"
-              onClick={() => changeTestimonial(1)}
-              className="flex h-10 w-10 cursor-pointer items-center justify-center text-on-light-muted transition-colors hover:text-sanct-indigo"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              >
-                <path
-                  d="M5 12h14M13 6l6 6-6 6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
+        </div>
+        <div className="sanct-testimonials__stage">
+          <blockquote aria-live={autoPlay ? "off" : "polite"} aria-atomic="true">
+            <div key={testimonial.name} className="sanct-testimonials__quote">
+              <p>&ldquo;{testimonial.quote}&rdquo;</p>
+              <footer>
+                <cite>
+                  <span>{testimonial.name}</span>
+                  <span>{testimonial.role}</span>
+                </cite>
+              </footer>
+            </div>
+          </blockquote>
+          <div className="sanct-testimonials__controls">
+            <span className="sanct-testimonials__count" aria-label={`Testimonial ${activeIndex + 1} of ${TESTIMONIALS.length}`}>
+              {String(activeIndex + 1).padStart(2, "0")} / {String(TESTIMONIALS.length).padStart(2, "0")}
+            </span>
+            <div className="sanct-testimonials__buttons">
+              <button type="button" className="sanct-testimonials__pause" aria-pressed={isPaused} onClick={() => setIsPaused((paused) => !paused)}>
+                {isPaused ? "Play" : "Pause"}
+              </button>
+              <button type="button" aria-label="Previous testimonial" onClick={() => changeTestimonial(-1)}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                  <path d="M19 12H5M5 12l6-6M5 12l6 6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              <button type="button" aria-label="Next testimonial" onClick={() => changeTestimonial(1)}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </div>

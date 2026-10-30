@@ -1,573 +1,93 @@
 "use client";
 
-import { useEffect, useRef, useState, Fragment, type MouseEventHandler, type ReactNode } from "react";
-import { ButtonLink } from "@/components/ui/button";
-import { BrandMarquee } from "@/components/home/brand-marquee";
-import { HeroPixelField } from "@/components/home/hero-pixel-field";
+import Image from "next/image";
+import { useRef } from "react";
 import { useIntro } from "@/components/providers/intro-provider";
+import { ButtonLink } from "@/components/ui/button";
+import { brands } from "@/lib/brands";
 import { EASE_OUT, gsap, useGSAP } from "@/lib/gsap";
-import { useReducedMotion } from "@/lib/use-reduced-motion";
-
-type CodeToken = { text: string; color: string };
-type CodeLine = { tokens: CodeToken[] };
-type TabId = "index.ts" | "api.ts" | "deploy.yml";
-
-type CodeFile = {
-  language: string;
-  lines: CodeLine[];
-  badges: Array<{ icon: string; iconColor: string; text: string }>;
-};
-
-const CODE_FILES: Record<TabId, CodeFile> = {
-  "index.ts": {
-    language: "TypeScript",
-    lines: [
-      {
-        tokens: [
-          { text: "import", color: "#c792ea" },
-          { text: " { ", color: "#cdd3de" },
-          { text: "createClient", color: "#82aaff" },
-          { text: " } ", color: "#cdd3de" },
-          { text: "from", color: "#c792ea" },
-          { text: ' "@sanct/sdk"', color: "#c3e88d" },
-        ],
-      },
-      { tokens: [] },
-      {
-        tokens: [
-          { text: "const", color: "#c792ea" },
-          { text: " app ", color: "#cdd3de" },
-          { text: "=", color: "#89ddff" },
-          { text: " createClient({", color: "#cdd3de" },
-        ],
-      },
-      {
-        tokens: [
-          { text: "  simplicity", color: "#f07178" },
-          { text: ": ", color: "#89ddff" },
-          { text: "true", color: "#ff9cac" },
-          { text: ",", color: "#cdd3de" },
-        ],
-      },
-      {
-        tokens: [
-          { text: "  complexity", color: "#f07178" },
-          { text: ": ", color: "#89ddff" },
-          { text: "0", color: "#f78c6c" },
-          { text: ",", color: "#cdd3de" },
-        ],
-      },
-      {
-        tokens: [
-          { text: "  focus", color: "#f07178" },
-          { text: ": ", color: "#89ddff" },
-          { text: '"what matters"', color: "#c3e88d" },
-          { text: ",", color: "#cdd3de" },
-        ],
-      },
-      { tokens: [{ text: "})", color: "#cdd3de" }] },
-      { tokens: [] },
-      { tokens: [{ text: "// Ship faster. Think clearer.", color: "#546e7a" }] },
-      {
-        tokens: [
-          { text: "app", color: "#82aaff" },
-          { text: ".", color: "#cdd3de" },
-          { text: "launch", color: "#82aaff" },
-          { text: "()", color: "#cdd3de" },
-        ],
-      },
-    ],
-    badges: [
-      { icon: "✓", iconColor: "#28c840", text: "Build successful · 2.3s" },
-      { icon: "↑", iconColor: "#82aaff", text: "Deployed to production" },
-    ],
-  },
-  "api.ts": {
-    language: "TypeScript",
-    lines: [
-      {
-        tokens: [
-          { text: "import", color: "#c792ea" },
-          { text: " { ", color: "#cdd3de" },
-          { text: "NextResponse", color: "#82aaff" },
-          { text: " } ", color: "#cdd3de" },
-          { text: "from", color: "#c792ea" },
-          { text: ' "next/server"', color: "#c3e88d" },
-        ],
-      },
-      {
-        tokens: [
-          { text: "import", color: "#c792ea" },
-          { text: " { ", color: "#cdd3de" },
-          { text: "getFeaturedProjects", color: "#82aaff" },
-          { text: " } ", color: "#cdd3de" },
-          { text: "from", color: "#c792ea" },
-          { text: ' "@/lib/projects"', color: "#c3e88d" },
-        ],
-      },
-      { tokens: [] },
-      {
-        tokens: [
-          { text: "export", color: "#c792ea" },
-          { text: " async ", color: "#cdd3de" },
-          { text: "function", color: "#c792ea" },
-          { text: " GET", color: "#82aaff" },
-          { text: "() {", color: "#cdd3de" },
-        ],
-      },
-      {
-        tokens: [
-          { text: "  const", color: "#c792ea" },
-          { text: " projects ", color: "#cdd3de" },
-          { text: "=", color: "#89ddff" },
-          { text: " getFeaturedProjects", color: "#82aaff" },
-          { text: "()", color: "#cdd3de" },
-        ],
-      },
-      {
-        tokens: [
-          { text: "  return", color: "#c792ea" },
-          { text: " NextResponse", color: "#82aaff" },
-          { text: ".", color: "#cdd3de" },
-          { text: "json", color: "#82aaff" },
-          { text: "({ site", color: "#cdd3de" },
-          { text: ": ", color: "#89ddff" },
-          { text: '"sanct.ph"', color: "#c3e88d" },
-          { text: ", projects })", color: "#cdd3de" },
-        ],
-      },
-      { tokens: [{ text: "}", color: "#cdd3de" }] },
-    ],
-    badges: [
-      { icon: "✓", iconColor: "#28c840", text: "Featured work loaded" },
-      { icon: "→", iconColor: "#82aaff", text: "/work data ready" },
-    ],
-  },
-  "deploy.yml": {
-    language: "YAML",
-    lines: [
-      {
-        tokens: [
-          { text: "name", color: "#f07178" },
-          { text: ": ", color: "#89ddff" },
-          { text: "Deploy sanct-website", color: "#c3e88d" },
-        ],
-      },
-      { tokens: [] },
-      {
-        tokens: [
-          { text: "on", color: "#f07178" },
-          { text: ":", color: "#cdd3de" },
-        ],
-      },
-      {
-        tokens: [
-          { text: "  push", color: "#f07178" },
-          { text: ":", color: "#cdd3de" },
-        ],
-      },
-      {
-        tokens: [
-          { text: "    branches", color: "#f07178" },
-          { text: ": [", color: "#cdd3de" },
-          { text: "main", color: "#c3e88d" },
-          { text: "]", color: "#cdd3de" },
-        ],
-      },
-      { tokens: [] },
-      {
-        tokens: [
-          { text: "jobs", color: "#f07178" },
-          { text: ":", color: "#cdd3de" },
-        ],
-      },
-      {
-        tokens: [
-          { text: "  deploy", color: "#f07178" },
-          { text: ":", color: "#cdd3de" },
-        ],
-      },
-      {
-        tokens: [
-          { text: "    runs-on", color: "#f07178" },
-          { text: ": ", color: "#89ddff" },
-          { text: "ubuntu-latest", color: "#c3e88d" },
-        ],
-      },
-      {
-        tokens: [
-          { text: "    defaults", color: "#f07178" },
-          { text: ":", color: "#cdd3de" },
-        ],
-      },
-      {
-        tokens: [
-          { text: "      run", color: "#f07178" },
-          { text: ":", color: "#cdd3de" },
-        ],
-      },
-      {
-        tokens: [
-          { text: "        working-directory", color: "#f07178" },
-          { text: ": ", color: "#89ddff" },
-          { text: "sanct-website", color: "#c3e88d" },
-        ],
-      },
-      {
-        tokens: [
-          { text: "    steps", color: "#f07178" },
-          { text: ":", color: "#cdd3de" },
-        ],
-      },
-      {
-        tokens: [
-          { text: "      - ", color: "#cdd3de" },
-          { text: "run", color: "#f07178" },
-          { text: ": ", color: "#89ddff" },
-          { text: "npm ci && npm run build", color: "#c3e88d" },
-        ],
-      },
-      {
-        tokens: [
-          { text: "      - ", color: "#cdd3de" },
-          { text: "run", color: "#f07178" },
-          { text: ": ", color: "#89ddff" },
-          { text: "vercel deploy --prod", color: "#c3e88d" },
-        ],
-      },
-    ],
-    badges: [
-      { icon: "✓", iconColor: "#28c840", text: "Build passed · sanct-website" },
-      { icon: "↑", iconColor: "#82aaff", text: "sanct.ph live on Vercel" },
-    ],
-  },
-};
-
-const TABS = Object.keys(CODE_FILES) as TabId[];
-
-function HeroCodeAnimation() {
-  const [activeTab, setActiveTab] = useState<TabId>("index.ts");
-  const [lineCount, setLineCount] = useState(0);
-  const [cursorOn, setCursorOn] = useState(true);
-  const [showBadges, setShowBadges] = useState(false);
-  const [userPickedTab, setUserPickedTab] = useState(false);
-
-  const activeFile = CODE_FILES[activeTab];
-  const codeLines = activeFile.lines;
-
-  function selectTab(tab: TabId) {
-    if (tab === activeTab) return;
-    setUserPickedTab(true);
-    setActiveTab(tab);
-    setLineCount(0);
-    setShowBadges(false);
-  }
-
-  useEffect(() => {
-    if (lineCount < codeLines.length) {
-      const delay = lineCount === 0 ? 600 : 200;
-      const t = setTimeout(() => setLineCount((n) => n + 1), delay);
-      return () => clearTimeout(t);
-    }
-    const t = setTimeout(() => setShowBadges(true), 500);
-    return () => clearTimeout(t);
-  }, [lineCount, codeLines.length]);
-
-  useEffect(() => {
-    if (!showBadges || userPickedTab) return;
-    const t = setTimeout(() => {
-      setShowBadges(false);
-      setLineCount(0);
-    }, 3500);
-    return () => clearTimeout(t);
-  }, [showBadges, userPickedTab]);
-
-  useEffect(() => {
-    const i = setInterval(() => setCursorOn((v) => !v), 530);
-    return () => clearInterval(i);
-  }, []);
-
-  return (
-    <div className="absolute inset-0 flex flex-col overflow-hidden bg-[#0d0f16] font-terminal">
-      {/* title bar */}
-      <div className="flex shrink-0 items-center gap-2 border-b border-white/[0.06] bg-[#13151f] px-4 py-2.5">
-        <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
-        <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
-        <span className="h-3 w-3 rounded-full bg-[#28c840]" />
-        <div className="ml-3 flex gap-0.5 text-[12px]">
-          {TABS.map((tab) => {
-            const isActive = tab === activeTab;
-            return (
-              <button
-                key={tab}
-                type="button"
-                onClick={() => selectTab(tab)}
-                className={`cursor-pointer rounded-t px-3 py-1 transition-colors duration-150 ${
-                  isActive
-                    ? "bg-[#0d0f16] text-white/70"
-                    : "text-white/25 hover:text-white/50"
-                }`}
-              >
-                {tab}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* code area */}
-      <div className="flex-1 overflow-hidden p-5 text-[14px] leading-[22px]">
-        {codeLines.slice(0, lineCount).map((line, i) => (
-          <div key={`${activeTab}-${i}`} className="flex items-start">
-            <span className="mr-5 mt-0.5 w-5 shrink-0 select-none text-right text-[12px] text-white/20">
-              {i + 1}
-            </span>
-            <span>
-              {line.tokens.map((tok, j) => (
-                <span key={j} style={{ color: tok.color }}>
-                  {tok.text}
-                </span>
-              ))}
-              {i === lineCount - 1 && (
-                <span
-                  style={{
-                    color: "#528bff",
-                    opacity: cursorOn ? 1 : 0,
-                    transition: "opacity 75ms",
-                  }}
-                >
-                  |
-                </span>
-              )}
-            </span>
-          </div>
-        ))}
-      </div>
-
-      {/* status bar */}
-      <div className="flex shrink-0 items-center gap-4 bg-[#2C1FA8] px-4 py-1.5 text-[12px] text-white/70">
-        <span className="text-white/90">{activeFile.language}</span>
-        <span>● Ready</span>
-        <span className="ml-auto">Ln {lineCount}&nbsp;&nbsp;Col 1</span>
-      </div>
-
-      {/* result badges */}
-      <div
-        className="absolute bottom-10 right-4 flex flex-col items-end gap-2"
-        style={{
-          opacity: showBadges ? 1 : 0,
-          transform: showBadges ? "translateY(0)" : "translateY(8px)",
-          transition: "opacity 0.4s ease, transform 0.4s ease",
-        }}
-      >
-        {activeFile.badges.map((badge) => (
-          <div
-            key={badge.text}
-            className="flex items-center gap-2 rounded-lg border border-white/[0.08] bg-[#1a1d2e] px-3 py-2 text-[12px] text-white shadow-xl"
-          >
-            <span style={{ color: badge.iconColor }}>{badge.icon}</span>
-            {badge.text}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-const HERO_WORDS = ["Software", "that", "strips", "away"];
-const COMPLEXITY_WORD = "complexity.";
-
-function WordMask({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return (
-    <span
-      className={className}
-      style={{
-        display: "inline-block",
-        overflow: "hidden",
-        verticalAlign: "bottom",
-        paddingTop: "0.08em",
-        marginTop: "-0.08em",
-        paddingBottom: "0.12em",
-        marginBottom: "-0.12em",
-      }}
-    >
-      <span className="hero-word" style={{ display: "inline-block" }}>
-        {children}
-      </span>
-    </span>
-  );
-}
+import "./hallmark/hero.css";
 
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const imageBlockRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
-  const marqueeRef = useRef<HTMLDivElement>(null);
-  const reducedMotion = useReducedMotion();
-  const [typedChars, setTypedChars] = useState(0);
-  const [showTypingCursor, setShowTypingCursor] = useState(false);
-  const { introComplete, introWasPlayed } = useIntro();
-  const heroMotionMode = introWasPlayed && !introComplete
-    ? "prime"
-    : introComplete && !reducedMotion
-      ? "enter"
-      : "idle";
-  const showFullWord = reducedMotion;
-  const hideWord = !reducedMotion && heroMotionMode === "prime";
-  const visibleChars = showFullWord ? COMPLEXITY_WORD.length : hideWord ? 0 : typedChars;
-  const typingCursor = !showFullWord && !hideWord && showTypingCursor;
-
-  useEffect(() => {
-    if (reducedMotion || heroMotionMode === "prime") return;
-
-    const typingDelay = heroMotionMode === "enter" ? 900 : 180;
-    let typingInterval: number | undefined;
-    const reset = window.setTimeout(() => {
-      setTypedChars(0);
-      setShowTypingCursor(true);
-    }, 0);
-    const startTyping = window.setTimeout(() => {
-      typingInterval = window.setInterval(() => {
-        setTypedChars((current) => {
-          if (current >= COMPLEXITY_WORD.length) {
-            if (typingInterval) window.clearInterval(typingInterval);
-            window.setTimeout(() => setShowTypingCursor(false), 550);
-            return current;
-          }
-          return current + 1;
-        });
-      }, 85);
-    }, typingDelay);
-
-    return () => {
-      window.clearTimeout(reset);
-      window.clearTimeout(startTyping);
-      if (typingInterval) window.clearInterval(typingInterval);
-    };
-  }, [heroMotionMode, reducedMotion]);
+  const { introComplete } = useIntro();
 
   useGSAP(
     () => {
-      if (heroMotionMode !== "prime") return;
+      if (!introComplete) return;
 
-      gsap.set(".hero-word", { y: "110%" });
-      gsap.set(subtitleRef.current, { autoAlpha: 0, y: 20 });
-      gsap.set(".hero-cta", { autoAlpha: 0, y: 16 });
-      if (imageBlockRef.current) {
-        gsap.set(imageBlockRef.current, { autoAlpha: 0, y: 32 });
-      }
-      if (imageRef.current) {
-        gsap.set(imageRef.current, { scale: 0.96, autoAlpha: 1 });
-      }
-      gsap.set(marqueeRef.current, { autoAlpha: 0, y: 20 });
-    },
-    { scope: sectionRef, dependencies: [heroMotionMode] },
-  );
+      const media = gsap.matchMedia();
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        const select = gsap.utils.selector(sectionRef);
+        const lines = select(".sanct-hero__title > span");
+        const copy = select(".sanct-hero__aside p");
+        const actions = select(".sanct-hero__actions");
+        const credentials = select(".sanct-hero__credential");
+        const pixels = select(".sanct-hero__edge span");
 
-  useGSAP(
-    () => {
-      if (heroMotionMode !== "enter") return;
-
-      const tl = gsap.timeline({
-        defaults: { ease: EASE_OUT },
-        onComplete: () => {
-          gsap.set(".hero-word", { clearProps: "transform" });
-          gsap.set(subtitleRef.current, { clearProps: "opacity,visibility,transform" });
-          gsap.set(".hero-cta", { clearProps: "opacity,visibility,transform" });
-          if (imageBlockRef.current) {
-            gsap.set(imageBlockRef.current, { clearProps: "opacity,visibility,transform" });
-          }
-          if (imageRef.current) {
-            gsap.set(imageRef.current, { clearProps: "transform" });
-          }
-          gsap.set(marqueeRef.current, { clearProps: "opacity,visibility,transform" });
-        },
+        gsap.timeline({
+          defaults: { ease: EASE_OUT },
+          onComplete: () => {
+            gsap.set([...lines, ...copy, ...actions, ...credentials, ...pixels], {
+              clearProps: "transform,opacity,transformOrigin",
+            });
+          },
+        })
+          .from(lines, { y: 32, opacity: 0, duration: 0.7, stagger: 0.12 }, 0)
+          .from(copy, { y: 16, opacity: 0, duration: 0.55 }, 0.25)
+          .from(actions, { y: 12, opacity: 0, duration: 0.5 }, 0.4)
+          .from(credentials, { y: 12, opacity: 0, duration: 0.5, stagger: 0.06 }, 0.6)
+          .from(pixels, {
+            scaleY: 0,
+            transformOrigin: "bottom center",
+            duration: 0.6,
+            stagger: { amount: 0.2, from: "center" },
+          }, 0.25);
       });
 
-      tl.to(".hero-word", { y: "0%", duration: 0.85, stagger: 0.07 })
-        .to(subtitleRef.current, { autoAlpha: 1, y: 0, duration: 0.6 }, "-=0.35")
-        .to(".hero-cta", { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.12 }, "-=0.3");
-
-      if (imageBlockRef.current) {
-        tl.to(imageBlockRef.current, { autoAlpha: 1, y: 0, duration: 0.7 }, "-=0.2");
-      }
-      if (imageRef.current) {
-        tl.to(imageRef.current, { scale: 1, duration: 0.8 }, "-=0.55");
-      }
-
-      tl.to(marqueeRef.current, { autoAlpha: 1, y: 0, duration: 0.6 }, "-=0.35");
+      return () => media.revert();
     },
-    { scope: sectionRef, dependencies: [heroMotionMode] },
+    { scope: sectionRef, dependencies: [introComplete], revertOnUpdate: true },
   );
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative flex min-h-[calc(100dvh-4.5rem)] flex-col overflow-hidden bg-white pt-10 text-near-black sm:pt-14 lg:min-h-[calc(100svh-4.5rem)] lg:pt-20"
-    >
-      <div className="relative z-10 mx-auto flex w-full flex-1 flex-col justify-center max-w-(--max-width-container) px-(--spacing-section-x) lg:justify-start">
-        <div className="mx-auto max-w-4xl text-center">
-          <h1 className="font-display text-[clamp(2.75rem,9vw,4.5rem)] font-extrabold leading-[1.05] tracking-[-0.03em] lg:text-[clamp(2.75rem,7vw,5.25rem)]">
-            {HERO_WORDS.map((word, index) => (
-              <Fragment key={word}>
-                {index > 0 ? " " : null}
-                <WordMask>{word}</WordMask>
-              </Fragment>
-            ))}
-            {" "}
-            <WordMask>
-              <span className="font-terminal text-sanct-indigo ">
-                {COMPLEXITY_WORD.slice(0, visibleChars)}
-                {typingCursor ? <span aria-hidden="true">|</span> : null}
-              </span>
-            </WordMask>
+    <section ref={sectionRef} className="sanct-hero" aria-labelledby="sanct-hero-title">
+      <div className="sanct-hero__inner">
+        <div className="sanct-hero__composition">
+          <h1 id="sanct-hero-title" className="sanct-hero__title">
+            <span>Software that </span>
+            <span>strips away </span>
+            <span className="sanct-hero__pixel">complexity.</span>
           </h1>
-
-          <p
-            ref={subtitleRef}
-            className="mx-auto mt-6 max-w-2xl text-lg font-normal leading-relaxed text-on-light-muted md:text-xl lg:mt-8"
-          >
-            Built on expertise. Designed to scale. Focused on results that
-            matter to your business.
-          </p>
-
-          <div className="mt-7 flex flex-row flex-wrap items-center justify-center gap-x-6 gap-y-3 lg:mt-10">
-            <ButtonLink href="/work" variant="primary" className="hero-cta">
-              What We Built
-            </ButtonLink>
-            <button
-              type="button"
-              data-cal-link="deo-talip-iwfmht/secret"
-              data-cal-namespace="secret"
-              data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
-              className="hero-cta inline-flex cursor-pointer items-center gap-2 text-sm font-medium uppercase tracking-[0.08em] text-near-black transition-colors duration-150 ease-out hover:text-sanct-indigo"
-            >
-              Let&apos;s Talk
-              <span aria-hidden="true">→</span>
-            </button>
+          <div className="sanct-hero__aside">
+            <p>We don't let AI just create. We engineer great.</p>
+            <div className="sanct-hero__actions">
+              <ButtonLink href="/work" variant="primary" className="sanct-hero__primary">
+                What we built
+              </ButtonLink>
+              <button
+                type="button"
+                data-cal-link="deo-talip-iwfmht/secret"
+                data-cal-namespace="secret"
+                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                className="sanct-hero__contact"
+              >
+                Let&apos;s talk
+              </button>
+            </div>
           </div>
         </div>
-
-        {/* <div
-          ref={imageBlockRef}
-          className="relative mx-auto mt-16 max-w-5xl md:mt-24"
-        >
-          <div
-            ref={imageRef}
-            className="relative z-10 mx-auto aspect-[16/10] max-w-3xl overflow-hidden rounded-card shadow-2xl shadow-sanct-indigo/20"
-          >
-            <HeroCodeAnimation />
-          </div>
-        </div> */}
-
-        <div ref={marqueeRef} className="mt-6 lg:mt-0">
-          <BrandMarquee />
+        <div className="sanct-hero__credentials" aria-label="Accreditations and partnerships">
+          {brands.map((brand) => (
+            <div key={brand.name} className="sanct-hero__credential">
+              <Image src={brand.logo} alt="" width={48} height={48} className="sanct-hero__logo" />
+              <span>{brand.name}</span>
+            </div>
+          ))}
         </div>
       </div>
-
-      <div className="pointer-events-none mt-auto h-20 w-full shrink-0 sm:h-24 lg:h-[clamp(160px,18vh,200px)]">
-        <HeroPixelField mode={heroMotionMode} />
+      <div className="sanct-hero__edge" aria-hidden="true">
+        {Array.from({ length: 72 }, (_, index) => <span key={index} />)}
       </div>
     </section>
   );

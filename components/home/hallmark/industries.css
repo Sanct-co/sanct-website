@@ -1,0 +1,70 @@
+/* Hallmark Â· component: industries section Â· genre: modern-minimal Â· theme: brand Â· redesign: full Â· v2.0.0 */
+/* Hallmark Â· pre-emit critique: P4 H5 E4 S4 R5 V4 Â· weakest: S, brought the existing industry-specific descriptions into the default view */
+/* Hallmark Â· waive 39b Â· industry rows are selectable content panels with full descriptions Â· their larger hit area retains the existing hover and keyboard interaction */
+/* Hallmark Â· answered F3 Â· explicit heading line break follows the two-column studio composition */
+
+/* Hallmark Â· finish-review: subagent Â· 1 finding Â· 1 resolved Â· mobile next control retains keyboard focus */
+@import "./tokens.css";
+
+.sanct-industries { color: var(--near-black); }
+.sanct-industries__layout { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.8fr); gap: 64px; align-items: start; }
+.sanct-industries__heading {
+  position: static;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(40px, 4.4vw, 64px);
+  font-weight: 800;
+  letter-spacing: -.06em;
+  line-height: 1.06;
+  min-width: 0;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+.sanct-industries__viewport { min-width: 0; }
+.sanct-industries__list { display: flex; flex-direction: column; border-top: 2px solid var(--near-black); }
+.sanct-industries__item { position: relative; min-width: 0; border-bottom: 1px solid var(--hero-rule); scroll-margin-top: 100px; }
+.sanct-industries__row {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.4fr) auto;
+  align-items: start;
+  gap: 24px;
+  width: 100%;
+  min-height: 156px;
+  padding: 28px 20px;
+  text-align: left;
+  color: var(--near-black);
+  background: var(--ghost-indigo);
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: color 180ms ease-out, background-color 180ms ease-out;
+}
+.sanct-industries__name { font-size: clamp(24px, 2.2vw, 32px); font-weight: 700; letter-spacing: -.045em; line-height: 1.2; }
+.sanct-industries__details { display: flex; flex-direction: column; gap: 20px; }
+.sanct-industries__description { font-size: 16px; line-height: 1.65; text-wrap: pretty; }
+.sanct-industries__offerings { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 12px; font-weight: 600; }
+.sanct-industries__region { padding-top: 4px; font-size: 12px; }
+.sanct-industries__item[data-selected] .sanct-industries__row { color: var(--ghost-indigo); background: var(--sanct-indigo); }
+.sanct-industries__row:focus-visible, .sanct-industries__next:focus-visible { outline: 2px solid var(--sanct-indigo); outline-offset: 4px; position: relative; z-index: 1; }
+.sanct-industries__row:active { background: var(--indigo-mid); color: var(--ghost-indigo); }
+.sanct-industries__row:disabled, .sanct-industries__next:disabled { opacity: .55; cursor: not-allowed; }
+.sanct-industries__next { display: none; }
+@media (max-width: 1023px) {
+  .sanct-industries__layout { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .sanct-industries__heading { position: static; font-size: clamp(40px, 7vw, 64px); }
+  .sanct-industries__viewport { overflow: clip; padding: 4px; margin: -4px; }
+  .sanct-industries__list { flex-direction: row; border-top: 0; gap: 16px; touch-action: pan-y pinch-zoom; }
+  .sanct-industries__item { flex: 0 0 80%; border-top: 2px solid var(--near-black); }
+  .sanct-industries__row { grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto 1fr; min-height: 300px; height: 100%; padding: 24px; gap: 32px 16px; }
+  .sanct-industries__name { font-size: 32px; }
+  .sanct-industries__details { grid-column: 1 / -1; grid-row: 2; justify-content: space-between; align-self: stretch; gap: 32px; padding-bottom: 24px; }
+  .sanct-industries__region { grid-column: 2; grid-row: 1; }
+  .sanct-industries__next { position: absolute; bottom: 16px; right: 16px; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; background: var(--ghost-indigo); color: var(--sanct-indigo); border: 1px solid var(--hero-rule); cursor: pointer; }
+  .sanct-industries__next:hover { background: var(--hero-rule); }
+  .sanct-industries__next:active { transform: translateX(2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sanct-industries__row { transition: none; }
+  .sanct-industries__next:active { transform: none; }
+}
+
+.sanct-industries__item[data-selected] .sanct-industries__row:focus-visible { outline-color: var(--ghost-indigo); outline-offset: -4px; }

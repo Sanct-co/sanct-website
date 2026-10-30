@@ -1,0 +1,5 @@
+:root {
+  --hero-paper: var(--ghost-indigo);
+  --hero-ink: var(--near-black);
+  --hero-rule: #dcdbe5;
+}

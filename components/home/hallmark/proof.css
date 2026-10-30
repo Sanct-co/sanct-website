@@ -1,0 +1,87 @@
+/* Hallmark · component: testimonials and gallery · genre: modern-minimal · theme: brand · redesign: full · copy: verbatim (testimonials) · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H5 E4 S5 R4 V4 · weakest: R, removed quote ornament and made the supplied photographs the only imagery */
+/* Hallmark · finish-review: subagent · ship · no remaining scoped findings · original quotes and six photos preserved */
+@import "./tokens.css";
+:root {
+  --proof-ink: #ffffff;
+  --proof-secondary: #c6c5ca;
+  --proof-rule: #69686e;
+  --proof-hover: #252429;
+}
+.sanct-testimonials { background: var(--near-black); color: var(--proof-ink); }
+.sanct-testimonials__layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr); gap: 80px; }
+.sanct-testimonials__intro { display: flex; flex-direction: column; justify-content: space-between; gap: 48px; }
+.sanct-testimonials__intro h2, .sanct-gallery__heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(36px, 3.4vw, 48px);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -.05em;
+  min-width: 0;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+.sanct-testimonials__navigation { display: flex; flex-direction: column; }
+.sanct-testimonials__person { width: 100%; padding: 16px 0; border-top: 1px solid var(--proof-rule); color: var(--proof-secondary); text-align: left; cursor: pointer; font-family: var(--font-body); }
+.sanct-testimonials__person span { display: block; font-size: 14px; }
+.sanct-testimonials__person span:first-child { font-size: 16px; font-weight: 600; }
+.sanct-testimonials__person[aria-pressed="true"] { color: var(--proof-ink); border-top-color: var(--proof-ink); }
+.sanct-testimonials__person:hover { background: var(--proof-hover); }
+.sanct-testimonials__stage { min-width: 0; display: flex; flex-direction: column; justify-content: space-between; gap: 40px; }
+.sanct-testimonials blockquote { margin: 0; }
+.sanct-testimonials__quote { min-height: 400px; animation: sanct-quote-enter 350ms ease-out; }
+.sanct-testimonials__quote p { margin: 0; font-size: clamp(22px, 2vw, 28px); font-weight: 400; line-height: 1.55; letter-spacing: -.025em; text-wrap: pretty; }
+.sanct-testimonials__quote footer { margin-top: 32px; }
+.sanct-testimonials__quote cite { font-style: normal; }
+.sanct-testimonials__quote cite span { display: block; font-size: 14px; color: var(--proof-secondary); }
+.sanct-testimonials__quote cite span:first-child { font-size: 16px; color: var(--proof-ink); font-weight: 600; margin-bottom: 4px; }
+.sanct-testimonials__controls { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--proof-rule); padding-top: 20px; }
+.sanct-testimonials__count { font-size: 14px; font-variant-numeric: tabular-nums; color: var(--proof-secondary); }
+.sanct-testimonials__buttons { display: flex; gap: 8px; }
+.sanct-testimonials__buttons button { display: flex; align-items: center; justify-content: center; min-width: 48px; height: 48px; padding: 0 12px; border: 1px solid var(--proof-rule); color: var(--proof-ink); cursor: pointer; font-family: var(--font-body); font-size: 14px; }
+.sanct-testimonials__buttons button:hover { background: var(--proof-hover); }
+.sanct-testimonials button:focus-visible { outline: 2px solid var(--proof-ink); outline-offset: 4px; }
+.sanct-testimonials button:active { transform: translateY(1px); }
+.sanct-testimonials button:disabled { opacity: .55; cursor: not-allowed; }
+.sanct-gallery__layout { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); grid-template-rows: auto 1fr; gap: 40px; align-items: start; }
+.sanct-gallery__layout > div:first-child { grid-column: 1; grid-row: 1 / 3; }
+.sanct-gallery__slide { position: relative; aspect-ratio: 4 / 3; overflow: clip; background: var(--near-black); }
+.sanct-gallery__image { object-fit: contain; }
+.sanct-gallery__heading { grid-column: 2; grid-row: 1; padding-top: 16px; }
+.sanct-gallery__thumbs { grid-column: 2; grid-row: 2; padding: 4px; margin: -4px; }
+.sanct-gallery__thumbs > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.sanct-gallery .sanct-gallery__thumb { width: 100%; aspect-ratio: 4 / 3; border-radius: 0; outline-offset: -4px; }
+.sanct-gallery__thumb[aria-current="true"] { outline: 3px solid var(--sanct-indigo); outline-offset: -3px; }
+.sanct-gallery__thumb:focus-visible { outline: 3px solid var(--sanct-indigo); outline-offset: 1px; }
+.sanct-gallery__thumb:active { transform: translateY(1px); }
+.sanct-gallery__thumb:disabled { opacity: .55; cursor: not-allowed; }
+@keyframes sanct-quote-enter { from { opacity: .4; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 1023px) {
+  .sanct-testimonials__layout { gap: 40px; }
+  .sanct-testimonials__quote { min-height: 460px; }
+  .sanct-gallery__layout { gap: 24px; }
+  .sanct-gallery__heading { font-size: 32px; }
+}
+@media (max-width: 700px) {
+  .sanct-testimonials__layout { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .sanct-testimonials__intro { gap: 32px; }
+  .sanct-testimonials__intro h2 { font-size: 36px; }
+  .sanct-testimonials__navigation { flex-direction: row; gap: 16px; }
+  .sanct-testimonials__person { min-width: 0; }
+  .sanct-testimonials__person span:first-child { font-size: 14px; }
+  .sanct-testimonials__person span:last-child { font-size: 12px; }
+  .sanct-testimonials__quote { min-height: 480px; }
+  .sanct-testimonials__quote p { font-size: 22px; }
+  .sanct-testimonials__stage { gap: 24px; }
+  .sanct-gallery__layout { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .sanct-gallery__heading { grid-column: 1; grid-row: 1; font-size: 40px; padding-top: 0; }
+  .sanct-gallery__layout > div:first-child { grid-column: 1; grid-row: 2; }
+  .sanct-gallery__thumbs { grid-column: 1; grid-row: 3; }
+  .sanct-gallery__thumbs > div { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+  .sanct-gallery .sanct-gallery__thumb { min-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sanct-testimonials__quote { animation: none; }
+  .sanct-testimonials button:active, .sanct-gallery__thumb:active { transform: none; }
+}

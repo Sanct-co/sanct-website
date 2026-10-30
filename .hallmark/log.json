@@ -1,0 +1,131 @@
+[
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "component",
+  "shape": "dark typographic call to action",
+  "theme": "brand",
+  "axes": "dark/grotesk-heavy/cool",
+  "hero": "kept",
+  "nav": "kept",
+  "footer": "kept",
+  "imagery": "Original promise in large typography",
+  "photos": [],
+  "entry": "Statement headline with bottom booking row",
+  "fingerprint": "dark-statement/left-heading/hairline/booking-row",
+  "sections": [
+   "Homepage call to action"
+  ],
+  "signature": "Original headline at statement scale",
+  "waived": [],
+  "prompt": "Redesign homepage booking banner with Hallmark while retaining black/white backgrounds",
+  "validation": "Scoped lint clean, TypeScript, ESLint and production build passed. Desktop/mobile captures have no horizontal overflow; Cal booking attributes preserved. Other routes retain default banner.",
+  "date": "2026-10-30"
+ },
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "component",
+  "shape": "white editorial inquiry form",
+  "theme": "brand",
+  "axes": "light/grotesk-heavy/cool",
+  "hero": "kept",
+  "nav": "kept",
+  "footer": "kept",
+  "imagery": "Typography and working form",
+  "photos": [],
+  "entry": "Large launch headline beside unboxed inquiry form",
+  "fingerprint": "white-statement/unboxed-form/outlined-choices/indigo-submit",
+  "sections": [
+   "Contact"
+  ],
+  "signature": "Large Launch fast heading beside the actual service and budget selector",
+  "waived": [],
+  "prompt": "Redesign homepage contact section using same Hallmark brand direction and black/white backgrounds",
+  "validation": "Scoped lint 0 FAIL 0 REFLEX, TypeScript and ESLint passed, production build passed; desktop/mobile field serialization and invalid server submission errors passed. No valid message sent.",
+  "date": "2026-10-30"
+ },
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "component",
+  "shape": "indigo quotation stage and photograph index",
+  "theme": "brand",
+  "axes": "indigo/grotesk-heavy/cool",
+  "hero": "kept",
+  "nav": "kept",
+  "footer": "kept",
+  "imagery": "Six supplied team and client photographs",
+  "photos": [
+   "six.jpg",
+   "2.jpg",
+   "3.jpg",
+   "4.jpg",
+   "5.jpg",
+   "1.jpg"
+  ],
+  "entry": "Named testimonial selection and full-photo gallery",
+  "fingerprint": "indigo-quote/named-selector/white-photo/side-thumbnails",
+  "sections": [
+   "Testimonials",
+   "Gallery"
+  ],
+  "signature": "Indigo testimonial band paired with uncropped team photographs",
+  "waived": [],
+  "prompt": "Redesign testimonials and gallery using the same Sanct Hallmark system",
+  "validation": "Scoped lint clean, TypeScript, ESLint and production build passed; desktop/mobile prev/next, pause and six-thumbnail navigation passed; no horizontal overflow or JS errors; finish review ship. Whole-page render scan retains unrelated header/form/FAQ findings.",
+  "date": "2026-10-30"
+ },
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "component",
+  "shape": "split industry index",
+  "theme": "brand",
+  "axes": "light/grotesk-heavy/cool",
+  "hero": "kept",
+  "nav": "kept",
+  "footer": "kept",
+  "imagery": "Existing industry facts in type",
+  "photos": [],
+  "entry": "Heading beside four content rows",
+  "fingerprint": "split-heading/vertical-index/visible-descriptions/mobile-carousel",
+  "sections": [
+   "Industries"
+  ],
+  "signature": "Large fixed heading beside selectable industry rows",
+  "waived": [
+   "39b: selectable content panels retain larger hit targets"
+  ],
+  "prompt": "Redesign industries section in same Sanct Hallmark design system",
+  "validation": "Section lint clean, TypeScript and ESLint passed, production build passed. Desktop/mobile browser checks passed including keyboard next-control focus. Whole-page render scan flags existing unrelated header/FAQ/form issues.",
+  "date": "2026-10-30"
+ },
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "hero",
+  "shape": "type-led studio",
+  "theme": "brand",
+  "axes": "light/grotesk-heavy/cool",
+  "hero": "Statement",
+  "nav": "kept",
+  "footer": "kept",
+  "imagery": "Existing accreditation logos",
+  "photos": [],
+  "entry": "Monumental brand typography",
+  "fingerprint": "type-led/asymmetric/static/white/full-measure-pixel/credential-strip",
+  "sections": [
+   "Hero"
+  ],
+  "signature": "Full-measure pixel complexity word",
+  "waived": [
+   "38iii: existing brand treatment",
+   "49b: existing footer outside scope",
+   "81: existing section below hero outside scope"
+  ],
+  "prompt": "Redesign Sanct website hero with Hallmark, preserving existing header edit",
+  "validation": "TypeScript, ESLint and production build passed; four responsive screenshots; static/render sweep 0 FAIL, 0 REFLEX.",
+  "date": "2026-10-30"
+ }
+]

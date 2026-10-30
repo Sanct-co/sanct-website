@@ -1,0 +1,10 @@
+{
+  "mode": "redesign", "depth": "full", "scope": "component",
+  "shape": "dark typographic call to action", "theme": "brand",
+  "axes": "dark/grotesk-heavy/cool", "hero": "kept", "nav": "kept", "footer": "kept",
+  "imagery": "Original promise in large typography", "photos": [],
+  "entry": "Statement headline with bottom booking row", "fingerprint": "dark-statement/left-heading/hairline/booking-row",
+  "sections": ["Homepage call to action"], "signature": "Original headline at statement scale",
+  "waived": [], "prompt": "Redesign homepage booking banner with Hallmark while retaining black/white backgrounds",
+  "validation": "Scoped lint clean, TypeScript, ESLint and production build passed. Desktop/mobile captures have no horizontal overflow; Cal booking attributes preserved. Other routes retain default banner."
+}

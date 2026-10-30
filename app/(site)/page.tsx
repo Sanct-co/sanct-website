@@ -30,6 +30,7 @@ export default function Home() {
       <ProofGallery />
       <FaqSection />
       <CtaBanner
+        variant="statement"
         headline="Ready to build something that matters?"
         subtext="Tell us about your project. We'll respond within one business day."
       />
